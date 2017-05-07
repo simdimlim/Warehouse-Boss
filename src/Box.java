@@ -1,7 +1,11 @@
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-public class Box {
+public class Box extends SokobanObject{
 	
-	private int currentLocationX;
-	private int currentLocationY;
-	ArrayList<Integer> possibleLocations = new ArrayList<>();
+	private boolean finished;
+	public Box (Grid g, Point currentLocation,BufferedImage image){
+		super(g,currentLocation,image);
+		this.finished = false;
+	}
 }

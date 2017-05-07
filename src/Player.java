@@ -1,8 +1,12 @@
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player {
+public class Player extends SokobanObject {
 	
-	private int currentLocationX;
-	private int currentLocationY;
-	ArrayList<Integer> possibleLocations = new ArrayList<>();
+	public Player (Grid g, Point currentLocation,BufferedImage image){
+		super(g,currentLocation,image);
+		
+	}
+	
 }
