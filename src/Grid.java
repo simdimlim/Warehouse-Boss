@@ -37,8 +37,14 @@ public class Grid {
 		}
 		adj[2][1] = new Wall(easyGrid, new Point(1,1), playerImage);
 		adj[2][4] = new Goal(easyGrid, new Point(),goalImage);
+//		String[][] adj = new String[][]{
+//		    {"WALL","WALL","WALL","WALL","WALL","WALL","WALL"},
+//		    {"WALL","FLOOR","FLOOR","FLOOR","FLOOR","FLOOR", "WALL"},
+//		    {"WALL","WALL","WALL","WALL","WALL","WALL","WALL"}
+//		};
 		
 		return easyGrid;
+		//return adj;
 	}
 	public Boolean isWall(int x, int y){
 		if(this.adj[x, y].type.equals("Wall")) return true;

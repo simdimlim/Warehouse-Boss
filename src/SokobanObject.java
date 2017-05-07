@@ -16,7 +16,7 @@ public class SokobanObject {
 	 */
 	public SokobanObject (Grid g, Point currentLocation,BufferedImage image){
 		this.setG(g);
-		this.setCurrentLocation(currentLocation);
+		this.setCurrentLocation(currentLocation.x,currentLocation.y);
 		this.setImage(image);
 		
 	}
@@ -25,8 +25,9 @@ public class SokobanObject {
 		return currentLocation;
 	}
 
-	public void setCurrentLocation(Point currentLocation) {
-		this.currentLocation = currentLocation;
+	public void setCurrentLocation(int x, int y) {
+		Point temp = new Point(x,y);
+		this.currentLocation = temp;
 	}
 
 	public Grid getG() {
