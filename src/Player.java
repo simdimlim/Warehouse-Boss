@@ -13,21 +13,20 @@ public class Player extends SokobanObject {
 		flag = checkValidMove(dir, grid);
 		int x = super.getCurrentLocation().x;
 		int y = super.getCurrentLocation().y;
-		
 		if (flag == true){
 			switch(dir){
-				case UP:
-					super.setCurrentLocation(x,y--);
-					break;
-				case DOWN:
-					super.setCurrentLocation(x,y++);
-					break;
-				case LEFT:
-					super.setCurrentLocation(x--,y);
-					break;
-				case RIGHT:
-					super.setCurrentLocation(x++,y);
-					break;
+			case UP:
+				super.setCurrentLocation(--x,y);
+				break;
+			case DOWN:
+				super.setCurrentLocation(++x,y);
+				break;
+			case LEFT:
+				super.setCurrentLocation(x,--y);
+				break;
+			case RIGHT:
+				super.setCurrentLocation(x,++y);
+				break;
 			}
 		}
 	}
@@ -36,22 +35,22 @@ public class Player extends SokobanObject {
 		int currentY = super.getCurrentLocation().y;
 		switch(dir){
 		case UP:
-			if (!grid.isWall(currentX , currentY--)){
+			if (!grid.isWall(--currentX , currentY)){
 				return true;
 			}
 			break;
 		case DOWN:
-			if (!grid.isWall(currentX , currentY++)){
+			if (!grid.isWall(++currentX , currentY)){
 				return true;
 			}
 			break;
 		case LEFT:
-			if (!grid.isWall(currentX-- , currentY)){
+			if (!grid.isWall(currentX , --currentY)){
 				return true;
 			}
 			break;
 		case RIGHT:
-			if (!grid.isWall(currentX++ , currentY--)){
+			if (!grid.isWall(currentX , ++currentY)){
 				return true;
 			}
 			break;
