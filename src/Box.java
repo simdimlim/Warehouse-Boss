@@ -6,13 +6,13 @@ public class Box extends SokobanObject{
 	private boolean flag = false;
 	private boolean goalReached;
 	
-	public Box (Grid g, Point currentLocation,BufferedImage image){
-		super(g,currentLocation,image,"BOX");
+	public Box (Point currentLocation){
+		super(currentLocation,"B");
 		this.goalReached = false;
 		
 	}
-	public void move (Direction dir){
-		flag = checkValidMove(dir);
+	public void move (Direction dir, Grid grid){
+		flag = checkValidMove(dir, grid);
 		int x = super.getCurrentLocation().x;
 		int y = super.getCurrentLocation().y;
 		
@@ -33,10 +33,9 @@ public class Box extends SokobanObject{
 			}
 		}
 	}
-	public boolean checkValidMove(Direction dir){
+	public boolean checkValidMove(Direction dir, Grid grid){
 		int currentX = super.getCurrentLocation().x;
 		int currentY = super.getCurrentLocation().y;
-		Grid grid = super.getG();
 		switch(dir){
 		case UP:
 			if (!grid.isWall(currentX , currentY--)){

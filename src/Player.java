@@ -6,11 +6,11 @@ public class Player extends SokobanObject {
 	
 	private boolean flag = false;
 
-	public Player (Grid g, Point currentLocation,BufferedImage image){
-		super(g,currentLocation,image,"PLAYER");	
+	public Player (Point currentLocation,BufferedImage image){
+		super(currentLocation,"P");	
 	}
-	public void move (Direction dir){
-		flag = checkValidMove(dir);
+	public void move (Direction dir, Grid grid){
+		flag = checkValidMove(dir, grid);
 		int x = super.getCurrentLocation().x;
 		int y = super.getCurrentLocation().y;
 		
@@ -31,10 +31,9 @@ public class Player extends SokobanObject {
 			}
 		}
 	}
-	public boolean checkValidMove(Direction dir){
+	public boolean checkValidMove(Direction dir, Grid grid){
 		int currentX = super.getCurrentLocation().x;
 		int currentY = super.getCurrentLocation().y;
-		Grid grid = super.getG();
 		switch(dir){
 		case UP:
 			if (!grid.isWall(currentX , currentY--)){
