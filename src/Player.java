@@ -5,10 +5,9 @@ import java.util.ArrayList;
 public class Player extends SokobanObject {
 	
 	private boolean flag = false;
-	private String type = "PLAYER";
+
 	public Player (Grid g, Point currentLocation,BufferedImage image){
-		super(g,currentLocation,image);
-		
+		super(g,currentLocation,image,"PLAYER");	
 	}
 	public void move (Direction dir){
 		flag = checkValidMove(dir);

@@ -7,6 +7,7 @@ public class SokobanObject {
 	private Point currentLocation;
 	private Grid g;
 	private BufferedImage image;
+	private String type; 
 	
 	/**
 	 * Creates a new Object
@@ -14,10 +15,11 @@ public class SokobanObject {
 	 * @param currentLocation 
 	 * @param image
 	 */
-	public SokobanObject (Grid g, Point currentLocation,BufferedImage image){
+	public SokobanObject (Grid g, Point currentLocation,BufferedImage image, String type){
 		this.setG(g);
 		this.setCurrentLocation(currentLocation.x,currentLocation.y);
 		this.setImage(image);
+		this.setType(type);
 		
 	}
 
@@ -44,5 +46,13 @@ public class SokobanObject {
 
 	public void setImage(BufferedImage image) {
 		this.image = image;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

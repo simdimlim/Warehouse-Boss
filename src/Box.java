@@ -5,10 +5,11 @@ public class Box extends SokobanObject{
 	
 	private boolean flag = false;
 	private boolean goalReached;
-	private String type = "BOX";
+	
 	public Box (Grid g, Point currentLocation,BufferedImage image){
-		super(g,currentLocation,image);
+		super(g,currentLocation,image,"BOX");
 		this.goalReached = false;
+		
 	}
 	public void move (Direction dir){
 		flag = checkValidMove(dir);

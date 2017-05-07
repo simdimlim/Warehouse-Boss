@@ -6,6 +6,6 @@ public class Goal extends SokobanObject{
 
 	private String type = "GOAL";
 	public Goal (Grid g, Point currentLocation,BufferedImage image){
-		super(g,currentLocation,image);
+		super(g,currentLocation,image,"GOAL");
 	}
 }
