@@ -73,4 +73,12 @@ public class Grid {
 	public SokobanObject[][] getGrid() {
 		return grid;
 	}
+	
+	public int getNumRow() {
+		return numRow;
+	}
+	
+	public int getNumCol() {
+		return numCol;
+	}
 }

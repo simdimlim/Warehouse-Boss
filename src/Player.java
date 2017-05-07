@@ -6,7 +6,7 @@ public class Player extends SokobanObject {
 	
 	private boolean flag = false;
 
-	public Player (Point currentLocation,BufferedImage image){
+	public Player (Point currentLocation){
 		super(currentLocation,"P");	
 	}
 	public void move (Direction dir, Grid grid){
