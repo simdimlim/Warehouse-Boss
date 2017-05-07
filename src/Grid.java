@@ -58,7 +58,13 @@ public class Grid {
 	public void printGrid(SokobanObject[][] g) {
 		for (int i = 0; i < numRow; i++) {
 			for (int j = 0; j < numCol; j++) {
-				System.out.print(g[i][j].getType());
+				String type = g[i][j].getType();
+				if (type.equals("W")) {
+					System.out.print("#");
+				} else if (type.equals("F")) {
+					System.out.print(" ");
+				}
+				
 			}
 			System.out.println();
 		}
