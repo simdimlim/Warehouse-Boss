@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class SokobanObject {
 
 	private Point currentLocation;
-	private BufferedImage image;
 	private String type; 
 	
 	/**
@@ -27,14 +26,6 @@ public class SokobanObject {
 	public void setCurrentLocation(int x, int y) {
 		Point temp = new Point(x,y);
 		this.currentLocation = temp;
-	}
-
-	public BufferedImage getImage() {
-		return image;
-	}
-
-	public void setImage(BufferedImage image) {
-		this.image = image;
 	}
 
 	public String getType() {

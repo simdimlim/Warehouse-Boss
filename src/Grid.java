@@ -14,7 +14,7 @@ public class Grid {
 	}
 	
 	public Boolean isWall(int x, int y){
-		if(this.grid[x][y].getType().equals("WALL")) {
+		if(this.grid[x][y].getType().equals("W")) {
 			return true;
 		}
 		return false;
