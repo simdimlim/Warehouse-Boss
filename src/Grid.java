@@ -1,5 +1,5 @@
-import java.awt.Point;
-import java.util.ArrayList;
+import java.util.*;
+import java.io.*;
 
 public class Grid {
 	private SokobanObject[][] adj;
@@ -14,7 +14,7 @@ public class Grid {
 		{
 			sc = new Scanner(new FileReader(args[0]));
 			String current = sc.next();
-			graph = new Graph();
+			grid = new Grid(6,3);
 			jobList = new ArrayList<Job>();
 			int cost;
 			while(sc.hasNext()){
@@ -40,8 +40,8 @@ public class Grid {
 		
 		return easyGrid;
 	}
-	public Boolean isWall(Point point){
-		if(this.SokobanObject[point.getX(), point.getY()].type.equals("Wall")) return true;
+	public Boolean isWall(int x, int y){
+		if(this.adj[x, y].type.equals("Wall")) return true;
 		return false;
 	}
 }
