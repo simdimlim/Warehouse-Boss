@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
  */
 public class SokobanController implements KeyListener, ActionListener {
      
-    private GridProgram p;
+    private SokobanGame p;
     private int playerUp;
     private int playerRight;
     private int playerDown;
@@ -20,7 +20,7 @@ public class SokobanController implements KeyListener, ActionListener {
      * @param p
      * The main maze program.
      */
-    public SokobanController(GridProgram p) {
+    public SokobanController(SokobanGame p) {
         this.p = p;
         playerUp = KeyEvent.VK_UP;
         playerRight = KeyEvent.VK_RIGHT;

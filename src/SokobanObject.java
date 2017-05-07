@@ -35,4 +35,31 @@ public class SokobanObject {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public boolean checkValidMove(Direction dir, Grid grid){
+		int currentX = this.getCurrentLocation().x;
+		int currentY = this.getCurrentLocation().y;
+		switch(dir){
+		case UP:
+			if (!grid.isWall(--currentX , currentY)){
+				return true;
+			}
+			break;
+		case DOWN:
+			if (!grid.isWall(++currentX , currentY)){
+				return true;
+			}
+			break;
+		case LEFT:
+			if (!grid.isWall(currentX , --currentY)){
+				return true;
+			}
+			break;
+		case RIGHT:
+			if (!grid.isWall(currentX , ++currentY)){
+				return true;
+			}
+			break;
+		}
+		return false;
+	}
 }

@@ -29,33 +29,5 @@ public class Player extends SokobanObject {
 				break;
 			}
 		}
-	}
-	public boolean checkValidMove(Direction dir, Grid grid){
-		int currentX = super.getCurrentLocation().x;
-		int currentY = super.getCurrentLocation().y;
-		switch(dir){
-		case UP:
-			if (!grid.isWall(--currentX , currentY)){
-				return true;
-			}
-			break;
-		case DOWN:
-			if (!grid.isWall(++currentX , currentY)){
-				return true;
-			}
-			break;
-		case LEFT:
-			if (!grid.isWall(currentX , --currentY)){
-				return true;
-			}
-			break;
-		case RIGHT:
-			if (!grid.isWall(currentX , ++currentY)){
-				return true;
-			}
-			break;
-		}
-		return false;
-	}
-	
+	}	
 }

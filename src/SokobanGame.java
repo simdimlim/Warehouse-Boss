@@ -9,14 +9,20 @@ public class SokobanGame {
 	Box b;
 	Goal g;
 	
+	
 	public SokobanGame(Grid grid) {
 		this.grid = grid;
-		p = new Player(new Point(1,1));
-		b = new Box(new Point(1,2));
-		g = new Goal(new Point(1,5));
+		p = new Player(new Point(3,1));
+		b = new Box(new Point(3,2));
+		g = new Goal(new Point(2,8));
 	}
 	public static void main(String[] args) throws java.io.IOException {
-		Grid g = new Grid(3, 7);
+		Direction up = Direction.UP;
+		Direction down = Direction.DOWN;
+		Direction left = Direction.LEFT;
+		Direction right = Direction.RIGHT;
+		
+		Grid g = new Grid(6, 15);
 		try {
 			g.generateLevel(new FileReader("level1.txt"));
 		} catch (FileNotFoundException e) {
@@ -29,26 +35,51 @@ public class SokobanGame {
 		while(scan.hasNext()){
 	        String n = scan.next();
 	        System.out.println(n);
+	        
 	        switch(n){
 			case "w":
-				Direction up = Direction.UP;
-		    	game.p.move(up, g);
-		    	game.b.move(up, g);
+				if (game.p.checkValidMove(up, game.grid)){
+			    	game.p.move(up, g);
+			    	if(game.canPush(game.p,game.b,up)){
+			    		game.b.move(up, g);
+			    	} 
+			    	if(game.isPushing(game.p,game.b)){
+			    		game.p.move(down, g);
+			    	}
+				}
 		    	break;
 			case "s":
-				Direction down = Direction.DOWN;
-		    	game.p.move(down, g);
-		    	game.b.move(down, g);
+				if (game.p.checkValidMove(down, game.grid)){
+			    	game.p.move(down, g);
+			    	if(game.canPush(game.p,game.b,down)){
+			    		game.b.move(down, g);
+			    	} 
+			    	if(game.isPushing(game.p,game.b)){
+			    		game.p.move(up, g);
+			    	}
+				}
 		    	break;
 			case "a":
-				Direction left = Direction.LEFT;
-		    	game.p.move(left, g);
-		    	game.b.move(left, g);
+				if (game.p.checkValidMove(left, game.grid)){
+			    	game.p.move(left, g);
+			    	if(game.canPush(game.p,game.b,left)){
+			    		game.b.move(left, g);
+			    	} 
+			    	if(game.isPushing(game.p,game.b)){
+			    		game.p.move(right, g);
+			    	}
+				}
 		    	break;
 			case "d":
-				Direction right = Direction.RIGHT;
-		    	game.p.move(right, g);
-		    	game.b.move(right, g);
+				if (game.p.checkValidMove(right, game.grid)){
+			    	game.p.move(right, g);
+			    	if(game.canPush(game.p,game.b,right)){
+			    		game.b.move(right, g);
+			    	} 
+			    	if(game.isPushing(game.p,game.b)){
+			    		game.p.move(left, g);
+			    	}
+				}
 		    	break;
 			}
 	        game.printGame(g);
@@ -89,5 +120,17 @@ public class SokobanGame {
 			return this.g.getType();
 		}
 		return null;
+	}
+	public boolean canPush(SokobanObject p,SokobanObject b, Direction dir){
+		if (p.getCurrentLocation().equals(b.getCurrentLocation()) && b.checkValidMove(dir, grid)){
+			return true;
+		}
+		return false;
+	}
+	public boolean isPushing(SokobanObject p,SokobanObject b){
+		if (p.getCurrentLocation().equals(b.getCurrentLocation())){
+			return true;
+		}
+		return false;
 	}
 }
