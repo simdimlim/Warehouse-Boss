@@ -14,9 +14,9 @@ public class Grid {
 		{
 			sc = new Scanner(new FileReader(args[0]));
 			String current = sc.next();
+			currX = 0;
+			currY = 0;
 			grid = new Grid(6,3);
-			jobList = new ArrayList<Job>();
-			int cost;
 			while(sc.hasNext()){
 				if(current.equals("#")){
 					sc.nextLine();
@@ -58,7 +58,7 @@ public class Grid {
 		return easyGrid;
 	}
 	public Boolean isWall(int x, int y){
-		if(this.adj[x, y].type.equals("Wall")) return true;
+		if(this.adj[x,y].type.equals("Wall")) return true;
 		return false;
 	}
 }
