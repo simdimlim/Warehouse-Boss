@@ -10,7 +10,11 @@ import java.awt.event.KeyListener;
 public class SokobanController implements KeyListener, ActionListener {
      
     private GridProgram p;
-     
+    private int playerUp;
+    private int playerRight;
+    private int playerDown;
+    private int playerLeft;
+    
     /**
      * Creates a new key listener..
      * @param p
@@ -18,6 +22,10 @@ public class SokobanController implements KeyListener, ActionListener {
      */
     public SokobanController(GridProgram p) {
         this.p = p;
+        playerUp = KeyEvent.VK_UP;
+        playerRight = KeyEvent.VK_RIGHT;
+        playerDown = KeyEvent.VK_DOWN;
+        playerLeft = KeyEvent.VK_LEFT;
     }
  
     @Override
