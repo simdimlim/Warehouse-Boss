@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class SokobanObject {
 
-	private Point currentLocation;
-	private String type; 
+	private int x;
+	private int y;
 	
 	/**
 	 * Creates a new Object
@@ -13,31 +13,38 @@ public class SokobanObject {
 	 * @param currentLocation 
 	 * @param image
 	 */
-	public SokobanObject (Point currentLocation, String type){
-		this.setCurrentLocation(currentLocation.x,currentLocation.y);
-		this.setType(type);
+	public SokobanObject (int x, int y){
+		this.x = x;
+		this.y = y;
 		
 	}
 
-	public Point getCurrentLocation() {
-		return currentLocation;
+	public int x() {
+		return x;
+	}
+	
+	public int y() {
+		return y;
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
 	}
 
-	public void setCurrentLocation(int x, int y) {
-		Point temp = new Point(x,y);
-		this.currentLocation = temp;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+//	public String getType() {
+//		return type;
+//	}
+//
+//	public void setType(String type) {
+//		this.type = type;
+//	}
 	public boolean checkValidMove(Direction dir, Grid grid){
-		int currentX = this.getCurrentLocation().x;
-		int currentY = this.getCurrentLocation().y;
+		int currentX = this.x;
+		int currentY = this.y;
 		switch(dir){
 		case UP:
 			if (!grid.isWall(--currentX , currentY)){

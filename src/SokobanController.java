@@ -33,7 +33,7 @@ public class SokobanController implements KeyListener, ActionListener {
      * Handle any key pressed down.
      */
     public void keyPressed(KeyEvent e) {
-        p.keyPress(e);
+//        p.keyPress(e);
     }
  
     @Override
@@ -57,7 +57,7 @@ public class SokobanController implements KeyListener, ActionListener {
      * Handles refresh updates.
      */
     public void actionPerformed(ActionEvent e) {
-        p.updateFrame(e);
+//        p.updateFrame(e);
     }
  
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Wall extends SokobanObject{
 
-	public Wall (Point currentLocation){
-		super(currentLocation,"W");
+	public Wall (int x, int y){
+		super(x, y);
 	}
 }

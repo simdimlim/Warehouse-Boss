@@ -6,26 +6,28 @@ public class Player extends SokobanObject {
 	
 	private boolean flag = false;
 
-	public Player (Point currentLocation){
-		super(currentLocation,"P");	
+	public Player (int x, int y){
+		super(x, y);	
 	}
 	public void move (Direction dir, Grid grid){
-		flag = checkValidMove(dir, grid);
-		int x = super.getCurrentLocation().x;
-		int y = super.getCurrentLocation().y;
+		flag =  checkValidMove(dir, grid);
+		
 		if (flag == true){
 			switch(dir){
 			case UP:
-				super.setCurrentLocation(--x,y);
+				setX(this.x()-1);
+//				setY(this.y());
 				break;
 			case DOWN:
-				super.setCurrentLocation(++x,y);
+				setX(this.x()+1);
+//				super.setCurrentLocation(++x,y);
 				break;
 			case LEFT:
-				super.setCurrentLocation(x,--y);
+				setY(this.y()-1);
 				break;
 			case RIGHT:
-				super.setCurrentLocation(x,++y);
+//				super.setCurrentLocation(x,++y);
+				setY(this.y()+1);
 				break;
 			}
 		}

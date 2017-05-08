@@ -6,29 +6,30 @@ public class Box extends SokobanObject{
 	private boolean flag = false;
 	private boolean goalReached;
 	
-	public Box (Point currentLocation){
-		super(currentLocation,"B");
+	public Box (int x, int y){
+		super(x, y);
 		this.goalReached = false;
 		
 	}
 	public void move (Direction dir, Grid grid){
 		flag =  checkValidMove(dir, grid);
-		int x = super.getCurrentLocation().x;
-		int y = super.getCurrentLocation().y;
 		
 		if (flag == true){
 			switch(dir){
 			case UP:
-				super.setCurrentLocation(--x,y);
+				setX(this.x()-1);
+//				setY(this.y());
 				break;
 			case DOWN:
-				super.setCurrentLocation(++x,y);
+				setX(this.x()+1);
+//				super.setCurrentLocation(++x,y);
 				break;
 			case LEFT:
-				super.setCurrentLocation(x,--y);
+				setY(this.y()-1);
 				break;
 			case RIGHT:
-				super.setCurrentLocation(x,++y);
+//				super.setCurrentLocation(x,++y);
+				setY(this.y()+1);
 				break;
 			}
 		}

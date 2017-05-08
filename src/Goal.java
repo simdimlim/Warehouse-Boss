@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Goal extends SokobanObject{
 
-	public Goal (Point currentLocation){
-		super(currentLocation,"G");
+	public Goal (int x, int y){
+		super(x, y);
 	}
 }

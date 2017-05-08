@@ -14,7 +14,7 @@ public class Grid {
 	}
 	
 	public Boolean isWall(int x, int y){
-		if(this.grid[x][y].getType().equals("W")) {
+		if(this.grid[x][y] instanceof Wall) {
 			return true;
 		}
 		return false;
@@ -34,11 +34,11 @@ public class Grid {
 				while (ls.hasNext()) {
 					String character = ls.next();
 					if (character.equals("#")) {
-						SokobanObject wall = new Wall(new Point(x,y));
+						SokobanObject wall = new Wall(x, y);
 						//System.out.println(x+" "+y);
 						grid[x][y] = wall;
 					} else if (character.equals(" ")) {
-						SokobanObject floor = new Floor(new Point(x,y));
+						SokobanObject floor = new Floor(x, y);
 						grid[x][y] = floor;
 					}
 					y++;
@@ -59,10 +59,10 @@ public class Grid {
 	public void printGrid(SokobanObject[][] g) {
 		for (int i = 0; i < numRow; i++) {
 			for (int j = 0; j < numCol; j++) {
-				String type = g[i][j].getType();
-				if (type.equals("W")) {
+				SokobanObject type = g[i][j];
+				if (type instanceof Wall) {
 					System.out.print("#");
-				} else if (type.equals("F")) {
+				} else if (type instanceof Floor) {
 					System.out.print(" ");
 				}
 				

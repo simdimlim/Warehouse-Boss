@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Floor extends SokobanObject {
-	public Floor(Point currentLocation) {
-		super(currentLocation,"F");
+	public Floor(int x, int y) {
+		super(x, y);
 	}
 }

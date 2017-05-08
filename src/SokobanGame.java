@@ -12,9 +12,9 @@ public class SokobanGame {
 	
 	public SokobanGame(Grid grid) {
 		this.grid = grid;
-		p = new Player(new Point(3,1));
-		b = new Box(new Point(3,2));
-		g = new Goal(new Point(2,8));
+		p = new Player(3,1);
+		b = new Box(3,2);
+		g = new Goal(2,8);
 	}
 	public static void main(String[] args) throws java.io.IOException {
 		Direction up = Direction.UP;
@@ -83,7 +83,7 @@ public class SokobanGame {
 		    	break;
 			}
 	        game.printGame(g);
-		    if ((game.b.getCurrentLocation().getX()==game.g.getCurrentLocation().getX()) && (game.b.getCurrentLocation().getY()==game.g.getCurrentLocation().getY())){
+		    if ((game.b.x()==game.g.x()) && (game.b.y()==game.g.y())){
 		    	System.out.println("You win!");
 		    	break;
 		    }
@@ -94,41 +94,48 @@ public class SokobanGame {
 		SokobanObject[][] g = grid.getGrid();
 		for (int i = 0; i < grid.getNumRow(); i++) {
 			for (int j = 0; j < grid.getNumCol(); j++) {
-				String type = g[i][j].getType();
-				String obj = getObjectAtPoint(new Point(i,j));
-				if (obj != null) {
-					System.out.print(obj);
+				SokobanObject type = g[i][j];
+				SokobanObject obj = getObjectAtPoint(i, j);
+				
+				if (obj instanceof Player) {
+					System.out.print("P");
+					continue;
+				} else if (obj instanceof Box) {
+					System.out.print("B");
+					continue;
+				} else if (obj instanceof Goal) {
+					System.out.print("G");
 					continue;
 				}
-				if (type.equals("W")) {
+				
+				if (type instanceof Wall) {
 					System.out.print("#");
-				} else if (type.equals("F")) {
+				} else if (type instanceof Floor) {
 					System.out.print(" ");
 				}
-				
 			}
 			System.out.println();
 		}
 	}
 	
-	public String getObjectAtPoint(Point p) {
-		if (this.p.getCurrentLocation().equals(p)) {
-			return this.p.getType();
-		} else if (this.b.getCurrentLocation().equals(p)) {
-			return this.b.getType();
-		} else if (this.g.getCurrentLocation().equals(p)) {
-			return this.g.getType();
+	public SokobanObject getObjectAtPoint(int x, int y) {
+		if (p.x() == x && p.y() == y) {
+			return new Player(x, y);
+		} else if (b.x() == x && b.y() == y) {
+			return new Box(x, y);
+		} else if (g.x() == x && g.y() == y) {
+			return new Goal(x, y);
 		}
 		return null;
 	}
 	public boolean canPush(SokobanObject p,SokobanObject b, Direction dir){
-		if (p.getCurrentLocation().equals(b.getCurrentLocation()) && b.checkValidMove(dir, grid)){
+		if (p.x() == b.x() && p.y() == b.y() && b.checkValidMove(dir, grid)){
 			return true;
 		}
 		return false;
 	}
 	public boolean isPushing(SokobanObject p,SokobanObject b){
-		if (p.getCurrentLocation().equals(b.getCurrentLocation())){
+		if (p.x() == b.x() && p.y() == b.y()){
 			return true;
 		}
 		return false;
