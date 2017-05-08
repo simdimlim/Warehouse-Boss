@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.JPanel;
 
-public class SokobanGame extends JPanel {
+public class SokobanGame {
 	
 	private Grid grid;
 	private Player p;
@@ -12,17 +12,15 @@ public class SokobanGame extends JPanel {
 	private Goal g;
 	private SokobanView sv;
 	private boolean isComplete;
-	
+	private int SIZE = 60;
 	
 	public SokobanGame(Grid grid) {
 		this.grid = grid;
 		p = new Player(3,1);
 		b = new Box(3,2);
 		g = new Goal(2,8);
-		addKeyListener(new SokobanController(this));
-		setFocusable(true);
-		sv = new SokobanView(this);
 		isComplete = false;
+		sv = new SokobanView(this);
 	}
 	
 	public void printGame(Grid grid) {
@@ -45,7 +43,7 @@ public class SokobanGame extends JPanel {
 				
 				if (type instanceof Wall) {
 					System.out.print("#");
-				} else if (type instanceof Floor) {
+				} else {
 					System.out.print(" ");
 				}
 			}

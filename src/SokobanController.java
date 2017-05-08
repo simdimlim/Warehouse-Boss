@@ -10,9 +10,11 @@ import java.awt.event.KeyListener;
 public class SokobanController implements KeyListener {
      
     private SokobanGame sb;
+    private SokobanView sv;
     
-    public SokobanController(SokobanGame sb) {
-        this.sb = sb;
+    public SokobanController(SokobanView sv) {
+        sb = sv.getGame();
+        this.sv = sv;
     }
  
     @Override
@@ -70,7 +72,7 @@ public class SokobanController implements KeyListener {
 		    	}
 			}
 		}
-		sb.getSView().printGame();
+		sv.repaint();
     }
  
     @Override

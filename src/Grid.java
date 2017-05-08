@@ -37,8 +37,7 @@ public class Grid {
 						SokobanObject wall = new Wall(x, y);
 						grid[x][y] = wall;
 					} else if (character.equals(" ")) {
-						SokobanObject floor = new Floor(x, y);
-						grid[x][y] = floor;
+						grid[x][y] = new Floor(x, y);
 					}
 					y++;
 				}
@@ -61,7 +60,7 @@ public class Grid {
 				SokobanObject type = g[i][j];
 				if (type instanceof Wall) {
 					System.out.print("#");
-				} else if (type instanceof Floor) {
+				} else {
 					System.out.print(" ");
 				}
 				
