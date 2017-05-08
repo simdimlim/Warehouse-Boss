@@ -35,7 +35,6 @@ public class Grid {
 					String character = ls.next();
 					if (character.equals("#")) {
 						SokobanObject wall = new Wall(x, y);
-						//System.out.println(x+" "+y);
 						grid[x][y] = wall;
 					} else if (character.equals(" ")) {
 						SokobanObject floor = new Floor(x, y);

@@ -10,6 +10,9 @@ public class SokobanView {
 	}
 	
 	public void printGame() {
+		if (sg.isComplete()) {
+			return;
+		}
 		SokobanObject[][] g = sg.getGrid().getGrid();
 		for (int i = 0; i < sg.getGrid().getNumRow(); i++) {
 			for (int j = 0; j < sg.getGrid().getNumCol(); j++) {
@@ -36,6 +39,7 @@ public class SokobanView {
 		}
 		if ((sg.getBox().x()==sg.getGoal().x()) && (sg.getBox().y()==sg.getGoal().y())){
 	    	System.out.println("You win!");
+	    	sg.changeIsComplete(true);
 	    }
 	}
 }

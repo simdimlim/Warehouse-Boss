@@ -6,11 +6,12 @@ import javax.swing.JPanel;
 
 public class SokobanGame extends JPanel {
 	
-	Grid grid;
-	Player p;
-	Box b;
-	Goal g;
-	SokobanView sv;
+	private Grid grid;
+	private Player p;
+	private Box b;
+	private Goal g;
+	private SokobanView sv;
+	private boolean isComplete;
 	
 	
 	public SokobanGame(Grid grid) {
@@ -21,80 +22,8 @@ public class SokobanGame extends JPanel {
 		addKeyListener(new SokobanController(this));
 		setFocusable(true);
 		sv = new SokobanView(this);
+		isComplete = false;
 	}
-//	public static void main(String[] args) throws java.io.IOException {
-//		Direction up = Direction.UP;
-//		Direction down = Direction.DOWN;
-//		Direction left = Direction.LEFT;
-//		Direction right = Direction.RIGHT;
-//		
-//		Grid g = new Grid(6, 15);
-//		try {
-//			g.generateLevel(new FileReader("level1.txt"));
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		SokobanGame game = new SokobanGame(g);
-//		game.printGame(g);
-//		@SuppressWarnings("resource")
-//		Scanner scan = new Scanner(System.in);
-//		while(scan.hasNext()){
-//	        String n = scan.next();
-//	        System.out.println(n);
-//	        
-//	        switch(n){
-//			case "w":
-//				if (game.p.checkValidMove(up, game.grid)){
-//			    	game.p.move(up, g);
-//			    	if(game.canPush(game.p,game.b,up)){
-//			    		game.b.move(up, g);
-//			    	} 
-//			    	if(game.isPushing(game.p,game.b)){
-//			    		game.p.move(down, g);
-//			    	}
-//				}
-//		    	break;
-//			case "s":
-//				if (game.p.checkValidMove(down, game.grid)){
-//			    	game.p.move(down, g);
-//			    	if(game.canPush(game.p,game.b,down)){
-//			    		game.b.move(down, g);
-//			    	} 
-//			    	if(game.isPushing(game.p,game.b)){
-//			    		game.p.move(up, g);
-//			    	}
-//				}
-//		    	break;
-//			case "a":
-//				if (game.p.checkValidMove(left, game.grid)){
-//			    	game.p.move(left, g);
-//			    	if(game.canPush(game.p,game.b,left)){
-//			    		game.b.move(left, g);
-//			    	} 
-//			    	if(game.isPushing(game.p,game.b)){
-//			    		game.p.move(right, g);
-//			    	}
-//				}
-//		    	break;
-//			case "d":
-//				if (game.p.checkValidMove(right, game.grid)){
-//			    	game.p.move(right, g);
-//			    	if(game.canPush(game.p,game.b,right)){
-//			    		game.b.move(right, g);
-//			    	} 
-//			    	if(game.isPushing(game.p,game.b)){
-//			    		game.p.move(left, g);
-//			    	}
-//				}
-//		    	break;
-//			}
-//	        game.printGame(g);
-//		    if ((game.b.x()==game.g.x()) && (game.b.y()==game.g.y())){
-//		    	System.out.println("You win!");
-//		    	break;
-//		    }
-//		}
-//	}
 	
 	public void printGame(Grid grid) {
 		SokobanObject[][] g = grid.getGrid();
@@ -165,5 +94,13 @@ public class SokobanGame extends JPanel {
 	
 	public Goal getGoal() {
 		return g;
+	}
+	
+	public void changeIsComplete(boolean b) {
+		isComplete = b;
+	}
+	
+	public boolean isComplete() {
+		return isComplete;
 	}
 }

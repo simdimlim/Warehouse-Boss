@@ -32,7 +32,7 @@ public class SokobanController implements KeyListener {
 		if (key == KeyEvent.VK_UP) {
 			if (p.checkValidMove(up, g)){
 		    	p.move(up, g);
-		    	if(sb.canPush(p, sb.b, up)){
+		    	if(sb.canPush(p, b, up)){
 		    		sb.getBox().move(up, g);
 		    	} 
 		    	if(sb.isPushing(p, b)){
