@@ -18,7 +18,7 @@ public class Sokoban extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle("Warehouse Boss");
-		getContentPane().setPreferredSize(new Dimension(sg.getGrid().getNumCol()*SIZE, sg.getGrid().getNumRow()*SIZE));
+		getContentPane().setPreferredSize(new Dimension(sg.getGrid().getWidth()*SIZE, sg.getGrid().getHeight()*SIZE));
 		pack();
 	}
 	

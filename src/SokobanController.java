@@ -12,8 +12,8 @@ public class SokobanController implements KeyListener {
     private SokobanGame sb;
     private SokobanView sv;
     
-    public SokobanController(SokobanView sv) {
-        sb = sv.getGame();
+    public SokobanController(SokobanGame sb, SokobanView sv) {
+        this.sb = sb;
         this.sv = sv;
     }
  

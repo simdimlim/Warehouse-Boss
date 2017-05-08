@@ -4,13 +4,13 @@ import java.io.*;
 
 public class Grid {
 	private SokobanObject[][] grid;
-	private int numCol;
-	private int numRow;
+	private int width;
+	private int height;
 	
-	Grid (int xSize,int ySize){
-		grid = new SokobanObject[xSize][ySize];
-		numCol = ySize;
-		numRow = xSize;
+	Grid (int x, int y){
+		grid = new SokobanObject[x][y];
+		width = y;
+		height = x;
 	}
 	
 	public Boolean isWall(int x, int y){
@@ -54,30 +54,15 @@ public class Grid {
 		return null;
 	}
 	
-	public void printGrid(SokobanObject[][] g) {
-		for (int i = 0; i < numRow; i++) {
-			for (int j = 0; j < numCol; j++) {
-				SokobanObject type = g[i][j];
-				if (type instanceof Wall) {
-					System.out.print("#");
-				} else {
-					System.out.print(" ");
-				}
-				
-			}
-			System.out.println();
-		}
-	}
-	
 	public SokobanObject[][] getGrid() {
 		return grid;
 	}
 	
-	public int getNumRow() {
-		return numRow;
+	public int getHeight() {
+		return height;
 	}
 	
-	public int getNumCol() {
-		return numCol;
+	public int getWidth() {
+		return width;
 	}
 }

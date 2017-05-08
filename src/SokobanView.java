@@ -1,48 +1,14 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class SokobanView extends JPanel{
+public class SokobanView extends JPanel {
 	private int SIZE = 60;
 	private SokobanGame sg;
 	
 	public SokobanView(SokobanGame sg) {
 		this.sg = sg;
-		addKeyListener(new SokobanController(this));
+		addKeyListener(new SokobanController(sg, this));
 		setFocusable(true);
-	}
-	
-	public void printGame() {
-		if (sg.isComplete()) {
-			return;
-		}
-		SokobanObject[][] g = sg.getGrid().getGrid();
-		for (int i = 0; i < sg.getGrid().getNumRow(); i++) {
-			for (int j = 0; j < sg.getGrid().getNumCol(); j++) {
-				SokobanObject type = g[i][j];
-				SokobanObject obj = sg.getObjectAtPoint(i, j);
-				if (obj instanceof Player) {
-					System.out.print("P");
-					continue;
-				} else if (obj instanceof Box) {
-					System.out.print("B");
-					continue;
-				} else if (obj instanceof Goal) {
-					System.out.print("G");
-					continue;
-				}
-				
-				if (type instanceof Wall) {
-					System.out.print("#");
-				} else {
-					System.out.print(" ");
-				}
-			}
-			System.out.println();
-		}
-		if ((sg.getBox().x()==sg.getGoal().x()) && (sg.getBox().y()==sg.getGoal().y())){
-	    	System.out.println("You win!");
-	    	sg.changeIsComplete(true);
-	    }
 	}
 	
 	public void paint(Graphics g) {
@@ -56,8 +22,8 @@ public class SokobanView extends JPanel{
 		}
 		Grid grid = sg.getGrid();
 		SokobanObject[][] board = grid.getGrid();
-		int width = grid.getNumCol();
-		int height = grid.getNumRow();
+		int width = grid.getWidth();
+		int height = grid.getHeight();
 		
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -95,5 +61,39 @@ public class SokobanView extends JPanel{
 	
 	public SokobanGame getGame() {
 		return sg;
+	}
+	
+	public void printGame() {
+		if (sg.isComplete()) {
+			return;
+		}
+		SokobanObject[][] g = sg.getGrid().getGrid();
+		for (int i = 0; i < sg.getGrid().getHeight(); i++) {
+			for (int j = 0; j < sg.getGrid().getWidth(); j++) {
+				SokobanObject type = g[i][j];
+				SokobanObject obj = sg.getObjectAtPoint(i, j);
+				if (obj instanceof Player) {
+					System.out.print("P");
+					continue;
+				} else if (obj instanceof Box) {
+					System.out.print("B");
+					continue;
+				} else if (obj instanceof Goal) {
+					System.out.print("G");
+					continue;
+				}
+				
+				if (type instanceof Wall) {
+					System.out.print("#");
+				} else {
+					System.out.print(" ");
+				}
+			}
+			System.out.println();
+		}
+		if ((sg.getBox().x()==sg.getGoal().x()) && (sg.getBox().y()==sg.getGoal().y())){
+	    	System.out.println("You win!");
+	    	sg.changeIsComplete(true);
+	    }
 	}
 }

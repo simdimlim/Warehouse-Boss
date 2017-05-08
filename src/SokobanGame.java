@@ -23,34 +23,6 @@ public class SokobanGame {
 		sv = new SokobanView(this);
 	}
 	
-	public void printGame(Grid grid) {
-		SokobanObject[][] g = grid.getGrid();
-		for (int i = 0; i < grid.getNumRow(); i++) {
-			for (int j = 0; j < grid.getNumCol(); j++) {
-				SokobanObject type = g[i][j];
-				SokobanObject obj = getObjectAtPoint(i, j);
-				
-				if (obj instanceof Player) {
-					System.out.print("P");
-					continue;
-				} else if (obj instanceof Box) {
-					System.out.print("B");
-					continue;
-				} else if (obj instanceof Goal) {
-					System.out.print("G");
-					continue;
-				}
-				
-				if (type instanceof Wall) {
-					System.out.print("#");
-				} else {
-					System.out.print(" ");
-				}
-			}
-			System.out.println();
-		}
-	}
-	
 	public SokobanObject getObjectAtPoint(int x, int y) {
 		if (p.x() == x && p.y() == y) {
 			return new Player(x, y);
