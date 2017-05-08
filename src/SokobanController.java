@@ -7,25 +7,12 @@ import java.awt.event.KeyListener;
  * A key listener that handles the maze key input and frame delay.
  *
  */
-public class SokobanController implements KeyListener, ActionListener {
+public class SokobanController implements KeyListener {
      
-    private SokobanGame p;
-    private int playerUp;
-    private int playerRight;
-    private int playerDown;
-    private int playerLeft;
+    private SokobanGame sb;
     
-    /**
-     * Creates a new key listener..
-     * @param p
-     * The main maze program.
-     */
-    public SokobanController(SokobanGame p) {
-        this.p = p;
-        playerUp = KeyEvent.VK_UP;
-        playerRight = KeyEvent.VK_RIGHT;
-        playerDown = KeyEvent.VK_DOWN;
-        playerLeft = KeyEvent.VK_LEFT;
+    public SokobanController(SokobanGame sb) {
+        this.sb = sb;
     }
  
     @Override
@@ -33,7 +20,56 @@ public class SokobanController implements KeyListener, ActionListener {
      * Handle any key pressed down.
      */
     public void keyPressed(KeyEvent e) {
-//        p.keyPress(e);
+    	int key = e.getKeyCode();
+		Player p = sb.getPlayer();
+		Grid g = sb.getGrid();
+		Box b = sb.getBox();
+		Direction up = Direction.UP;
+		Direction down = Direction.DOWN;
+		Direction left = Direction.LEFT;
+		Direction right = Direction.RIGHT;
+		
+		if (key == KeyEvent.VK_UP) {
+			if (p.checkValidMove(up, g)){
+		    	p.move(up, g);
+		    	if(sb.canPush(p, sb.b, up)){
+		    		sb.getBox().move(up, g);
+		    	} 
+		    	if(sb.isPushing(p, b)){
+		    		p.move(down, g);
+		    	}
+			}
+		} else if (key == KeyEvent.VK_RIGHT) {
+			if (p.checkValidMove(right, g)){
+		    	p.move(right, g);
+		    	if(sb.canPush(p,b,right)){
+		    		b.move(right, g);
+		    	} 
+		    	if(sb.isPushing(p, b)){
+		    		p.move(left, g);
+		    	}
+			}
+		} else if (key == KeyEvent.VK_LEFT) {
+			if (p.checkValidMove(left, g)) {
+		    	p.move(left, g);
+		    	if(sb.canPush(p,b,left)){
+		    		b.move(left, g);
+		    	} 
+		    	if(sb.isPushing(p, b)){
+		    		p.move(right, g);
+		    	}
+			}
+		} else if (key == KeyEvent.VK_DOWN) {
+			if (p.checkValidMove(down, g)){
+		    	p.move(down, g);
+		    	if(sb.canPush(p,b,down)){
+		    		b.move(down, g);
+		    	} 
+		    	if(sb.isPushing(p, b)){
+		    		p.move(up, g);
+		    	}
+			}
+		}
     }
  
     @Override
@@ -50,14 +86,6 @@ public class SokobanController implements KeyListener, ActionListener {
      */
     public void keyTyped(KeyEvent e) {
          
-    }
- 
-    @Override
-    /**
-     * Handles refresh updates.
-     */
-    public void actionPerformed(ActionEvent e) {
-//        p.updateFrame(e);
     }
  
 }

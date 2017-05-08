@@ -2,7 +2,9 @@ import java.awt.*;
 import java.io.*;
 import java.util.Scanner;
 
-public class SokobanGame {
+import javax.swing.JPanel;
+
+public class SokobanGame extends JPanel {
 	
 	Grid grid;
 	Player p;
@@ -15,6 +17,8 @@ public class SokobanGame {
 		p = new Player(3,1);
 		b = new Box(3,2);
 		g = new Goal(2,8);
+		addKeyListener(new SokobanController(this));
+		setFocusable(true);
 	}
 	public static void main(String[] args) throws java.io.IOException {
 		Direction up = Direction.UP;
@@ -139,5 +143,17 @@ public class SokobanGame {
 			return true;
 		}
 		return false;
+	}
+	
+	public Player getPlayer() {
+		return p;
+	}
+	
+	public Grid getGrid() {
+		return grid;
+	}
+	
+	public Box getBox() {
+		return b;
 	}
 }
