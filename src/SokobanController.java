@@ -70,6 +70,7 @@ public class SokobanController implements KeyListener {
 		    	}
 			}
 		}
+		sb.getSView().printGame();
     }
  
     @Override

@@ -35,13 +35,6 @@ public class SokobanObject {
 		this.y = y;
 	}
 
-//	public String getType() {
-//		return type;
-//	}
-//
-//	public void setType(String type) {
-//		this.type = type;
-//	}
 	public boolean checkValidMove(Direction dir, Grid grid){
 		int currentX = this.x;
 		int currentY = this.y;
