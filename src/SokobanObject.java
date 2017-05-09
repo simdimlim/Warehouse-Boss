@@ -34,31 +34,16 @@ public class SokobanObject {
 	public void setY(int y) {
 		this.y = y;
 	}
-
-	public boolean checkValidMove(Direction dir, Grid grid){
-		int currentX = this.x;
-		int currentY = this.y;
-		switch(dir){
-		case UP:
-			if (!grid.isWall(--currentX , currentY)){
-				return true;
-			}
-			break;
-		case DOWN:
-			if (!grid.isWall(++currentX , currentY)){
-				return true;
-			}
-			break;
-		case LEFT:
-			if (!grid.isWall(currentX , --currentY)){
-				return true;
-			}
-			break;
-		case RIGHT:
-			if (!grid.isWall(currentX , ++currentY)){
-				return true;
-			}
-			break;
+	
+	public boolean collidesWith(SokobanObject obj, Direction d) {
+		if (x-1 == obj.x() && y == obj.y() && d == Direction.LEFT) {
+			return true;
+		} else if (x+1 == obj.x() && obj.y() == y && d == Direction.RIGHT) {
+			return true;
+		} else if (x == obj.x() && y-1 == obj.y() && d == Direction.UP) {
+			return true;
+		} else if (x == obj.x() && y+1 == obj.y() && d == Direction.DOWN) {
+			return true;
 		}
 		return false;
 	}
