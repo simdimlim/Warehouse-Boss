@@ -326,9 +326,7 @@ public class SokobanGame {
 				rY = rng.nextInt(height-t3Height);
 			}
 		} else if (rX > 1 && rX < 5) {
-			while (rY < 1 || rY > 4) {
-				rY = rng.nextInt(height-t3Height);
-			}
+			rY = 4;
 		}
 		
 		initRX = rX;
@@ -366,10 +364,43 @@ public class SokobanGame {
 		free.remove(freeSpace);
 		p = new Player(freeSpace.x(), freeSpace.y());
 		
-		freeSpace = free.get(rng.nextInt(free.size()));
-		free.remove(freeSpace);
+		boolean validPos = false;
+		
+		while (!validPos) {
+			freeSpace = free.get(rng.nextInt(free.size()));
+			if (hitWall(freeSpace, up) && hitWall(freeSpace, left)) {
+				
+			} else if (hitWall(freeSpace, up) && hitWall(freeSpace, right)) {
+				
+			} else if (hitWall(freeSpace, down) && hitWall(freeSpace, left)) {
+				
+			} else if (hitWall(freeSpace, down) && hitWall(freeSpace, right)) {
+				
+			} else if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
+			
+			} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
+				
+			} else {
+				validPos = true;
+				free.remove(freeSpace);
+			}
+		}
+		
 		Box b = new Box(freeSpace.x(), freeSpace.y());
-		freeSpace = free.get(rng.nextInt(free.size()));
+		validPos = false;
+		
+		while (!validPos) {
+			freeSpace = free.get(rng.nextInt(free.size()));
+			if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
+			
+			} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
+				
+			} else {
+				validPos = true;
+				free.remove(freeSpace);
+			}
+		}
+
 		free.remove(freeSpace);
 		Goal g = new Goal(freeSpace.x(), freeSpace.y());
 		
