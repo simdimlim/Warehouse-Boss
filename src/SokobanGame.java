@@ -74,8 +74,8 @@ public class SokobanGame {
 		height = y;
 		all.addAll(goals);
 		all.addAll(walls);
-		all.addAll(boxes);
 		all.add(p);
+		all.addAll(boxes);
 	}
 	
 	public Player getPlayer() {
