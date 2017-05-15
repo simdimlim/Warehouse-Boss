@@ -214,10 +214,10 @@ public class SokobanGame {
 	private void generatePrototype() {
 		String prototype =
 		          "########\n"
-				+ "########\n"
-		        + "##    ##\n"
-		        + "## ## ##\n"
-		        + "##    ##\n"
+				+ "#  ##  #\n"
+		        + "#      #\n"
+		        + "#  ##  #\n"
+		        + "#      #\n"
 		        + "########\n"
 		        + "########\n"
 		        + "########\n";
@@ -365,53 +365,55 @@ public class SokobanGame {
 		p = new Player(freeSpace.x(), freeSpace.y());
 		
 		boolean validPos = false;
+		int boxNum = 0;
 		
-		while (!validPos) {
-			freeSpace = free.get(rng.nextInt(free.size()));
-			if (hitWall(freeSpace, up) && hitWall(freeSpace, left)) {
-				
-			} else if (hitWall(freeSpace, up) && hitWall(freeSpace, right)) {
-				
-			} else if (hitWall(freeSpace, down) && hitWall(freeSpace, left)) {
-				
-			} else if (hitWall(freeSpace, down) && hitWall(freeSpace, right)) {
-				
-			} else if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
-			
-			} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
-				
-			} else {
-				validPos = true;
-				free.remove(freeSpace);
+		while (boxNum < 3) {
+			while (!validPos) {
+				freeSpace = free.get(rng.nextInt(free.size()));
+				if (hitWall(freeSpace, up)) {
+					
+				} else if (hitWall(freeSpace, right)) {
+					
+				} else if (hitWall(freeSpace, down)) {
+					
+				} else if (hitWall(freeSpace, left)) {
+					
+				} else {
+					validPos = true;
+					free.remove(freeSpace);
+					Box b = new Box(freeSpace.x(), freeSpace.y());
+					boxes.add(b);
+					boxNum++;
+				}
 			}
+			validPos = false;
 		}
 		
-		Box b = new Box(freeSpace.x(), freeSpace.y());
-		validPos = false;
+		int goalNum = 0;
 		
-		while (!validPos) {
-			freeSpace = free.get(rng.nextInt(free.size()));
-			if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
-			
-			} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
+		while (goalNum < 3) {
+			while (!validPos) {
+				freeSpace = free.get(rng.nextInt(free.size()));
+				if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
 				
-			} else {
-				validPos = true;
-				free.remove(freeSpace);
+				} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
+					
+				} else {
+					validPos = true;
+					free.remove(freeSpace);
+					Goal g = new Goal(freeSpace.x(), freeSpace.y());
+					goals.add(g);
+					goalNum++;
+				}
 			}
+			validPos = false;
 		}
-
-		free.remove(freeSpace);
-		Goal g = new Goal(freeSpace.x(), freeSpace.y());
-		
 		
 		all.clear();
 		all.addAll(walls);
-		goals.add(g);
-		all.add(g);
+		all.addAll(goals);
 		all.add(p);
-		boxes.add(b);
-		all.add(b);
+		all.addAll(boxes);
 		sv.repaint();
 	}
 }
