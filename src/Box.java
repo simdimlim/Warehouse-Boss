@@ -20,5 +20,10 @@ public class Box extends SokobanObject{
 			setX(this.x()+1);
 			break;
 		}
-	}	
+	}
+	
+	@Override
+	public Box clone() {
+		return (Box) super.clone();
+	}
 }

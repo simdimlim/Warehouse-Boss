@@ -2,7 +2,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class SokobanObject {
+public class SokobanObject implements Cloneable {
 
 	private int x;
 	private int y;
@@ -46,5 +46,15 @@ public class SokobanObject {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public SokobanObject clone() {
+		try {
+			return (SokobanObject) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

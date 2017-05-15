@@ -24,4 +24,8 @@ public class Player extends SokobanObject {
 			break;
 		}
 	}
+	
+	public Player clone() {
+		return (Player) super.clone();
+	}
 }
