@@ -12,6 +12,7 @@ public class SokobanGame {
 	private ArrayList<SokobanObject> goals;
 	private ArrayList<SokobanObject> all;
 	private ArrayList<SokobanObject> free;
+	private ArrayList<SokobanObject> initial;
 	private Direction up = Direction.UP;
 	private Direction down = Direction.DOWN;
 	private Direction left = Direction.LEFT;
@@ -39,6 +40,7 @@ public class SokobanGame {
 		goals = new ArrayList<SokobanObject>();
 		all = new ArrayList<SokobanObject>();
 		free = new ArrayList<SokobanObject>();
+		initial = new ArrayList<SokobanObject>();
 		isComplete = false;
 		height = 0;
 		width = 0;
@@ -414,6 +416,16 @@ public class SokobanGame {
 		all.addAll(goals);
 		all.add(p);
 		all.addAll(boxes);
+		initial.addAll(walls);
+		initial.addAll(goals);
+		initial.add(p);
+		initial.addAll(boxes);
+		
 		sv.repaint();
+	}
+	
+	public void restartLevel() {
+		all.clear();
+		all.addAll(initial);
 	}
 }

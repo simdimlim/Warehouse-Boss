@@ -45,6 +45,8 @@ public class SokobanView extends JPanel {
 			} else if (obj instanceof Wall) {
 				g.setColor(Color.DARK_GRAY);
 				g.fillRect(x, y, SIZE, SIZE);
+			} else if (obj instanceof SokobanObject) {
+				System.out.println("sokoobj");
 			}
 		}
 	}
