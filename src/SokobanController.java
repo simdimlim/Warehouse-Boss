@@ -1,8 +1,4 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.awt.event.*;
  
 /**
  * A key listener that handles the maze key input and frame delay.
@@ -25,7 +21,6 @@ public class SokobanController implements KeyListener {
     public void keyPressed(KeyEvent e) {
     	int key = e.getKeyCode();
 		Player p = sb.getPlayer();
-		ArrayList<SokobanObject> all = sb.getAll();
 		Direction up = Direction.UP;
 		Direction down = Direction.DOWN;
 		Direction left = Direction.LEFT;

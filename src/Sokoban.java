@@ -1,6 +1,4 @@
 import java.awt.Dimension;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 
 import javax.swing.JFrame;
 

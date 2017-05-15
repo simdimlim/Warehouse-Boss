@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Box extends SokobanObject{
 		
 	public Box (int x, int y){

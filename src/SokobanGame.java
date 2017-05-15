@@ -1,9 +1,4 @@
-import java.awt.*;
-import java.io.*;
 import java.util.*;
-import java.util.stream.*;
-
-import javax.swing.JPanel;
 
 public class SokobanGame {
 	
@@ -26,16 +21,16 @@ public class SokobanGame {
 	private ArrayList<SokobanObject> initBoxes;
 	private ArrayList<SokobanObject> initGoals;
 	
-	private String level1 =
-	          "   ###   \n"
-			+ "  #####  \n"
-	        + " ##  ##  \n"
-	        + " #@$ ##  \n"
-	        + " ##$ ### \n"
-	        + " ## $ ## \n"
-	        + " #.$  ## \n"
-	        + " #.. .#  \n"
-	        + " ######  \n";
+//	private String level1 =
+//	          "   ###   \n"
+//			+ "  #####  \n"
+//	        + " ##  ##  \n"
+//	        + " #@$ ##  \n"
+//	        + " ##$ ### \n"
+//	        + " ## $ ## \n"
+//	        + " #.$  ## \n"
+//	        + " #.. .#  \n"
+//	        + " ######  \n";
 	
 	public SokobanGame() {
 		walls = new ArrayList<SokobanObject>();
