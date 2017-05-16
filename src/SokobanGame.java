@@ -173,6 +173,7 @@ public class SokobanGame {
 		all.add(p);
 		all.addAll(boxes);
 		
+		sv.repaint();
 	}
 	
 	public void restartLevel() {
@@ -190,6 +191,8 @@ public class SokobanGame {
 		all.addAll(goals);
 		all.add(p);
 		all.addAll(boxes);
+		
+		sv.repaint();
 	}
 	
 	public void isFinished() {
