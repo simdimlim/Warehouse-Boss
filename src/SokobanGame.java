@@ -17,9 +17,7 @@ public class SokobanGame {
 	private boolean isComplete;
 	private int height;
 	private int width;
-	private ArrayList<SokobanObject> initWalls;
-	private ArrayList<SokobanObject> initBoxes;
-	private ArrayList<SokobanObject> initGoals;
+	private ArrayList<SokobanObject> initialBoxes;
 	
 //	private String level1 =
 //	          "   ###   \n"
@@ -38,9 +36,7 @@ public class SokobanGame {
 		goals = new ArrayList<SokobanObject>();
 		all = new ArrayList<SokobanObject>();
 		free = new ArrayList<SokobanObject>();
-		initWalls = new ArrayList<SokobanObject>();
-		initBoxes = new ArrayList<SokobanObject>();
-		initGoals = new ArrayList<SokobanObject>();
+		initialBoxes = new ArrayList<SokobanObject>();
 		isComplete = false;
 		height = 0;
 		width = 0;
@@ -177,32 +173,16 @@ public class SokobanGame {
 		all.add(p);
 		all.addAll(boxes);
 		
-		for (int i = 0; i < walls.size(); i++) {
-			Wall wall = (Wall) walls.get(i);
-			initWalls.add(wall.clone());
-		}
 	}
 	
 	public void restartLevel() {
 		all.clear();
-		walls.clear();
-		goals.clear();
 		boxes.clear();
 		
 		p = initialP.clone();
 		
-		for (int i = 0; i < initWalls.size(); i++) {
-			Wall wall = (Wall) initWalls.get(i);
-			walls.add(wall.clone());
-		}
-		
-		for (int i = 0; i < initGoals.size(); i++) {
-			Goal goal = (Goal) initGoals.get(i);
-			goals.add(goal.clone());
-		}
-		
-		for (int i = 0; i < initBoxes.size(); i++) {
-			Box box = (Box) initBoxes.get(i);
+		for (int i = 0; i < initialBoxes.size(); i++) {
+			Box box = (Box) initialBoxes.get(i);
 			boxes.add(box.clone());
 		}
 		
@@ -235,10 +215,7 @@ public class SokobanGame {
 		walls.clear();
 		boxes.clear();
 		free.clear();
-		goals.clear();
-		initWalls.clear();
-		initBoxes.clear();
-		initGoals.clear();
+		initialBoxes.clear();
 		if (isComplete) {
 			isComplete = false;
 		}
@@ -255,7 +232,6 @@ public class SokobanGame {
 	
 	public void placeGoals() {
 		goals.clear();
-		initGoals.clear();
 		
 		int goalNum = 0;
 		int i = 0;
@@ -271,7 +247,6 @@ public class SokobanGame {
 				free.remove(freeSpace);
 				Goal g = new Goal(freeSpace.x(), freeSpace.y());
 				goals.add(g);
-				initGoals.add(g.clone());
 				goalNum++;
 				if (goalNum == 3) {
 					break;
@@ -305,7 +280,7 @@ public class SokobanGame {
 				free.remove(freeSpace);
 				Box b = new Box(freeSpace.x(), freeSpace.y());
 				boxes.add(b);
-				initBoxes.add(b.clone());
+				initialBoxes.add(b.clone());
 				boxNum++;
 				if (boxNum == 3) {
 					break;
@@ -486,7 +461,6 @@ public class SokobanGame {
 				rX++;
 			} else if (element == '#') {
 				walls.add(new Wall(rX, rY));
-				initWalls.add(new Wall(rX, rY));
 				for (Iterator<SokobanObject> iterator = free.iterator(); iterator.hasNext();) {
 				    SokobanObject freeObj = iterator.next();
 				    if (freeObj.x() == rX && freeObj.y() == rY) {
