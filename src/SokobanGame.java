@@ -45,46 +45,7 @@ public class SokobanGame {
 		height = 0;
 		width = 0;
 		sv = new SokobanView(this);
-		generatePrototype();
-//		generateLevel(level1);
-	}
-	
-	public void generateLevel(String level) {		
-		int x = 0;
-		int y = 0;
-		
-		for (int i = 0; i < level.length(); i++) {
-			char element = level.charAt(i);
-			
-			if (element == '\n') {
-				y++;
-				if (width < x) {
-					width = x;
-				}
-				x = 0;
-				continue;
-			} else if (element == '#') {
-				Wall wall = new Wall(x, y);
-				walls.add(wall);
-			} else if (element == '$') {
-				Box box = new Box(x, y);
-				boxes.add(box);
-			} else if (element == '.') {
-				Goal goal = new Goal(x, y);
-				goals.add(goal);
-			} else if (element == '@') {
-				p = new Player(x, y);
-			} else if (element == ' ') {
-				SokobanObject freeSpace = new SokobanObject(x, y);
-				free.add(freeSpace);
-			}
-			x++;
-		}
-		height = y;
-//		all.addAll(goals);
-//		all.addAll(walls);
-//		all.add(p);
-//		all.addAll(boxes);
+		generateLevel();
 	}
 	
 	public Player getPlayer() {
@@ -199,207 +160,16 @@ public class SokobanGame {
 		return false;
 	}
 	
-	private void generatePrototype() {		
-		String prototype =
-		          "########\n"
-				+ "#  ##  #\n"
-		        + "#      #\n"
-		        + "#  ##  #\n"
-		        + "#      #\n"
-		        + "########\n"
-		        + "########\n"
-		        + "########\n";
+	private void generateLevel() {	
 		
-		String template1 = 
-				  "  \n"
-				+ "  \n"
-		        + "  \n";
-		int t1Width = 2;
-		int t1Height = 3;
-		generateLevel(prototype);
+		initialisePrototype();
+		placeTemplate1();
+		placeTemplate2();
+		placeTemplate3();
 		
-		Random rng = new Random();
-		int rX = 0;
-		int rY = 0;
-		while (rX == 0) {
-			rX = rng.nextInt(width-t1Width);
-		}
-		
-		if (rX == 1 || rX == 5) {
-			while (rY < 1 || rY > 4) {
-				rY = rng.nextInt(height-t1Height);
-			}
-		} else if (rX > 1 && rX < 5) {
-			rY = 4;
-		}
-		
-		int initRX = rX;
-		
-		for (int i = 0; i < template1.length(); i++) {
-			char element = template1.charAt(i);
-			if (element == '\n') {
-				rX = initRX;
-				rY++;
-			} else if (element == ' ') {
-				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
-				    Wall wall = (Wall) iterator.next();
-				    if (wall.x() == rX && wall.y() == rY) {
-				    	free.add((SokobanObject) wall);
-				    	iterator.remove();
-				    }
-				}
-				rX++;
-			}
-		}
-		
-		String template2 = 
-				  "  \n"
-				+ "  \n";
-		int t2Width = 2;
-		int t2Height = 2;
-		
-		rX = 0;
-		rY = 0;
-		
-		while (rX == 0) {
-			rX = rng.nextInt(width-t2Width);
-		}
-		
-		if (rX == 1 || rX == 5) {
-			while (rY < 1 || rY > 4) {
-				rY = rng.nextInt(height-t2Height);
-			}
-		} else if (rX > 1 && rX < 5) {
-			while (rY < 4 || rY > 5) {
-				rY = rng.nextInt(height-t2Height);
-			}
-		}
-		
-		initRX = rX;
-		
-		for (int i = 0; i < template2.length(); i++) {
-			char element = template2.charAt(i);
-			if (element == '\n') {
-				rX = initRX;
-				rY++;
-			} else if (element == ' ') {
-				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
-				    Wall wall = (Wall) iterator.next();
-				    if (wall.x() == rX && wall.y() == rY) {
-				    	free.add((SokobanObject) wall);
-				    	iterator.remove();
-				    }
-				}
-				rX++;
-			}
-		}
-		
-		String template3 =
-				  "   \n"
-				+ " # \n"
-				+ "   \n";
-		
-		int t3Width = 3;
-		int t3Height = 3;
-		
-		rX = 0;
-		rY = 0;
-		
-		while (rX == 0) {
-			rX = rng.nextInt(width-t3Width);
-		}
-		
-		if (rX == 1 || rX == 4) {
-			while (rY < 1 || rY > 4) {
-				rY = rng.nextInt(height-t3Height);
-			}
-		} else if (rX > 1 && rX < 5) {
-			rY = 4;
-		}
-		
-		initRX = rX;
-		
-		for (int i = 0; i < template3.length(); i++) {
-			char element = template3.charAt(i);
-			if (element == '\n') {
-				rX = initRX;
-				rY++;
-			} else if (element == ' ') {
-				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
-				    Wall wall = (Wall) iterator.next();
-				    if (wall.x() == rX && wall.y() == rY) {
-				    	free.add((SokobanObject) wall);
-				    	iterator.remove();
-				    }
-				}
-				rX++;
-			} else if (element == '#') {
-				walls.add(new Wall(rX, rY));
-				initWalls.add(new Wall(rX, rY));
-				for (Iterator<SokobanObject> iterator = free.iterator(); iterator.hasNext();) {
-				    SokobanObject freeObj = iterator.next();
-				    if (freeObj.x() == rX && freeObj.y() == rY) {
-				    	iterator.remove();
-				    }
-				}
-				rX++;
-			}
-		}
-		
-		rX = 0;
-		rY = 0;
-		
-		SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
-		free.remove(freeSpace);
-		p = new Player(freeSpace.x(), freeSpace.y());
-		initialP = p.clone();
-		
-		boolean validPos = false;
-		int boxNum = 0;
-		
-		while (boxNum < 3) {
-			while (!validPos) {
-				freeSpace = free.get(rng.nextInt(free.size()));
-				if (hitWall(freeSpace, up)) {
-					
-				} else if (hitWall(freeSpace, right)) {
-					
-				} else if (hitWall(freeSpace, down)) {
-					
-				} else if (hitWall(freeSpace, left)) {
-					
-				} else {
-					validPos = true;
-					free.remove(freeSpace);
-					Box b = new Box(freeSpace.x(), freeSpace.y());
-					boxes.add(b);
-					initBoxes.add(b.clone());
-					boxNum++;
-				}
-			}
-			validPos = false;
-		}
-		
-		int goalNum = 0;
-		
-		while (goalNum < 3) {
-			while (!validPos) {
-				freeSpace = free.get(rng.nextInt(free.size()));
-				if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
-				
-				} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
-					
-				} else {
-					validPos = true;
-					free.remove(freeSpace);
-					Goal g = new Goal(freeSpace.x(), freeSpace.y());
-					goals.add(g);
-					initGoals.add(g.clone());
-					goalNum++;
-				}
-			}
-			validPos = false;
-		}
+		placePlayer();
+		placeBoxes();
+		placeGoals();
 		
 		all.clear();
 		all.addAll(walls);
@@ -436,9 +206,6 @@ public class SokobanGame {
 			boxes.add(box.clone());
 		}
 		
-		walls.addAll(walls);
-		goals.addAll(goals);
-		boxes.addAll(boxes);
 		all.addAll(walls);
 		all.addAll(goals);
 		all.add(p);
@@ -459,6 +226,7 @@ public class SokobanGame {
 		}
 		if (goalsReached == numGoals) {
 			isComplete = true;
+			newLevel();
 		}
 	}
 	
@@ -471,8 +239,262 @@ public class SokobanGame {
 		initWalls.clear();
 		initBoxes.clear();
 		initGoals.clear();
-		isComplete = false;
-		generatePrototype();
-		System.out.println("new level");
+		if (isComplete) {
+			isComplete = false;
+		}
+		generateLevel();
+	}
+	
+	public void placePlayer() {
+		Random rng = new Random();
+		SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
+		free.remove(freeSpace);
+		p = new Player(freeSpace.x(), freeSpace.y());
+		initialP = p.clone();
+	}
+	
+	public void placeGoals() {
+		goals.clear();
+		initGoals.clear();
+		
+		int goalNum = 0;
+		int i = 0;
+		Random rng = new Random();
+		
+		while (goalNum < 3 && i < 1000) {
+			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
+			if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
+			
+			} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
+				
+			} else {
+				free.remove(freeSpace);
+				Goal g = new Goal(freeSpace.x(), freeSpace.y());
+				goals.add(g);
+				initGoals.add(g.clone());
+				goalNum++;
+				if (goalNum == 3) {
+					break;
+				}
+			}
+			i++;
+		}
+		
+		if (goalNum < 3) {
+			newLevel();
+		}
+	}
+	
+	public void placeBoxes() {
+		int boxNum = 0;
+		int i = 0;
+		Random rng = new Random();
+		
+		while (boxNum < 3 && i < 1000) {
+			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
+			
+			if (hitWall(freeSpace, up)) {
+				
+			} else if (hitWall(freeSpace, right)) {
+				
+			} else if (hitWall(freeSpace, down)) {
+				
+			} else if (hitWall(freeSpace, left)) {
+				
+			} else {
+				free.remove(freeSpace);
+				Box b = new Box(freeSpace.x(), freeSpace.y());
+				boxes.add(b);
+				initBoxes.add(b.clone());
+				boxNum++;
+				if (boxNum == 3) {
+					break;
+				}
+			}
+			i++;
+		}
+		
+		if (boxNum < 3) {
+			newLevel();
+		}
+	}
+	
+	public void initialisePrototype() {
+		String prototype =
+		          "########\n"
+				+ "#  ##  #\n"
+		        + "#      #\n"
+		        + "#  ##  #\n"
+		        + "#      #\n"
+		        + "########\n"
+		        + "########\n"
+		        + "########\n";
+		
+		int x = 0;
+		int y = 0;
+		
+		for (int i = 0; i < prototype.length(); i++) {
+			char element = prototype.charAt(i);
+			
+			if (element == '\n') {
+				y++;
+				if (width < x) {
+					width = x;
+				}
+				x = 0;
+				continue;
+			} else if (element == '#') {
+				Wall wall = new Wall(x, y);
+				walls.add(wall);
+			} else if (element == ' ') {
+				SokobanObject freeSpace = new SokobanObject(x, y);
+				free.add(freeSpace);
+			}
+			x++;
+		}
+		height = y;
+	}
+	
+	public void placeTemplate1() {
+		String template1 = 
+				  "  \n"
+				+ "  \n"
+		        + "  \n";
+		int t1Width = 2;
+		int t1Height = 3;
+		
+		Random rng = new Random();
+		int rX = 0;
+		int rY = 0;
+		while (rX == 0) {
+			rX = rng.nextInt(width-t1Width);
+		}
+		
+		if (rX == 1 || rX == 5) {
+			while (rY < 1 || rY > 4) {
+				rY = rng.nextInt(height-t1Height);
+			}
+		} else if (rX > 1 && rX < 5) {
+			rY = 4;
+		}
+		
+		int initRX = rX;
+		
+		for (int i = 0; i < template1.length(); i++) {
+			char element = template1.charAt(i);
+			if (element == '\n') {
+				rX = initRX;
+				rY++;
+			} else if (element == ' ') {
+				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
+				    Wall wall = (Wall) iterator.next();
+				    if (wall.x() == rX && wall.y() == rY) {
+				    	free.add((SokobanObject) wall);
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			}
+		}
+	}
+	
+	public void placeTemplate2() {
+		String template2 = 
+				  "  \n"
+				+ "  \n";
+		int t2Width = 2;
+		int t2Height = 2;
+		
+		Random rng = new Random();
+		int rX = 0;
+		int rY = 0;
+		
+		while (rX == 0) {
+			rX = rng.nextInt(width-t2Width);
+		}
+		
+		if (rX == 1 || rX == 5) {
+			while (rY < 1 || rY > 4) {
+				rY = rng.nextInt(height-t2Height);
+			}
+		} else if (rX > 1 && rX < 5) {
+			while (rY < 4 || rY > 5) {
+				rY = rng.nextInt(height-t2Height);
+			}
+		}
+		
+		int initRX = rX;
+		
+		for (int i = 0; i < template2.length(); i++) {
+			char element = template2.charAt(i);
+			if (element == '\n') {
+				rX = initRX;
+				rY++;
+			} else if (element == ' ') {
+				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
+				    Wall wall = (Wall) iterator.next();
+				    if (wall.x() == rX && wall.y() == rY) {
+				    	free.add((SokobanObject) wall);
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			}
+		}
+	}
+	
+	public void placeTemplate3() {
+		String template3 =
+				  "   \n"
+				+ " # \n"
+				+ "   \n";
+		
+		int t3Width = 3;
+		int t3Height = 3;
+		
+		Random rng = new Random();
+		int rX = 0;
+		int rY = 0;
+		
+		while (rX == 0) {
+			rX = rng.nextInt(width-t3Width);
+		}
+		
+		if (rX == 1 || rX == 4) {
+			while (rY < 1 || rY > 4) {
+				rY = rng.nextInt(height-t3Height);
+			}
+		} else if (rX > 1 && rX < 5) {
+			rY = 4;
+		}
+		
+		int initRX = rX;
+		
+		for (int i = 0; i < template3.length(); i++) {
+			char element = template3.charAt(i);
+			if (element == '\n') {
+				rX = initRX;
+				rY++;
+			} else if (element == ' ') {
+				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
+				    Wall wall = (Wall) iterator.next();
+				    if (wall.x() == rX && wall.y() == rY) {
+				    	free.add((SokobanObject) wall);
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			} else if (element == '#') {
+				walls.add(new Wall(rX, rY));
+				initWalls.add(new Wall(rX, rY));
+				for (Iterator<SokobanObject> iterator = free.iterator(); iterator.hasNext();) {
+				    SokobanObject freeObj = iterator.next();
+				    if (freeObj.x() == rX && freeObj.y() == rY) {
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			}
+		}
 	}
 }
