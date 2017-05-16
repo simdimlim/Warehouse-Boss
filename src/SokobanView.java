@@ -19,9 +19,6 @@ public class SokobanView extends JPanel {
 	}
 	
 	public void paintLevel(Graphics g) {
-		if (sg.isComplete()) {
-			return;
-		}
 		ArrayList<SokobanObject> all = sg.getAll();
 		
 		for (int i = 0; i < all.size(); i++) {
@@ -46,6 +43,10 @@ public class SokobanView extends JPanel {
 				g.setColor(Color.DARK_GRAY);
 				g.fillRect(x, y, SIZE, SIZE);
 			}
+		}
+		
+		if (sg.isComplete()) {
+			System.out.println("Congratulations!");
 		}
 	}
 	

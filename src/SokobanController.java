@@ -57,6 +57,8 @@ public class SokobanController implements KeyListener {
 		} else if (key == KeyEvent.VK_R) {
 			sb.restartLevel();
 //			System.out.println("R");
+		} else if (key == KeyEvent.VK_N) {
+			sb.newLevel();
 		}
 		sv.repaint();
     }

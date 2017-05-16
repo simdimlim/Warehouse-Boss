@@ -49,7 +49,7 @@ public class SokobanGame {
 //		generateLevel(level1);
 	}
 	
-	public void generateLevel(String level) {
+	public void generateLevel(String level) {		
 		int x = 0;
 		int y = 0;
 		
@@ -95,10 +95,6 @@ public class SokobanGame {
 		return sv;
 	}
 	
-	public void changeIsComplete(boolean b) {
-		isComplete = b;
-	}
-	
 	public boolean isComplete() {
 		return isComplete;
 	}
@@ -113,20 +109,6 @@ public class SokobanGame {
 	
 	public ArrayList<SokobanObject> getAll() {
 		return all;
-	}
-	
-	public boolean canPush(SokobanObject p,SokobanObject b, Direction dir){
-		if (p.x() == b.x() && p.y() == b.y()){
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isPushing(SokobanObject p,SokobanObject b){
-		if (p.x() == b.x() && p.y() == b.y()){
-			return true;
-		}
-		return false;
 	}
 	
 	public boolean hitWall(SokobanObject obj, Direction d) {
@@ -169,6 +151,7 @@ public class SokobanGame {
 					}
 				}
 				box.move(left);
+				isFinished();
 			} else if (p.collidesWith(box, right) && d == right) {
 				for (int j = 0; j < boxes.size(); j++) {
 					Box otherBox = (Box) boxes.get(j);
@@ -182,6 +165,7 @@ public class SokobanGame {
 					}
 				}
 				box.move(right);
+				isFinished();
 			} else if (p.collidesWith(box, up) && d == up) {
 				for (int j = 0; j < boxes.size(); j++) {
 					Box otherBox = (Box) boxes.get(j);
@@ -195,6 +179,7 @@ public class SokobanGame {
 					}
 				}
 				box.move(up);
+				isFinished();
 			} else if (p.collidesWith(box, down) && d == down) {
 				for (int j = 0; j < boxes.size(); j++) {
 					Box otherBox = (Box) boxes.get(j);
@@ -208,12 +193,13 @@ public class SokobanGame {
 					}
 				}
 				box.move(down);
+				isFinished();
 			}
 		}
 		return false;
 	}
 	
-	private void generatePrototype() {
+	private void generatePrototype() {		
 		String prototype =
 		          "########\n"
 				+ "#  ##  #\n"
@@ -457,6 +443,36 @@ public class SokobanGame {
 		all.addAll(goals);
 		all.add(p);
 		all.addAll(boxes);
-		
+	}
+	
+	public void isFinished() {
+		int goalsReached = 0;
+		int numGoals = goals.size();
+		for (int i = 0; i < boxes.size(); i++) {
+			Box box = (Box) boxes.get(i);
+			for (int j = 0; j < goals.size(); j++) {
+				Goal goal = (Goal) goals.get(j);
+				if (box.x() == goal.x() && box.y() == goal.y()) {
+					goalsReached++;
+				}
+			}
+		}
+		if (goalsReached == numGoals) {
+			isComplete = true;
+		}
+	}
+	
+	public void newLevel() {
+		all.clear();
+		walls.clear();
+		boxes.clear();
+		free.clear();
+		goals.clear();
+		initWalls.clear();
+		initBoxes.clear();
+		initGoals.clear();
+		isComplete = false;
+		generatePrototype();
+		System.out.println("new level");
 	}
 }
