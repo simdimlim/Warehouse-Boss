@@ -35,7 +35,6 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
-		SokobanView sv = sg.getSView();
 		if (action.equals("restart")) {
 			sg.restartLevel();
 		} else if (action.equals("new")) {

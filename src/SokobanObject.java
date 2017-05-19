@@ -1,7 +1,11 @@
+import java.awt.Image;
+
 public class SokobanObject implements Cloneable {
 
 	private int x;
 	private int y;
+	private Image img;
+	private int SIZE = 60;
 	
 	/**
 	 * Creates a new Object
@@ -12,7 +16,6 @@ public class SokobanObject implements Cloneable {
 	public SokobanObject (int x, int y){
 		this.x = x;
 		this.y = y;
-		
 	}
 
 	public int x() {
@@ -29,6 +32,14 @@ public class SokobanObject implements Cloneable {
 	
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public Image getImage() {
+		return img;
+	}
+	
+	public void setImage(Image img) {
+		this.img = img.getScaledInstance(SIZE, SIZE, Image.SCALE_SMOOTH);
 	}
 	
 	public boolean collidesWith(SokobanObject obj, Direction d) {

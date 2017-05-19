@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.*;
 
 import javax.swing.*;
@@ -27,8 +28,9 @@ public class SokobanView extends JPanel {
 			int y = obj.y()*SIZE;
 			
 			if (obj instanceof Player) {
-				g.setColor(Color.CYAN);
-				g.fillOval(x, y, SIZE, SIZE);
+//				g.setColor(Color.CYAN);
+//				g.fillOval(x, y, SIZE, SIZE);
+				g.drawImage(obj.getImage(), x, y, this);
 			} else if (obj instanceof Box) {
 				g.setColor(Color.ORANGE);
 				g.fillRect(x, y, SIZE, SIZE);
@@ -42,6 +44,7 @@ public class SokobanView extends JPanel {
 			} else if (obj instanceof Wall) {
 				g.setColor(Color.DARK_GRAY);
 				g.fillRect(x, y, SIZE, SIZE);
+//				g.drawImage(obj.getImage(), x, y, this);
 			}
 		}
 		
