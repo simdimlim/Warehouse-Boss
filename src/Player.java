@@ -3,9 +3,10 @@ import javax.swing.ImageIcon;
 
 public class Player extends SokobanObject {
 	
+	private Image image;
 	public Player (int x, int y){
 		super(x, y);
-		Image image = new ImageIcon(this.getClass().getResource("/images/player.png")).getImage();
+		image = new ImageIcon(this.getClass().getResource("/images/player.png")).getImage();
 		this.setImage(image);
 	}
 	public void move (Direction dir){

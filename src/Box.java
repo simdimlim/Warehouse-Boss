@@ -1,7 +1,13 @@
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 public class Box extends SokobanObject{
-		
+	
+	private Image image;
 	public Box (int x, int y){
-		super(x, y);		
+		super(x, y);
+		image = new ImageIcon(this.getClass().getResource("/images/box.jpg")).getImage();
+		this.setImage(image);
 	}
 	public void move (Direction dir){
 		switch(dir){

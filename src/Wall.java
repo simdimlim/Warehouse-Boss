@@ -3,10 +3,11 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Wall extends SokobanObject{
-
+	
+	private Image image;
 	public Wall (int x, int y){
 		super(x, y);
-		Image image = new ImageIcon(this.getClass().getResource("/images/wall.png")).getImage();
+		image = new ImageIcon(this.getClass().getResource("/images/wall.jpg")).getImage();
 		this.setImage(image);
 	}
 	
