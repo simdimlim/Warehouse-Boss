@@ -27,24 +27,12 @@ public class SokobanView extends JPanel {
 			int y = obj.y()*SIZE;
 			
 			if (obj instanceof Player) {
-//				g.setColor(Color.CYAN);
-//				g.fillOval(x, y, SIZE, SIZE);
 				g.drawImage(obj.getImage(), x, y, this);
 			} else if (obj instanceof Box) {
-//				g.setColor(Color.ORANGE);
-//				g.fillRect(x, y, SIZE, SIZE);
-//				g.setColor(Color.BLACK);
-//				g.drawRect(x, y, SIZE, SIZE);
-//				g.drawLine(x, y, x+SIZE, y+SIZE);
-//				g.drawLine(x+SIZE, y, x, y+SIZE);
 				g.drawImage(obj.getImage(), x, y, this);
 			} else if (obj instanceof Goal) {
-//				g.setColor(Color.GREEN);
-//				g.fillRect(x, y, SIZE, SIZE);
 				g.drawImage(obj.getImage(), x, y, this);
 			} else if (obj instanceof Wall) {
-//				g.setColor(Color.DARK_GRAY);
-//				g.fillRect(x, y, SIZE, SIZE);
 				g.drawImage(obj.getImage(), x, y, this);
 			}
 		}

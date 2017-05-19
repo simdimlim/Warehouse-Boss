@@ -1,5 +1,7 @@
 import java.util.*;
 
+import com.sun.jmx.snmp.SnmpMsg;
+
 public class SokobanGame {
 	
 	private ArrayList<SokobanObject> walls;
@@ -18,6 +20,7 @@ public class SokobanGame {
 	private int height;
 	private int width;
 	private ArrayList<SokobanObject> initialBoxes;
+	public int count =0;
 	
 //	private String level1 =
 //	          "   ###   \n"
@@ -158,19 +161,27 @@ public class SokobanGame {
 	
 	private void generateLevel() {	
 		
-		initialisePrototype();
-		for(int i=0;i<3;i++){
-			int x = getRandArrayElement(); 
-			if(x==1) placeTemplate1();
-			else if(x==2) placeTemplate2();
-			else if(x==3) placeTemplate3();
+		if(count<4) {
+			initialisePrototype1();
+			placeTemplates();
+			placePlayer();
+			placeBoxes(3);
+			placeGoals(3);
 		}
-//		placeTemplate1();
-//		placeTemplate2();
-//		placeTemplate3();
-		placePlayer();
-		placeBoxes();
-		placeGoals();
+		else if (count>4 && count<8) {
+			initialisePrototype2();
+			placeTemplates();
+			placePlayer();
+			placeBoxes(4);
+			placeGoals(4);
+		}
+		else if (count>=8) {
+			initialisePrototype3();
+			placeTemplates();
+			placePlayer();
+			placeBoxes(5);
+			placeGoals(5);
+		}
 		
 		all.clear();
 		all.addAll(walls);
@@ -179,6 +190,15 @@ public class SokobanGame {
 		all.addAll(boxes);
 		
 		sv.repaint();
+		count++;
+	}
+	private void placeTemplates(){
+		for(int i=0;i<3;i++){
+			int x = getRandArrayElement(); 
+			if(x==1) placeTemplate1();
+			else if(x==2) placeTemplate2();
+			else if(x==3) placeTemplate3();
+		}
 	}
 
     private int[] items = new int[]{1,2,3};
@@ -224,6 +244,12 @@ public class SokobanGame {
 		}
 	}
 	
+	public void checkY(){
+		if(p.y()<0){
+			newLevel();
+		}
+	}
+	
 	public void newLevel() {
 		all.clear();
 		walls.clear();
@@ -244,14 +270,14 @@ public class SokobanGame {
 		initialP = p.clone();
 	}
 	
-	public void placeGoals() {
+	public void placeGoals(int n) {
 		goals.clear();
 		
 		int goalNum = 0;
 		int i = 0;
 		Random rng = new Random();
 		
-		while (goalNum < 3 && i < 1000) {
+		while (goalNum < n && i < 1000) {
 			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
 			if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
 			
@@ -262,24 +288,24 @@ public class SokobanGame {
 				Goal g = new Goal(freeSpace.x(), freeSpace.y());
 				goals.add(g);
 				goalNum++;
-				if (goalNum == 3) {
+				if (goalNum == n) {
 					break;
 				}
 			}
 			i++;
 		}
 		
-		if (goalNum < 3) {
+		if (goalNum < n) {
 			newLevel();
 		}
 	}
 	
-	public void placeBoxes() {
+	public void placeBoxes(int n) {
 		int boxNum = 0;
 		int i = 0;
 		Random rng = new Random();
 		
-		while (boxNum < 3 && i < 1000) {
+		while (boxNum < n && i < 1000) {
 			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
 			
 			if (hitWall(freeSpace, up)) {
@@ -296,19 +322,19 @@ public class SokobanGame {
 				boxes.add(b);
 				initialBoxes.add(b.clone());
 				boxNum++;
-				if (boxNum == 3) {
+				if (boxNum == n) {
 					break;
 				}
 			}
 			i++;
 		}
 		
-		if (boxNum < 3) {
+		if (boxNum < n) {
 			newLevel();
 		}
 	}
 	
-	public void initialisePrototype() {
+	public void initialisePrototype1() {
 		String prototype =
 		          "########\n"
 				+ "#  ##  #\n"
@@ -318,6 +344,79 @@ public class SokobanGame {
 		        + "########\n"
 		        + "########\n"
 		        + "########\n";
+		
+		int x = 0;
+		int y = 0;
+		
+		for (int i = 0; i < prototype.length(); i++) {
+			char element = prototype.charAt(i);
+			
+			if (element == '\n') {
+				y++;
+				if (width < x) {
+					width = x;
+				}
+				x = 0;
+				continue;
+			} else if (element == '#') {
+				Wall wall = new Wall(x, y);
+				walls.add(wall);
+			} else if (element == ' ') {
+				SokobanObject freeSpace = new SokobanObject(x, y);
+				free.add(freeSpace);
+			}
+			x++;
+		}
+		height = y;
+	}
+	public void initialisePrototype2() {
+		String prototype =
+		          "#############\n"
+				+ "#  ##      ##\n"
+		        + "#           #\n"
+		        + "#  ##    ####\n"
+		        + "#           #\n"
+		        + "#############\n"
+		        + "#############\n"
+		        + "#############\n";
+		
+		int x = 0;
+		int y = 0;
+		
+		for (int i = 0; i < prototype.length(); i++) {
+			char element = prototype.charAt(i);
+			
+			if (element == '\n') {
+				y++;
+				if (width < x) {
+					width = x;
+				}
+				x = 0;
+				continue;
+			} else if (element == '#') {
+				Wall wall = new Wall(x, y);
+				walls.add(wall);
+			} else if (element == ' ') {
+				SokobanObject freeSpace = new SokobanObject(x, y);
+				free.add(freeSpace);
+			}
+			x++;
+		}
+		height = y;
+	}
+	public void initialisePrototype3() {
+		String prototype =
+		          "##########################\n"
+		  		+ "##########################\n"
+				+ "#  ##                   ##\n"
+		        + "#                        #\n"
+		        + "#  ##    ##          #####\n"
+		        + "#             ##         #\n"
+		        + "#                        #\n"
+		        + "########      #####      #\n"
+		        + "######          ######   #\n"
+		        + "######                   #\n"
+		        + "##########################\n";
 		
 		int x = 0;
 		int y = 0;
