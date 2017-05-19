@@ -159,10 +159,15 @@ public class SokobanGame {
 	private void generateLevel() {	
 		
 		initialisePrototype();
-		placeTemplate1();
-		placeTemplate2();
-		placeTemplate3();
-		
+		for(int i=0;i<3;i++){
+			int x = getRandArrayElement(); 
+			if(x==1) placeTemplate1();
+			else if(x==2) placeTemplate2();
+			else if(x==3) placeTemplate3();
+		}
+//		placeTemplate1();
+//		placeTemplate2();
+//		placeTemplate3();
 		placePlayer();
 		placeBoxes();
 		placeGoals();
@@ -175,7 +180,13 @@ public class SokobanGame {
 		
 		sv.repaint();
 	}
-	
+
+    private int[] items = new int[]{1,2,3};
+    private Random rand = new Random();
+    public int getRandArrayElement(){
+        return items[rand.nextInt(items.length)];
+    }
+    
 	public void restartLevel() {
 		all.clear();
 		boxes.clear();
