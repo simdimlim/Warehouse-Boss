@@ -6,11 +6,14 @@ import javax.swing.*;
 public class SokobanView extends JPanel {
 	private int SIZE = 60;
 	private SokobanGame sg;
+	private Image boxOnGoal;
 	
 	public SokobanView(SokobanGame sg) {
 		this.sg = sg;
 		addKeyListener(new SokobanController(sg, this));
 		setFocusable(true);
+		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
+		boxOnGoal = new ImageIcon(boxOnGoal.getScaledInstance(SIZE, SIZE, Image.SCALE_SMOOTH)).getImage();
 	}
 	
 	public void paint(Graphics g) {
@@ -29,7 +32,11 @@ public class SokobanView extends JPanel {
 			if (obj instanceof Player) {
 				g.drawImage(obj.getImage(), x, y, this);
 			} else if (obj instanceof Box) {
-				g.drawImage(obj.getImage(), x, y, this);
+				if (sg.isBoxOnGoal(obj)) {
+					g.drawImage(boxOnGoal, x, y, SIZE, SIZE, this);
+				} else {
+					g.drawImage(obj.getImage(), x, y, this);
+				}
 			} else if (obj instanceof Goal) {
 				g.drawImage(obj.getImage(), x, y, this);
 			} else if (obj instanceof Wall) {

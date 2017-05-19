@@ -262,6 +262,16 @@ public class SokobanGame {
 		generateLevel();
 	}
 	
+	public boolean isBoxOnGoal(SokobanObject obj) {
+		for (int i = 0; i < goals.size(); i++) {
+			Goal g = (Goal) goals.get(i);
+			if (obj.x() == g.x() && obj.y() == g.y()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void placePlayer() {
 		Random rng = new Random();
 		SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
