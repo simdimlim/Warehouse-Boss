@@ -168,7 +168,7 @@ public class SokobanGame {
 			placeBoxes(3);
 			placeGoals(3);
 		}
-		else if (count>4 && count<8) {
+		else if (count>=4 && count<8) {
 			initialisePrototype2();
 			placeTemplates();
 			placePlayer();
