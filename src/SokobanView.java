@@ -46,7 +46,7 @@ public class SokobanView extends JPanel {
 		
 		if (sg.isComplete()) {
 			g.setColor(Color.WHITE);
-			g.drawString("Congratulations!", sg.getWidth()*SIZE-130, 30);
+			g.drawString("Congratulations!", 30, 30);
 		}
 	}
 	
