@@ -4,6 +4,10 @@ import java.util.*;
 import javax.swing.*;
 
 public class SokobanView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int SIZE = 60;
 	private SokobanGame sg;
 	private Image boxOnGoal;
@@ -46,7 +50,23 @@ public class SokobanView extends JPanel {
 		
 		if (sg.isComplete()) {
 			g.setColor(Color.WHITE);
-			g.drawString("Congratulations!", 30, 30);
+			g.drawString("Congratulations! ", 30, 30);
+			int countdown = 1;
+			try{
+		        while (countdown < 5){
+		            ++countdown;
+					Thread.sleep(1000);
+				}
+			}
+			catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            
+				
+			sg.newLevel();	
+	        
+			
 		}
 	}
 	
