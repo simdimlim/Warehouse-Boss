@@ -27,7 +27,7 @@ public class SokobanView extends JPanel {
 	
 	public void paintLevel(Graphics g) {
 		ArrayList<SokobanObject> all = sg.getAll();
-
+		
 		for (int i = 0; i < all.size(); i++) {
 			SokobanObject obj = all.get(i);
 			int x = obj.x()*SIZE;
@@ -51,22 +51,19 @@ public class SokobanView extends JPanel {
 		if (sg.isComplete()) {
 			g.setColor(Color.WHITE);
 			g.drawString("Congratulations! ", 30, 30);
-			int countdown = 1;
-			try{
-		        while (countdown < 5){
-		            ++countdown;
-					Thread.sleep(1000);
-				}
-			}
-			catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	            
-				
-			sg.newLevel();	
-	        
 			
+			Thread newLevelDelay = new Thread(new Runnable() {
+			    public void run() {
+		            try {
+		                Thread.sleep(1500);
+		                sg.newLevel();
+		            } catch (InterruptedException e) {
+		                e.printStackTrace();
+		            }
+			    }
+			});
+			
+			newLevelDelay.start();
 		}
 	}
 	
