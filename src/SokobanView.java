@@ -23,7 +23,7 @@ public class SokobanView extends JPanel {
 	
 	public void paintLevel(Graphics g) {
 		ArrayList<SokobanObject> all = sg.getAll();
-		
+
 		for (int i = 0; i < all.size(); i++) {
 			SokobanObject obj = all.get(i);
 			int x = obj.x()*SIZE;
@@ -45,7 +45,8 @@ public class SokobanView extends JPanel {
 		}
 		
 		if (sg.isComplete()) {
-			System.out.println("Congratulations!");
+			g.setColor(Color.WHITE);
+			g.drawString("Congratulations!", sg.getWidth()*SIZE-130, 30);
 		}
 	}
 	

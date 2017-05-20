@@ -240,7 +240,7 @@ public class SokobanGame {
 		}
 		if (goalsReached == numGoals) {
 			isComplete = true;
-			newLevel();
+//			newLevel();
 		}
 	}
 	
