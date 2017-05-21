@@ -8,7 +8,7 @@ public class SokobanView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int SIZE = 60;
+	public int size = 60;
 	private SokobanGame sg;
 	private Image boxOnGoal;
 	
@@ -17,7 +17,7 @@ public class SokobanView extends JPanel {
 		addKeyListener(new SokobanController(sg, this));
 		setFocusable(true);
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
-		boxOnGoal = new ImageIcon(boxOnGoal.getScaledInstance(SIZE, SIZE, Image.SCALE_SMOOTH)).getImage();
+		boxOnGoal = new ImageIcon(boxOnGoal.getScaledInstance(size, size, Image.SCALE_SMOOTH)).getImage();
 	}
 	
 	public void paint(Graphics g) {
@@ -30,21 +30,21 @@ public class SokobanView extends JPanel {
 		
 		for (int i = 0; i < all.size(); i++) {
 			SokobanObject obj = all.get(i);
-			int x = obj.x()*SIZE;
-			int y = obj.y()*SIZE;
+			int x = obj.x()*size;
+			int y = obj.y()*size;
 			
 			if (obj instanceof Player) {
-				g.drawImage(obj.getImage(), x, y, this);
+				g.drawImage(obj.getImage(), x, y, size, size, this);
 			} else if (obj instanceof Box) {
 				if (sg.isBoxOnGoal(obj)) {
-					g.drawImage(boxOnGoal, x, y, SIZE, SIZE, this);
+					g.drawImage(boxOnGoal, x, y, size, size, this);
 				} else {
-					g.drawImage(obj.getImage(), x, y, this);
+					g.drawImage(obj.getImage(), x, y, size, size, this);
 				}
 			} else if (obj instanceof Goal) {
-				g.drawImage(obj.getImage(), x, y, this);
+				g.drawImage(obj.getImage(), x, y, size, size, this);
 			} else if (obj instanceof Wall) {
-				g.drawImage(obj.getImage(), x, y, this);
+				g.drawImage(obj.getImage(), x, y, size, size, this);
 			}
 		}
 		
@@ -69,5 +69,9 @@ public class SokobanView extends JPanel {
 	
 	public SokobanGame getGame() {
 		return sg;
+	}
+	
+	public void scale () {
+		size -= 10;
 	}
 }

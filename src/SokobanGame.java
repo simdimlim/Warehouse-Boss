@@ -168,6 +168,7 @@ public class SokobanGame {
 			placeGoals(3);
 		}
 		else if (count>=4 && count<8) {
+			if (count == 4) sv.scale();
 			initialisePrototype2();
 			placeTemplates();
 			placePlayer();
@@ -175,6 +176,7 @@ public class SokobanGame {
 			placeGoals(4);
 		}
 		else if (count>=8) {
+			if (count == 8) sv.scale();
 			initialisePrototype3();
 			placeTemplates();
 			placePlayer();
