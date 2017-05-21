@@ -46,6 +46,8 @@ public class SokobanView extends JPanel {
 				g.drawImage(obj.getImage(), x, y, size, size, this);
 			}
 		}
+		g.setColor(Color.WHITE);
+		g.drawString(String.valueOf(sg.turns)+ " moves", 400, 450);
 		
 		if (sg.isComplete()) {
 			g.setColor(Color.WHITE);

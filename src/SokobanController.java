@@ -25,7 +25,7 @@ public class SokobanController implements KeyListener {
 		Direction down = Direction.DOWN;
 		Direction left = Direction.LEFT;
 		Direction right = Direction.RIGHT;
-		
+		int dirPressed = 1;
 		if (key == KeyEvent.VK_UP) {
 			if (!sb.hitWall(p, up)) {
 				if (!sb.hitBox(up)) {
@@ -53,10 +53,13 @@ public class SokobanController implements KeyListener {
 		} else if (key == KeyEvent.VK_R) {
 			sb.restartLevel();
 			sb.count--;
+			dirPressed = 0;
 		} else if (key == KeyEvent.VK_N) {
 			sb.newLevel();
 			sb.count--;
+			dirPressed = 0;
 		}
+		if (dirPressed != 0) sb.turns++;
 		sb.checkY();
 		sv.repaint();
     }

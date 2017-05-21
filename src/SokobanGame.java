@@ -20,6 +20,7 @@ public class SokobanGame {
 	private int width;
 	private ArrayList<SokobanObject> initialBoxes;
 	public int count =0;
+	public int turns = 0;
 	
 //	private String level1 =
 //	          "   ###   \n"
@@ -226,7 +227,7 @@ public class SokobanGame {
 		all.addAll(goals);
 		all.add(p);
 		all.addAll(boxes);
-		
+		turns=0;
 		sv.repaint();
 	}
 	
@@ -263,6 +264,7 @@ public class SokobanGame {
 		if (isComplete) {
 			isComplete = false;
 		}
+		turns=0;
 		generateLevel();
 	}
 	
