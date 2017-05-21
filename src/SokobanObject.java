@@ -5,7 +5,6 @@ public class SokobanObject implements Cloneable {
 	private int x;
 	private int y;
 	private Image img;
-	private int SIZE = 60;
 	
 	/**
 	 * Creates a new Object
@@ -39,7 +38,7 @@ public class SokobanObject implements Cloneable {
 	}
 	
 	public void setImage(Image img) {
-		this.img = img.getScaledInstance(SIZE, SIZE, Image.SCALE_SMOOTH);
+		this.img = img;
 	}
 	
 	public boolean collidesWith(SokobanObject obj, Direction d) {

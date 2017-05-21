@@ -17,7 +17,6 @@ public class SokobanView extends JPanel {
 		addKeyListener(new SokobanController(sg, this));
 		setFocusable(true);
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
-		boxOnGoal = new ImageIcon(boxOnGoal.getScaledInstance(size, size, Image.SCALE_SMOOTH)).getImage();
 	}
 	
 	public void paint(Graphics g) {

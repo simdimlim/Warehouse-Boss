@@ -194,12 +194,15 @@ public class SokobanGame {
 		count++;
 	}
 	private void placeTemplates(){
-		for(int i=0;i<3;i++){
-			int x = getRandArrayElement(); 
-			if(x==1) placeTemplate1();
-			else if(x==2) placeTemplate2();
-			else if(x==3) placeTemplate3();
-		}
+//		for(int i=0;i<3;i++){
+//			int x = getRandArrayElement(); 
+//			if(x==1) placeTemplate1();
+//			else if(x==2) placeTemplate2();
+//			else if(x==3) placeTemplate3();
+//		}
+		placeTemplate1();
+		placeTemplate2();
+		placeTemplate3();
 	}
 
     private int[] items = new int[]{1,2,3};
