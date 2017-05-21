@@ -25,41 +25,41 @@ public class SokobanController implements KeyListener {
 		Direction down = Direction.DOWN;
 		Direction left = Direction.LEFT;
 		Direction right = Direction.RIGHT;
-		int dirPressed = 1;
 		if (key == KeyEvent.VK_UP) {
 			if (!sb.hitWall(p, up)) {
 				if (!sb.hitBox(up)) {
 					p.move(up);
+					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_RIGHT) {
 			if (!sb.hitWall(p, right)) {
 				if (!sb.hitBox(right)) {
 					p.move(right);
+					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_LEFT) {
 			if (!sb.hitWall(p, left)) {
 				if (!sb.hitBox(left)) {
 					p.move(left);
+					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_DOWN) {
 			if (!sb.hitWall(p, down)) {
 				if (!sb.hitBox(down)) {
 					p.move(down);
+					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_R) {
 			sb.restartLevel();
 			sb.count--;
-			dirPressed = 0;
 		} else if (key == KeyEvent.VK_N) {
 			sb.newLevel();
 			sb.count--;
-			dirPressed = 0;
 		}
-		if (dirPressed != 0) sb.turns++;
 		sb.checkY();
 		sv.repaint();
     }
