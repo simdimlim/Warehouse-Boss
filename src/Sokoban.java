@@ -2,7 +2,6 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Sokoban extends JFrame{
-	private int SIZE = 60;
 	
 	/**
 	 * Constructor for the Sokoban object
@@ -11,13 +10,15 @@ public class Sokoban extends JFrame{
 	public Sokoban() {
 		setLayout(new BorderLayout());
 		SokobanGame sg = new SokobanGame();
-		add(sg.getSView(), BorderLayout.CENTER);
+		SokobanView sv = sg.getSView();
+		add(sv, BorderLayout.CENTER);
 		ButtonPanel bp = new ButtonPanel(sg);
 		add(bp, BorderLayout.EAST);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle("Warehouse Boss");
-		getContentPane().setPreferredSize(new Dimension(sg.getWidth()*SIZE+110, sg.getHeight()*SIZE));
+		int size = sv.getTileSize();
+		getContentPane().setPreferredSize(new Dimension(sg.getWidth()*size+110, sg.getHeight()*size));
 		pack();
 	}
 	

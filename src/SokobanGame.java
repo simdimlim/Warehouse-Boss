@@ -19,19 +19,11 @@ public class SokobanGame {
 	private int height;
 	private int width;
 	private ArrayList<SokobanObject> initialBoxes;
-	public int count =0;
-	public int turns = 0;
+	private int level = 0;
+	private int moves = 0;
+	private boolean sleep = false;
+	private int RNG_BOUND = 1000;
 	
-//	private String level1 =
-//	          "   ###   \n"
-//			+ "  #####  \n"
-//	        + " ##  ##  \n"
-//	        + " #@$ ##  \n"
-//	        + " ##$ ### \n"
-//	        + " ## $ ## \n"
-//	        + " #.$  ## \n"
-//	        + " #.. .#  \n"
-//	        + " ######  \n";
 	
 	public SokobanGame() {
 		walls = new ArrayList<SokobanObject>();
@@ -45,6 +37,18 @@ public class SokobanGame {
 		width = 0;
 		sv = new SokobanView(this);
 		generateLevel();
+	}
+	
+	public boolean isSleeping() {
+		return sleep;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public void setSleeping(boolean b) {
+		sleep = b;
 	}
 	
 	public Player getPlayer() {
@@ -111,6 +115,7 @@ public class SokobanGame {
 					}
 				}
 				box.move(left);
+				moves++;
 				isFinished();
 			} else if (p.collidesWith(box, right) && d == right) {
 				for (int j = 0; j < boxes.size(); j++) {
@@ -125,6 +130,7 @@ public class SokobanGame {
 					}
 				}
 				box.move(right);
+				moves++;
 				isFinished();
 			} else if (p.collidesWith(box, up) && d == up) {
 				for (int j = 0; j < boxes.size(); j++) {
@@ -139,6 +145,7 @@ public class SokobanGame {
 					}
 				}
 				box.move(up);
+				moves++;
 				isFinished();
 			} else if (p.collidesWith(box, down) && d == down) {
 				for (int j = 0; j < boxes.size(); j++) {
@@ -153,6 +160,7 @@ public class SokobanGame {
 					}
 				}
 				box.move(down);
+				moves++;
 				isFinished();
 			}
 		}
@@ -161,28 +169,28 @@ public class SokobanGame {
 	
 	private void generateLevel() {	
 		
-		if(count<4) {
+		if (level < 5) {
 			initialisePrototype1();
-			placeTemplates();
+			placeTemplates(1);
 			placePlayer();
 			placeBoxes(3);
 			placeGoals(3);
 		}
-		else if (count>=4 && count<8) {
-			if (count == 4) sv.scale();
+		else if (level >= 5 && level < 10) {
 			initialisePrototype2();
-			placeTemplates();
+			placeTemplates(2);
 			placePlayer();
 			placeBoxes(4);
 			placeGoals(4);
+			sv.scale();
 		}
-		else if (count>=8) {
-			if (count == 8) sv.scale();
+		else if (level >= 10) {
 			initialisePrototype3();
-			placeTemplates();
+			placeTemplates(3);
 			placePlayer();
 			placeBoxes(5);
 			placeGoals(5);
+			sv.scale();
 		}
 		
 		all.clear();
@@ -192,18 +200,26 @@ public class SokobanGame {
 		all.addAll(boxes);
 		
 		sv.repaint();
-		count++;
+		level++;
+		sleep = false;
 	}
-	private void placeTemplates(){
-//		for(int i=0;i<3;i++){
-//			int x = getRandArrayElement(); 
-//			if(x==1) placeTemplate1();
-//			else if(x==2) placeTemplate2();
-//			else if(x==3) placeTemplate3();
-//		}
-		placeTemplate1();
-		placeTemplate2();
-		placeTemplate3();
+	
+	public void decrementLevel() {
+		if (level > 0) {
+			level--;
+		}
+	}
+	
+	private void placeTemplates(int prototype){
+		for(int i=0;i<3;i++){
+			int x = getRandArrayElement(); 
+			if(x==1) placeTemplate1(prototype);
+			else if(x==2) placeTemplate2(prototype);
+			else if(x==3) placeTemplate3(prototype);
+		}
+//		placeTemplate1();
+//		placeTemplate2();
+//		placeTemplate3();
 	}
 
     private int[] items = new int[]{1,2,3};
@@ -227,8 +243,12 @@ public class SokobanGame {
 		all.addAll(goals);
 		all.add(p);
 		all.addAll(boxes);
-		turns=0;
+		moves = 0;
 		sv.repaint();
+	}
+	
+	public int moveNum() {
+		return moves;
 	}
 	
 	public void isFinished() {
@@ -245,13 +265,6 @@ public class SokobanGame {
 		}
 		if (goalsReached == numGoals) {
 			isComplete = true;
-//			newLevel();
-		}
-	}
-	
-	public void checkY(){
-		if(p.y()<0){
-			newLevel();
 		}
 	}
 	
@@ -264,7 +277,7 @@ public class SokobanGame {
 		if (isComplete) {
 			isComplete = false;
 		}
-		turns=0;
+		moves = 0;
 		generateLevel();
 	}
 	
@@ -293,7 +306,7 @@ public class SokobanGame {
 		int i = 0;
 		Random rng = new Random();
 		
-		while (goalNum < n && i < 1000) {
+		while (goalNum < n && i < RNG_BOUND) {
 			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
 			if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
 			
@@ -321,7 +334,7 @@ public class SokobanGame {
 		int i = 0;
 		Random rng = new Random();
 		
-		while (boxNum < n && i < 1000) {
+		while (boxNum < n && i < RNG_BOUND) {
 			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
 			
 			if (hitWall(freeSpace, up)) {
@@ -387,14 +400,16 @@ public class SokobanGame {
 	}
 	public void initialisePrototype2() {
 		String prototype =
-		          "#############\n"
-				+ "#  ##      ##\n"
-		        + "#           #\n"
-		        + "#  ##    ####\n"
-		        + "#           #\n"
-		        + "#############\n"
-		        + "#############\n"
-		        + "#############\n";
+		          "##########\n"
+				+ "#  ##   ##\n"
+		        + "#        #\n"
+		        + "#  #  ####\n"
+		        + "#        #\n"
+		        + "##########\n"
+		        + "##########\n"
+		        + "##########\n"
+		        + "##########\n"
+		        + "##########\n";
 		
 		int x = 0;
 		int y = 0;
@@ -422,17 +437,22 @@ public class SokobanGame {
 	}
 	public void initialisePrototype3() {
 		String prototype =
-		          "##########################\n"
-		  		+ "##########################\n"
-				+ "#  ##                   ##\n"
-		        + "#                        #\n"
-		        + "#  ##    ##          #####\n"
-		        + "#             ##         #\n"
-		        + "#                        #\n"
-		        + "########      #####      #\n"
-		        + "######          ######   #\n"
-		        + "######                   #\n"
-		        + "##########################\n";
+		          "###############\n"
+		  		+ "###############\n"
+				+ "#  ##        ##\n"
+		        + "#             #\n"
+		        + "#  ##     #####\n"
+		        + "#    ##       #\n"
+		        + "#             #\n"
+		        + "####   ###    #\n"
+		        + "###    ###### #\n"
+		        + "####          #\n"
+		        + "###############\n"
+		        + "###############\n"
+		        + "###############\n"
+		        + "###############\n"
+		        + "###############\n"
+		        + "###############\n";
 		
 		int x = 0;
 		int y = 0;
@@ -459,13 +479,14 @@ public class SokobanGame {
 		height = y;
 	}
 	
-	public void placeTemplate1() {
+	public void placeTemplate1(int prototype) {
 		String template1 = 
 				  "  \n"
 				+ "  \n"
 		        + "  \n";
 		int t1Width = 2;
 		int t1Height = 3;
+		int boundY = 0;
 		
 		Random rng = new Random();
 		int rX = 0;
@@ -480,6 +501,15 @@ public class SokobanGame {
 			}
 		} else if (rX > 1 && rX < 5) {
 			rY = 4;
+		} else {
+			if (prototype == 2) {
+				boundY = 3;
+			} else if (prototype == 3) {
+				boundY = 8;
+			}
+			while (rY < 1 || rY > boundY) {
+				rY = rng.nextInt(height-t1Height);
+			}
 		}
 		
 		int initRX = rX;
@@ -502,7 +532,7 @@ public class SokobanGame {
 		}
 	}
 	
-	public void placeTemplate2() {
+	public void placeTemplate2(int prototype) {
 		String template2 = 
 				  "  \n"
 				+ "  \n";
@@ -512,6 +542,7 @@ public class SokobanGame {
 		Random rng = new Random();
 		int rX = 0;
 		int rY = 0;
+		int boundY = 0;
 		
 		while (rX == 0) {
 			rX = rng.nextInt(width-t2Width);
@@ -523,6 +554,15 @@ public class SokobanGame {
 			}
 		} else if (rX > 1 && rX < 5) {
 			while (rY < 4 || rY > 5) {
+				rY = rng.nextInt(height-t2Height);
+			}
+		} else {
+			if (prototype == 2) {
+				boundY = 3;
+			} else if (prototype == 3) {
+				boundY = 8;
+			}
+			while (rY < 1 || rY > boundY) {
 				rY = rng.nextInt(height-t2Height);
 			}
 		}
@@ -547,7 +587,7 @@ public class SokobanGame {
 		}
 	}
 	
-	public void placeTemplate3() {
+	public void placeTemplate3(int prototype) {
 		String template3 =
 				  "   \n"
 				+ " # \n"
@@ -559,6 +599,7 @@ public class SokobanGame {
 		Random rng = new Random();
 		int rX = 0;
 		int rY = 0;
+		int boundY = 0;
 		
 		while (rX == 0) {
 			rX = rng.nextInt(width-t3Width);
@@ -570,6 +611,15 @@ public class SokobanGame {
 			}
 		} else if (rX > 1 && rX < 5) {
 			rY = 4;
+		} else {
+			if (prototype == 2) {
+				boundY = 4;
+			} else if (prototype == 3) {
+				boundY = 8;
+			}
+			while (rY < 1 || rY > boundY) {
+				rY = rng.nextInt(height-t3Height);
+			}
 		}
 		
 		int initRX = rX;

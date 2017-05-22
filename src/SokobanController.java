@@ -19,6 +19,9 @@ public class SokobanController implements KeyListener {
      * Handle any key pressed down.
      */
     public void keyPressed(KeyEvent e) {
+    	if (sb.isSleeping()) {
+    		return;
+    	}
     	int key = e.getKeyCode();
 		Player p = sb.getPlayer();
 		Direction up = Direction.UP;
@@ -29,38 +32,32 @@ public class SokobanController implements KeyListener {
 			if (!sb.hitWall(p, up)) {
 				if (!sb.hitBox(up)) {
 					p.move(up);
-					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_RIGHT) {
 			if (!sb.hitWall(p, right)) {
 				if (!sb.hitBox(right)) {
 					p.move(right);
-					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_LEFT) {
 			if (!sb.hitWall(p, left)) {
 				if (!sb.hitBox(left)) {
 					p.move(left);
-					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_DOWN) {
 			if (!sb.hitWall(p, down)) {
 				if (!sb.hitBox(down)) {
 					p.move(down);
-					sb.turns++;
 				}
 			}
 		} else if (key == KeyEvent.VK_R) {
 			sb.restartLevel();
-			sb.count--;
 		} else if (key == KeyEvent.VK_N) {
 			sb.newLevel();
-			sb.count--;
+			sb.decrementLevel();
 		}
-		sb.checkY();
 		sv.repaint();
     }
  

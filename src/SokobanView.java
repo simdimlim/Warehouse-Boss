@@ -7,8 +7,8 @@ public class SokobanView extends JPanel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	public int size = 60;
+	private int size = 75;
+	private int currSize = 0;
 	private SokobanGame sg;
 	private Image boxOnGoal;
 	
@@ -25,6 +25,10 @@ public class SokobanView extends JPanel {
 	}
 	
 	public void paintLevel(Graphics g) {
+		if (currSize == 0) {
+			currSize = size*sg.getWidth();
+		}
+		
 		ArrayList<SokobanObject> all = sg.getAll();
 		
 		for (int i = 0; i < all.size(); i++) {
@@ -46,13 +50,17 @@ public class SokobanView extends JPanel {
 				g.drawImage(obj.getImage(), x, y, size, size, this);
 			}
 		}
+		
 		g.setColor(Color.WHITE);
-		g.drawString(String.valueOf(sg.turns)+ " moves", 400, 450);
+        g.fillRect(sg.getWidth()*size-105, 15, 75, 20);
+        g.setColor(Color.BLACK);
+		g.drawString("Moves: " + sg.moveNum(), sg.getWidth()*size-100, 30);
 		
 		if (sg.isComplete()) {
 			g.setColor(Color.WHITE);
 			g.drawString("Congratulations! ", 30, 30);
 			
+			sg.setSleeping(true);
 			Thread newLevelDelay = new Thread(new Runnable() {
 			    public void run() {
 		            try {
@@ -72,7 +80,11 @@ public class SokobanView extends JPanel {
 		return sg;
 	}
 	
-	public void scale () {
-		size -= 10;
+	public void scale() {
+		size = currSize/sg.getWidth();
+	}
+	
+	public int getTileSize() {
+		return size;
 	}
 }
