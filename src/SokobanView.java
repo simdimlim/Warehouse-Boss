@@ -39,7 +39,9 @@ public class SokobanView extends JPanel {
 			SokobanObject obj = all.get(i);
 			int x = obj.x()*size;
 			int y = obj.y()*size;
-			
+			if (obj == null) {
+				continue;
+			}
 			if (obj instanceof Player) {
 				g.drawImage(obj.getImage(), x, y, size, size, this);
 			} else if (obj instanceof Box) {
