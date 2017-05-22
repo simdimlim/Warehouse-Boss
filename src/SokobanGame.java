@@ -200,14 +200,7 @@ public class SokobanGame {
 		all.addAll(boxes);
 		
 		sv.repaint();
-		level++;
 		sleep = false;
-	}
-	
-	public void decrementLevel() {
-		if (level > 0) {
-			level--;
-		}
 	}
 	
 	private void placeTemplates(int prototype){
@@ -265,6 +258,7 @@ public class SokobanGame {
 		}
 		if (goalsReached == numGoals) {
 			isComplete = true;
+			level++;
 		}
 	}
 	

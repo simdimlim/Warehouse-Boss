@@ -61,7 +61,7 @@ public class SokobanView extends JPanel {
 		if (sg.isComplete()) {
 //			g.setColor(Color.WHITE);
 //			g.drawString("Congratulations! ", 30, 30);
-			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(getFocusCycleRootAncestor()), levelComplete.getHeight(getFocusCycleRootAncestor()), this);
+			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(getParent()), levelComplete.getHeight(getParent()), this);
 			
 			sg.setSleeping(true);
 			Thread newLevelDelay = new Thread(new Runnable() {
