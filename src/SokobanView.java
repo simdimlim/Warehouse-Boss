@@ -66,7 +66,7 @@ public class SokobanView extends JPanel {
 		g.drawString("" + sg.moveNum(), currSize-65, 31);
 		
 		if (sg.isComplete()) {
-			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(getParent()), levelComplete.getHeight(getParent()), this);
+			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(null), levelComplete.getHeight(null), this);
 			
 			sg.setSleeping(true);
 			Thread newLevelDelay = new Thread(new Runnable() {
