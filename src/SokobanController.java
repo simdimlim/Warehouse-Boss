@@ -1,5 +1,7 @@
 import java.awt.event.*;
- 
+import java.io.*;
+import sun.audio.*;
+
 /**
  * A key listener that handles the maze key input and frame delay.
  *
@@ -29,29 +31,45 @@ public class SokobanController implements KeyListener {
 		Direction left = Direction.LEFT;
 		Direction right = Direction.RIGHT;
 		if (key == KeyEvent.VK_UP) {
-			if (!sb.hitWall(p, up)) {
-				if (!sb.hitBox(up)) {
-					p.move(up);
+			if (!sb.hitWall(p, up) && !sb.hitBox(up)) {
+				p.move(up);
+			} else
+				try {
+					playSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			}
 		} else if (key == KeyEvent.VK_RIGHT) {
-			if (!sb.hitWall(p, right)) {
-				if (!sb.hitBox(right)) {
-					p.move(right);
+			if (!sb.hitWall(p, right) && !sb.hitBox(right)) {
+				p.move(right);
+			} else
+				try {
+					playSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			}
 		} else if (key == KeyEvent.VK_LEFT) {
-			if (!sb.hitWall(p, left)) {
-				if (!sb.hitBox(left)) {
-					p.move(left);
+			if (!sb.hitWall(p, left) && !sb.hitBox(left)) {
+				p.move(left);
+			} else
+				try {
+					playSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			}
 		} else if (key == KeyEvent.VK_DOWN) {
-			if (!sb.hitWall(p, down)) {
-				if (!sb.hitBox(down)) {
-					p.move(down);
+			if (!sb.hitWall(p, down) && !sb.hitBox(down)) {
+				p.move(down);
+			} else
+				try {
+					playSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			}
 		} else if (key == KeyEvent.VK_R) {
 			sb.restartLevel();
 		} else if (key == KeyEvent.VK_N) {
@@ -76,5 +94,13 @@ public class SokobanController implements KeyListener {
     public void keyTyped(KeyEvent e) {
          
     }
+    
+    public void playSound() throws Exception{
+        String gongFile = "src/sounds/collisionSound.wav";
+        InputStream in = new FileInputStream(gongFile);
+        AudioStream audioStream = new AudioStream(in);
+        AudioPlayer.player.start(audioStream);
+    }
+
  
 }
