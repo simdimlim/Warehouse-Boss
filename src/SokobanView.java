@@ -11,12 +11,14 @@ public class SokobanView extends JPanel {
 	private int currSize = 0;
 	private SokobanGame sg;
 	private Image boxOnGoal;
+	private Image levelComplete;
 	
 	public SokobanView(SokobanGame sg) {
 		this.sg = sg;
 		addKeyListener(new SokobanController(sg, this));
 		setFocusable(true);
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
+		levelComplete = new ImageIcon(this.getClass().getResource("/images/level_complete.png")).getImage();
 	}
 	
 	public void paint(Graphics g) {
@@ -57,8 +59,9 @@ public class SokobanView extends JPanel {
 		g.drawString("Moves: " + sg.moveNum(), sg.getWidth()*size-100, 30);
 		
 		if (sg.isComplete()) {
-			g.setColor(Color.WHITE);
-			g.drawString("Congratulations! ", 30, 30);
+//			g.setColor(Color.WHITE);
+//			g.drawString("Congratulations! ", 30, 30);
+			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(getFocusCycleRootAncestor()), levelComplete.getHeight(getFocusCycleRootAncestor()), this);
 			
 			sg.setSleeping(true);
 			Thread newLevelDelay = new Thread(new Runnable() {
