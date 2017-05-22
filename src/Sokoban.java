@@ -3,6 +3,11 @@ import javax.swing.*;
 
 public class Sokoban extends JFrame{
 	private int SIZE = 60;
+	
+	/**
+	 * Constructor for the Sokoban object
+	 * Handles GUI operations.
+	 */
 	public Sokoban() {
 		setLayout(new BorderLayout());
 		SokobanGame sg = new SokobanGame();
@@ -16,6 +21,11 @@ public class Sokoban extends JFrame{
 		pack();
 	}
 	
+	/**
+	 * Main function for WarehouseBoss sets off rest of the program.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
         Sokoban sokoban = new Sokoban();
         sokoban.setVisible(true);
