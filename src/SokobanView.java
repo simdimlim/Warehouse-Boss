@@ -12,6 +12,7 @@ public class SokobanView extends JPanel {
 	private SokobanGame sg;
 	private Image boxOnGoal;
 	private Image levelComplete;
+	private Image moves;
 	
 	public SokobanView(SokobanGame sg) {
 		this.sg = sg;
@@ -19,6 +20,7 @@ public class SokobanView extends JPanel {
 		setFocusable(true);
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
 		levelComplete = new ImageIcon(this.getClass().getResource("/images/level_complete.png")).getImage();
+		moves = new ImageIcon(this.getClass().getResource("/images/moves.png")).getImage();
 	}
 	
 	public void paint(Graphics g) {
@@ -53,14 +55,17 @@ public class SokobanView extends JPanel {
 			}
 		}
 		
+//		g.setColor(Color.WHITE);
+//        g.fillRect(sg.getWidth()*size-105, 15, 75, 20);
+//        g.setColor(Color.BLACK);
+//		g.drawString("Moves: " + sg.moveNum(), sg.getWidth()*size-100, 30);
+		
+		g.drawImage(moves, currSize-150, 10, moves.getWidth(null), moves.getHeight(null), this);
+		g.setFont(new Font("Arial", Font.PLAIN, 22));
 		g.setColor(Color.WHITE);
-        g.fillRect(sg.getWidth()*size-105, 15, 75, 20);
-        g.setColor(Color.BLACK);
-		g.drawString("Moves: " + sg.moveNum(), sg.getWidth()*size-100, 30);
+		g.drawString("" + sg.moveNum(), currSize-65, 31);
 		
 		if (sg.isComplete()) {
-//			g.setColor(Color.WHITE);
-//			g.drawString("Congratulations! ", 30, 30);
 			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(getParent()), levelComplete.getHeight(getParent()), this);
 			
 			sg.setSleeping(true);

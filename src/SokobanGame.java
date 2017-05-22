@@ -525,8 +525,8 @@ public class SokobanGame {
 				    if (wall.x() == rX && wall.y() == rY) {
 				    	if (!free.contains((SokobanObject) wall)) {
 				    		free.add((SokobanObject) wall);
-					    	iterator.remove();
 						}
+				    	iterator.remove();
 				    }
 				}
 				rX++;
@@ -582,8 +582,8 @@ public class SokobanGame {
 				    if (wall.x() == rX && wall.y() == rY) {
 				    	if (!free.contains((SokobanObject) wall)) {
 				    		free.add((SokobanObject) wall);
-					    	iterator.remove();
 						}
+				    	iterator.remove();
 				    }
 				}
 				rX++;
@@ -639,8 +639,8 @@ public class SokobanGame {
 				    if (wall.x() == rX && wall.y() == rY) {
 				    	if (!free.contains((SokobanObject) wall)) {
 				    		free.add((SokobanObject) wall);
-					    	iterator.remove();
 						}
+				    	iterator.remove();
 				    }
 				}
 				rX++;
