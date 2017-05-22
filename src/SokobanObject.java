@@ -63,4 +63,10 @@ public class SokobanObject implements Cloneable {
 			return null;
 		}
 	}
+	
+	@Override
+	public boolean equals (Object o) {
+		SokobanObject s = (SokobanObject) o;
+		return this.x == s.x && this.y == s.y;
+	}
 }

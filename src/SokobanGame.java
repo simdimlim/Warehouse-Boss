@@ -386,7 +386,9 @@ public class SokobanGame {
 				walls.add(wall);
 			} else if (element == ' ') {
 				SokobanObject freeSpace = new SokobanObject(x, y);
-				free.add(freeSpace);
+				if (!free.contains(freeSpace)) {
+					free.add(freeSpace);
+				}
 			}
 			x++;
 		}
@@ -423,7 +425,9 @@ public class SokobanGame {
 				walls.add(wall);
 			} else if (element == ' ') {
 				SokobanObject freeSpace = new SokobanObject(x, y);
-				free.add(freeSpace);
+				if (!free.contains(freeSpace)) {
+					free.add(freeSpace);
+				}
 			}
 			x++;
 		}
@@ -466,7 +470,9 @@ public class SokobanGame {
 				walls.add(wall);
 			} else if (element == ' ') {
 				SokobanObject freeSpace = new SokobanObject(x, y);
-				free.add(freeSpace);
+				if (!free.contains(freeSpace)) {
+					free.add(freeSpace);
+				}
 			}
 			x++;
 		}
@@ -517,8 +523,10 @@ public class SokobanGame {
 				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	free.add((SokobanObject) wall);
-				    	iterator.remove();
+				    	if (!free.contains((SokobanObject) wall)) {
+				    		free.add((SokobanObject) wall);
+					    	iterator.remove();
+						}
 				    }
 				}
 				rX++;
@@ -572,8 +580,10 @@ public class SokobanGame {
 				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	free.add((SokobanObject) wall);
-				    	iterator.remove();
+				    	if (!free.contains((SokobanObject) wall)) {
+				    		free.add((SokobanObject) wall);
+					    	iterator.remove();
+						}
 				    }
 				}
 				rX++;
@@ -627,8 +637,10 @@ public class SokobanGame {
 				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	free.add((SokobanObject) wall);
-				    	iterator.remove();
+				    	if (!free.contains((SokobanObject) wall)) {
+				    		free.add((SokobanObject) wall);
+					    	iterator.remove();
+						}
 				    }
 				}
 				rX++;
