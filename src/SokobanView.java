@@ -37,11 +37,11 @@ public class SokobanView extends JPanel {
 		
 		for (int i = 0; i < all.size(); i++) {
 			SokobanObject obj = all.get(i);
-			int x = obj.x()*size;
-			int y = obj.y()*size;
 			if (obj == null) {
 				continue;
 			}
+			int x = obj.x()*size;
+			int y = obj.y()*size;
 			if (obj instanceof Player) {
 				g.drawImage(obj.getImage(), x, y, size, size, this);
 			} else if (obj instanceof Box) {
@@ -63,7 +63,7 @@ public class SokobanView extends JPanel {
 //		g.drawString("Moves: " + sg.moveNum(), sg.getWidth()*size-100, 30);
 		
 		g.drawImage(moves, currSize-150, 10, moves.getWidth(null), moves.getHeight(null), this);
-		g.setFont(new Font("Arial", Font.PLAIN, 22));
+		g.setFont(new Font("Arial", Font.BOLD, 22));
 		g.setColor(Color.WHITE);
 		g.drawString("" + sg.moveNum(), currSize-65, 31);
 		
