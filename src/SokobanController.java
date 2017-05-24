@@ -32,40 +32,64 @@ public class SokobanController implements KeyListener {
 		Direction right = Direction.RIGHT;
 		if (key == KeyEvent.VK_UP) {
 			if (!sb.hitWall(p, up) && !sb.hitBox(up)) {
+				try {
+					playMoveSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				p.move(up);
 			} else
 				try {
-					playSound();
+					playCollisionSound();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 		} else if (key == KeyEvent.VK_RIGHT) {
 			if (!sb.hitWall(p, right) && !sb.hitBox(right)) {
+				try {
+					playMoveSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				p.move(right);
 			} else
 				try {
-					playSound();
+					playCollisionSound();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 		} else if (key == KeyEvent.VK_LEFT) {
 			if (!sb.hitWall(p, left) && !sb.hitBox(left)) {
+				try {
+					playMoveSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				p.move(left);
 			} else
 				try {
-					playSound();
+					playCollisionSound();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 		} else if (key == KeyEvent.VK_DOWN) {
 			if (!sb.hitWall(p, down) && !sb.hitBox(down)) {
+				try {
+					playMoveSound();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				p.move(down);
 			} else
 				try {
-					playSound();
+					playCollisionSound();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -94,8 +118,14 @@ public class SokobanController implements KeyListener {
          
     }
     
-    public void playSound() throws Exception{
+    public void playCollisionSound() throws Exception{
         String gongFile = "src/sounds/collisionSound.wav";
+        InputStream in = new FileInputStream(gongFile);
+        AudioStream audioStream = new AudioStream(in);
+        AudioPlayer.player.start(audioStream);
+    }
+    public void playMoveSound() throws Exception{
+        String gongFile = "src/sounds/tap.wav";
         InputStream in = new FileInputStream(gongFile);
         AudioStream audioStream = new AudioStream(in);
         AudioPlayer.player.start(audioStream);

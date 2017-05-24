@@ -5,6 +5,7 @@ public class Player extends SokobanObject {
 	
 	private Image image;
 	
+
 	/**
 	 * Constructor for Player object.
 	 * Takes in x and y position and creates a PlayerS in that coordinate.
@@ -40,7 +41,7 @@ public class Player extends SokobanObject {
 			break;
 		}
 	}
-	
+
 	/**
 	 * Clones the player object.
 	 */

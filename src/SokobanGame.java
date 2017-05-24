@@ -1,4 +1,9 @@
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
+
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 
 public class SokobanGame {
@@ -261,7 +266,7 @@ public class SokobanGame {
 			level++;
 		}
 	}
-	
+
 	public void newLevel() {
 		all.clear();
 		walls.clear();
