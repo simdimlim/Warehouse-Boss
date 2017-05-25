@@ -1,6 +1,7 @@
 /**
- * WarehouseGame stores the current state of the game and 
- * performs collision detection every time the player wishes to move.
+ * WarehouseGame stores the current state of the game,
+ * performs collision detection every time the player wishes to move
+ * and various other game state checks.
  */
 public class WarehouseGame {
 	private Map map;
