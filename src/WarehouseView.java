@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 /**
  * WarehouseView is responsible for displaying the current state of the game.
@@ -15,6 +16,8 @@ public class WarehouseView extends JPanel implements ActionListener {
 	private Image boxOnGoal;
 	private Image levelComplete;
 	private Image moves;
+	private Icon restartImg;
+	private Icon newLevelImg;
 	private JButton restart;
 	private JButton newLevel;
 	
@@ -148,8 +151,8 @@ public class WarehouseView extends JPanel implements ActionListener {
 	 * Adds the buttons to this panel.
 	 */
 	public void addButtons() {
-		restart = new JButton("restart level");		
-		newLevel = new JButton("new level");
+		restart = new JButton();		
+		newLevel = new JButton();
 		
 		restart.setActionCommand("restart");
 		newLevel.setActionCommand("new");
@@ -159,7 +162,15 @@ public class WarehouseView extends JPanel implements ActionListener {
 		
 		restart.setFocusable(false);
 		newLevel.setFocusable(false);
-				
+		
+		restartImg = new ImageIcon(this.getClass().getResource("/images/restart_level.png"));
+	 	newLevelImg = new ImageIcon(this.getClass().getResource("/images/new_level.png"));
+	 	
+	 	restart.setIcon(restartImg);
+	 	newLevel.setIcon(newLevelImg);
+	 	restart.setMargin(new Insets(0, 0, 0, 0));
+	 	newLevel.setMargin(new Insets(0, 0, 0, 0));
+	 	
 		add(restart);
 		add(newLevel);
 	}

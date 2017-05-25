@@ -1,15 +1,17 @@
 import java.awt.event.*;
 import java.io.*;
 import sun.audio.*;
+import javax.swing.Timer;
 
 /**
  * A key listener that detects key presses and updates the game accordingly.
  */
-public class WarehouseController implements KeyListener {
+public class WarehouseController implements KeyListener,ActionListener {
      
     private WarehouseGame g;
     private WarehouseView view;
-    
+    Timer t = new Timer(5,this);
+    int x=0,y=0,velx=0,vely=0;
     /**
      * Constructor for WarehouseController.
      * 
@@ -19,8 +21,40 @@ public class WarehouseController implements KeyListener {
     public WarehouseController(WarehouseGame g, WarehouseView view) {
         this.g = g;
         this.view = view;
+        t.start();
     }
  
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    	if(x < 0)
+    	{
+    		velx=0;
+    		x = 0;		
+    	}
+
+    	if(x > view.getWidth())
+    	{
+    		velx=0;
+    		x = view.getWidth();		
+    	}
+
+    	if(y < 0)
+    	{
+    		vely=0;
+    		y = 0;		
+    	}
+
+    	if(y > view.getHeight())
+    	{
+    		vely=0;
+    		y = view.getHeight();		
+    	}
+
+
+    	x += velx;
+    	y += vely;
+    	view.repaint();
+    }
     @Override
     /**
      * Handle any key pressed down.
@@ -43,6 +77,8 @@ public class WarehouseController implements KeyListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				vely = -1;
+				velx = 0;
 				p.move(up);
 			} else
 				try {
@@ -59,6 +95,8 @@ public class WarehouseController implements KeyListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				vely = 0;
+				velx = 1;
 				p.move(right);
 			} else
 				try {
@@ -75,6 +113,8 @@ public class WarehouseController implements KeyListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				vely = 0;
+				velx = -1;
 				p.move(left);
 			} else
 				try {
@@ -91,6 +131,8 @@ public class WarehouseController implements KeyListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				vely = 1;
+				velx = 0;
 				p.move(down);
 			} else
 				try {
@@ -104,8 +146,9 @@ public class WarehouseController implements KeyListener {
 		} else if (key == KeyEvent.VK_N) {
 			g.newLevel();
 		}
-		view.repaint();
+		//view.repaint();
     }
+    
  
     @Override
     /**
@@ -113,6 +156,8 @@ public class WarehouseController implements KeyListener {
      */
     public void keyReleased(KeyEvent e) {
         // Add key up stuff here.
+    	velx=0;
+    	vely=0;
     }
  
     @Override

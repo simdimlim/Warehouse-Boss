@@ -11,7 +11,8 @@ public class Map {
 	private ArrayList<WarehouseObject> free;
 	private int width;
 	private int height;
-	
+	/** Indicator if a given tile has been visited during the search */
+	private boolean[][] visited = new boolean[width][height];
 	/**
 	 * Constructor for the games map.
 	 * Stores the entire level.
@@ -226,5 +227,20 @@ public class Map {
 		}
 		return false;
 	}
-
+	
+	public void pathFinderVisited(int x, int y) {
+		visited[x][y] = true;
+	}
+	
+	public void clearVisited() {
+		for (int x=0;x<getWidth();x++) {
+			for (int y=0;y<getHeight();y++) {
+				visited[x][y] = false;
+			}
+		}
+	}
+	
+	public float getCost(WarehouseObject f, int sx, int sy, int tx, int ty) {
+		return 1;
+	}
 }
