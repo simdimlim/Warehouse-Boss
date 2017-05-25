@@ -206,12 +206,7 @@ public class Map {
 	}
 	
 	public void removeFree(WarehouseObject toBeRemoved) {
-		for (Iterator<WarehouseObject> iterator = free.iterator(); iterator.hasNext();) {
-		    WarehouseObject obj = iterator.next();
-		    if (obj.x() == toBeRemoved.x() && obj.y() == toBeRemoved.y()) {
-		    	iterator.remove();
-		    }
-		}
+		free.remove(toBeRemoved);
 	}
 	
 	public void addToFree(WarehouseObject f){
@@ -219,13 +214,11 @@ public class Map {
 	}
 	
 	public boolean freeContains(WarehouseObject f) {
-		for (int i = 0; i < free.size(); i++) {
-			WarehouseObject obj = free.get(i);
-			if (obj.x() == f.x() && obj.y() == f.y()) {
-				return true;
-			}
-		}
-		return false;
+		return free.contains(f);
+	}
+	
+	public void clearFree() {
+		free.clear();
 	}
 	
 	public void pathFinderVisited(int x, int y) {
