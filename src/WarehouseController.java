@@ -7,18 +7,18 @@ import sun.audio.*;
  */
 public class WarehouseController implements KeyListener {
      
-    private WarehouseGame sb;
-    private WarehouseView sv;
+    private WarehouseGame g;
+    private WarehouseView view;
     
     /**
      * Constructor for WarehouseController.
      * 
-     * @param sb The warehouse game
-     * @param sv The warehouse view
+     * @param g The warehouse game
+     * @param view The warehouse view
      */
-    public WarehouseController(WarehouseGame sb, WarehouseView sv) {
-        this.sb = sb;
-        this.sv = sv;
+    public WarehouseController(WarehouseGame g, WarehouseView view) {
+        this.g = g;
+        this.view = view;
     }
  
     @Override
@@ -26,17 +26,17 @@ public class WarehouseController implements KeyListener {
      * Handle any key pressed down.
      */
     public void keyPressed(KeyEvent e) {
-    	if (sb.isSleeping()) {
+    	if (g.isSleeping()) {
     		return;
     	}
     	int key = e.getKeyCode();
-		Player p = sb.getPlayer();
+		Player p = g.getPlayer();
 		Direction up = Direction.UP;
 		Direction down = Direction.DOWN;
 		Direction left = Direction.LEFT;
 		Direction right = Direction.RIGHT;
 		if (key == KeyEvent.VK_UP) {
-			if (!sb.hitWall(p, up) && !sb.hitBox(up)) {
+			if (!g.hitWall(p, up) && !g.hitBox(up)) {
 				try {
 					playMoveSound();
 				} catch (Exception e1) {
@@ -52,7 +52,7 @@ public class WarehouseController implements KeyListener {
 					e1.printStackTrace();
 				}
 		} else if (key == KeyEvent.VK_RIGHT) {
-			if (!sb.hitWall(p, right) && !sb.hitBox(right)) {
+			if (!g.hitWall(p, right) && !g.hitBox(right)) {
 				try {
 					playMoveSound();
 				} catch (Exception e1) {
@@ -68,7 +68,7 @@ public class WarehouseController implements KeyListener {
 					e1.printStackTrace();
 				}
 		} else if (key == KeyEvent.VK_LEFT) {
-			if (!sb.hitWall(p, left) && !sb.hitBox(left)) {
+			if (!g.hitWall(p, left) && !g.hitBox(left)) {
 				try {
 					playMoveSound();
 				} catch (Exception e1) {
@@ -84,7 +84,7 @@ public class WarehouseController implements KeyListener {
 					e1.printStackTrace();
 				}
 		} else if (key == KeyEvent.VK_DOWN) {
-			if (!sb.hitWall(p, down) && !sb.hitBox(down)) {
+			if (!g.hitWall(p, down) && !g.hitBox(down)) {
 				try {
 					playMoveSound();
 				} catch (Exception e1) {
@@ -100,11 +100,11 @@ public class WarehouseController implements KeyListener {
 					e1.printStackTrace();
 				}
 		} else if (key == KeyEvent.VK_R) {
-			sb.restartLevel();
+			g.restartLevel();
 		} else if (key == KeyEvent.VK_N) {
-			sb.newLevel();
+			g.newLevel();
 		}
-		sv.repaint();
+		view.repaint();
     }
  
     @Override

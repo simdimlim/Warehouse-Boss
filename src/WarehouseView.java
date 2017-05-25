@@ -12,7 +12,7 @@ import javax.swing.*;
 public class WarehouseView extends JPanel implements ActionListener {
 	private int size = 75;
 	private int currSize = 0;
-	private WarehouseGame sg;
+	private WarehouseGame whg;
 	private Image boxOnGoal;
 	private Image levelComplete;
 	private Image moves;
@@ -22,11 +22,11 @@ public class WarehouseView extends JPanel implements ActionListener {
 	/**
 	 * Constructor for WarehouseView.
 	 * 
-	 * @param sg The warehouse game to display
+	 * @param whg The warehouse game to display
 	 */
-	public WarehouseView(WarehouseGame sg) {
-		this.sg = sg;
-		addKeyListener(new WarehouseController(sg, this));
+	public WarehouseView(WarehouseGame whg) {
+		this.whg = whg;
+		addKeyListener(new WarehouseController(whg, this));
 		setFocusable(true);
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
 		levelComplete = new ImageIcon(this.getClass().getResource("/images/level_complete.png")).getImage();
@@ -51,10 +51,10 @@ public class WarehouseView extends JPanel implements ActionListener {
 	 */
 	public void paintLevel(Graphics g) {
 		if (currSize == 0) {
-			currSize = size*sg.getWidth();
+			currSize = size*whg.getWidth();
 		}
 		
-		ArrayList<WarehouseObject> all = sg.getGameMap().getEntireMap();
+		ArrayList<WarehouseObject> all = whg.getGameMap().getMap();
 		
 		for (int i = 0; i < all.size(); i++) {
 			WarehouseObject obj = all.get(i);
@@ -66,7 +66,7 @@ public class WarehouseView extends JPanel implements ActionListener {
 			if (obj instanceof Player) {
 				g.drawImage(obj.getImage(), x, y, size, size, this);
 			} else if (obj instanceof Box) {
-				if (sg.isBoxOnGoal(obj)) {
+				if (whg.isBoxOnGoal(obj)) {
 					g.drawImage(boxOnGoal, x, y, size, size, this);
 				} else {
 					g.drawImage(obj.getImage(), x, y, size, size, this);
@@ -82,18 +82,18 @@ public class WarehouseView extends JPanel implements ActionListener {
 		g.drawImage(moves, currSize-150, 10, moves.getWidth(null), moves.getHeight(null), this);
 		g.setFont(new Font("Arial", Font.BOLD, 22));
 		g.setColor(Color.WHITE);
-		g.drawString("" + sg.moveNum(), currSize-65, 31);
+		g.drawString("" + whg.moveNum(), currSize-65, 31);
 		
 		// paints a message if the player completes the game
-		if (sg.isComplete()) {
+		if (whg.isComplete()) {
 			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(null), levelComplete.getHeight(null), this);
 			// if the level is complete, pauses the display for 1.5 seconds before displaying the newly generated level
-			sg.setSleeping(true);
+			whg.setSleeping(true);
 			Thread newLevelDelay = new Thread(new Runnable() {
 			    public void run() {
 		            try {
 		                Thread.sleep(1500);
-		                sg.newLevel();
+		                whg.newLevel();
 		            } catch (InterruptedException e) {
 		                e.printStackTrace();
 		            }
@@ -110,7 +110,7 @@ public class WarehouseView extends JPanel implements ActionListener {
 	 * @return The warehouse game
 	 */
 	public WarehouseGame getGame() {
-		return sg;
+		return whg;
 	}
 	
 	/**
@@ -139,9 +139,9 @@ public class WarehouseView extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (action.equals("restart")) {
-			sg.restartLevel();
+			whg.restartLevel();
 		} else if (action.equals("new")) {
-			sg.newLevel();
+			whg.newLevel();
 		}
 	}
 	

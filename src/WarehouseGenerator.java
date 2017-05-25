@@ -10,9 +10,9 @@ import java.util.Random;
  * to create interesting levels.
  */
 public class WarehouseGenerator {
-	private WarehouseGame wg;
-	private WarehouseView sv;
-	private GameMap entireMap;
+	private WarehouseGame g;
+	private WarehouseView view;
+	private GameMap map;
 	private int RNG_BOUND = 1000;
 	private Direction up = Direction.UP;
 	private Direction down = Direction.DOWN;
@@ -24,22 +24,22 @@ public class WarehouseGenerator {
 	/**
 	 * Constructor to generate warehouse levels.
 	 * 
-	 * @param wg The warehouse game
+	 * @param g The warehouse game
 	 */
-	public WarehouseGenerator(WarehouseGame wg) {
-		this.wg = wg;
-		sv = wg.getView();
-		entireMap = wg.getGameMap();
+	public WarehouseGenerator(WarehouseGame g) {
+		this.g = g;
+		view = g.getView();
+		map = g.getGameMap();
 		generateLevel();
-		wg.setHeight(height);
-		wg.setWidth(width);
+		g.setHeight(height);
+		g.setWidth(width);
 	}
     
 	/**
 	 * Generate a level randomly.
 	 */
 	public void generateLevel() {
-		int level = wg.getLevel();
+		int level = g.getLevel();
 		if (level < 5) {
 			initialisePrototype1();
 			placeTemplates(1);
@@ -53,7 +53,7 @@ public class WarehouseGenerator {
 			placePlayer();
 			placeBoxes(4);
 			placeGoals(4);
-			sv.scale(width);
+			view.scale(width);
 		}
 		else if (level >= 10) {
 			initialisePrototype3();
@@ -61,21 +61,20 @@ public class WarehouseGenerator {
 			placePlayer();
 			placeBoxes(5);
 			placeGoals(5);
-			sv.scale(width);
+			view.scale(width);
 		}
 		
-		entireMap.clearMap();
-		entireMap.addAllToMap();
-		
-		sv.repaint();
-		wg.setSleeping(false);
+		map.clearMap();
+		map.addAllToMap();
+		view.repaint();
+		g.setSleeping(false);
 	}
 	
 	/**
 	 * Generate a new level.
 	 */
 	public void newLevel() {
-		entireMap.newMap();
+		map.newMap();
 		generateLevel();
 	}
 	
@@ -83,8 +82,8 @@ public class WarehouseGenerator {
 	 * Restart the level.
 	 */
 	public void restartLevel() {
-		entireMap.restartMap();
-		sv.repaint();
+		map.restartMap();
+		view.repaint();
 	}
 	
 	/**
@@ -106,11 +105,11 @@ public class WarehouseGenerator {
 	 * Place the player in a randomly selected free space.
 	 */
     public void placePlayer() {
-		WarehouseObject freeSpace = entireMap.getRandomFree();
-		entireMap.removeFree(freeSpace);
+		WarehouseObject freeSpace = map.getRandomFree();
+		map.removeFree(freeSpace);
 		Player p = new Player(freeSpace.x(), freeSpace.y());
-		entireMap.setInitialPlayer(p);
-		entireMap.setPlayer(p);
+		map.setInitialPlayer(p);
+		map.setPlayer(p);
 	}
 	
     /**
@@ -119,23 +118,23 @@ public class WarehouseGenerator {
      * @param n The number of goals to place
      */
 	public void placeGoals(int n) {
-		entireMap.clearGoals();
+		map.clearGoals();
 		
 		int goalNum = 0;
 		int i = 0;
 
 		while (goalNum < n && i < RNG_BOUND) {
-			WarehouseObject freeSpace = entireMap.getRandomFree();
-			if (wg.hitWall(freeSpace, up) && wg.hitWall(freeSpace, down)) {
+			WarehouseObject freeSpace = map.getRandomFree();
+			if (g.hitWall(freeSpace, up) && g.hitWall(freeSpace, down)) {
 				i++;
 				continue;
-			} else if (wg.hitWall(freeSpace, right) && wg.hitWall(freeSpace, left)) {
+			} else if (g.hitWall(freeSpace, right) && g.hitWall(freeSpace, left)) {
 				i++;
 				continue;
 			} else {
-				entireMap.removeFree(freeSpace);
+				map.removeFree(freeSpace);
 				Goal g = new Goal(freeSpace.x(), freeSpace.y());
-				entireMap.addToGoals(g);
+				map.addToGoals(g);
 				goalNum++;
 				if (goalNum == n) {
 					break;
@@ -158,28 +157,28 @@ public class WarehouseGenerator {
 		int boxNum = 0;
 		int i = 0;
 		
-		entireMap.clearBoxes();
+		map.clearBoxes();
 		
 		while (boxNum < n && i < RNG_BOUND) {
-			WarehouseObject freeSpace = entireMap.getRandomFree();
+			WarehouseObject freeSpace = map.getRandomFree();
 			
-			if (wg.hitWall(freeSpace, up)) {
+			if (g.hitWall(freeSpace, up)) {
 				i++;
 				continue;
-			} else if (wg.hitWall(freeSpace, right)) {
+			} else if (g.hitWall(freeSpace, right)) {
 				i++;
 				continue;
-			} else if (wg.hitWall(freeSpace, down)) {
+			} else if (g.hitWall(freeSpace, down)) {
 				i++;
 				continue;
-			} else if (wg.hitWall(freeSpace, left)) {
+			} else if (g.hitWall(freeSpace, left)) {
 				i++;
 				continue;
 			} else {
-				entireMap.removeFree(freeSpace);
+				map.removeFree(freeSpace);
 				Box b = new Box(freeSpace.x(), freeSpace.y());
-				entireMap.addToBoxes(b);
-				entireMap.addToInitialBoxes(b.clone());
+				map.addToBoxes(b);
+				map.addToInitialBoxes(b.clone());
 				boxNum++;
 				if (boxNum == n) {
 					break;
@@ -223,11 +222,11 @@ public class WarehouseGenerator {
 				continue;
 			} else if (element == '#') {
 				Wall wall = new Wall(x, y);
-				entireMap.addToWalls(wall);
+				map.addToWalls(wall);
 			} else if (element == ' ') {
 				WarehouseObject freeSpace = new WarehouseObject(x, y);
-				if (!entireMap.freeContains(freeSpace)) {
-					entireMap.addToFree(freeSpace);
+				if (!map.freeContains(freeSpace)) {
+					map.addToFree(freeSpace);
 				}
 			}
 			x++;
@@ -267,11 +266,11 @@ public class WarehouseGenerator {
 				continue;
 			} else if (element == '#') {
 				Wall wall = new Wall(x, y);
-				entireMap.addToWalls(wall);
+				map.addToWalls(wall);
 			} else if (element == ' ') {
 				WarehouseObject freeSpace = new WarehouseObject(x, y);
-				if (!entireMap.freeContains(freeSpace)) {
-					entireMap.addToFree(freeSpace);
+				if (!map.freeContains(freeSpace)) {
+					map.addToFree(freeSpace);
 				}
 			}
 			x++;
@@ -316,11 +315,11 @@ public class WarehouseGenerator {
 				continue;
 			} else if (element == '#') {
 				Wall wall = new Wall(x, y);
-				entireMap.addToWalls(wall);
+				map.addToWalls(wall);
 			} else if (element == ' ') {
 				WarehouseObject freeSpace = new WarehouseObject(x, y);
-				if (!entireMap.freeContains(freeSpace)) {
-					entireMap.addToFree(freeSpace);
+				if (!map.freeContains(freeSpace)) {
+					map.addToFree(freeSpace);
 				}
 			}
 			x++;
@@ -374,11 +373,11 @@ public class WarehouseGenerator {
 				rX = initRX;
 				rY++;
 			} else if (element == ' ') {
-				for (Iterator<Wall> iterator = entireMap.getWalls().iterator(); iterator.hasNext();) {
+				for (Iterator<Wall> iterator = map.getWalls().iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	if (!entireMap.freeContains((WarehouseObject) wall)) {
-				    		entireMap.addToFree((WarehouseObject) wall);
+				    	if (!map.freeContains((WarehouseObject) wall)) {
+				    		map.addToFree((WarehouseObject) wall);
 						}
 				    	iterator.remove();
 				    }
@@ -436,11 +435,11 @@ public class WarehouseGenerator {
 				rX = initRX;
 				rY++;
 			} else if (element == ' ') {
-				for (Iterator<Wall> iterator = entireMap.getWalls().iterator(); iterator.hasNext();) {
+				for (Iterator<Wall> iterator = map.getWalls().iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	if (!entireMap.freeContains((WarehouseObject) wall)) {
-				    		entireMap.addToFree((WarehouseObject) wall);
+				    	if (!map.freeContains((WarehouseObject) wall)) {
+				    		map.addToFree((WarehouseObject) wall);
 						}
 				    	iterator.remove();
 				    }
@@ -498,19 +497,19 @@ public class WarehouseGenerator {
 				rX = initRX;
 				rY++;
 			} else if (element == ' ') {
-				for (Iterator<Wall> iterator = entireMap.getWalls().iterator(); iterator.hasNext();) {
+				for (Iterator<Wall> iterator = map.getWalls().iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	if (!entireMap.freeContains((WarehouseObject) wall)) {
-				    		entireMap.addToFree((WarehouseObject) wall);
+				    	if (!map.freeContains((WarehouseObject) wall)) {
+				    		map.addToFree((WarehouseObject) wall);
 						}
 				    	iterator.remove();
 				    }
 				}
 				rX++;
 			} else if (element == '#') {
-				entireMap.addToWalls(new Wall(rX, rY));
-				for (Iterator<WarehouseObject> iterator = entireMap.getFree().iterator(); iterator.hasNext();) {
+				map.addToWalls(new Wall(rX, rY));
+				for (Iterator<WarehouseObject> iterator = map.getFree().iterator(); iterator.hasNext();) {
 				    WarehouseObject freeObj = iterator.next();
 				    if (freeObj.x() == rX && freeObj.y() == rY) {
 				    	iterator.remove();

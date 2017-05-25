@@ -4,12 +4,12 @@ import java.util.*;
  * performs collision detection every time the player wishes to move.
  */
 public class WarehouseGame {
-	private GameMap entireMap;
+	private GameMap map;
 	private Direction up = Direction.UP;
 	private Direction down = Direction.DOWN;
 	private Direction left = Direction.LEFT;
 	private Direction right = Direction.RIGHT;
-	private WarehouseView sv;
+	private WarehouseView view;
 	private boolean isComplete;
 	private int height;
 	private int width;
@@ -22,11 +22,11 @@ public class WarehouseGame {
 	 * Constructor for WarehouseGame.
 	 */
 	public WarehouseGame() {
-		entireMap = new GameMap();
+		map = new GameMap();
 		isComplete = false;
 		height = 0;
 		width = 0;
-		sv = new WarehouseView(this);
+		view = new WarehouseView(this);
 		gen = new WarehouseGenerator(this);
 		gen.generateLevel();
 	}
@@ -37,7 +37,7 @@ public class WarehouseGame {
 	 * @return The current player
 	 */
 	public Player getPlayer(){
-		return entireMap.getPlayer();
+		return map.getPlayer();
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class WarehouseGame {
 	 * @return The map
 	 */
 	public GameMap getGameMap() {
-		return entireMap;
+		return map;
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class WarehouseGame {
 	 * @return The game's view
 	 */
 	public WarehouseView getView() {
-		return sv;
+		return view;
 	}
 	
 	/**
@@ -138,7 +138,7 @@ public class WarehouseGame {
 	 * @return True if the object will hit a wall, false otherwise.
 	 */
 	public boolean hitWall(WarehouseObject obj, Direction d) {
-		for (Wall w: entireMap.getWalls()){
+		for (Wall w: map.getWalls()){
 			if (d == Direction.UP) {
 				if (obj.x() == w.x() && obj.y()-1 == w.y()) {
 					return true;
@@ -169,9 +169,9 @@ public class WarehouseGame {
 	 * @return true if the player has encountered a box, false otherwise.
 	 */
 	public boolean hitBox(Direction d) {
-		for (Box box: entireMap.getBoxes()){
-			if (entireMap.getPlayer().collidesWith(box, left) && d == left) {
-				for (Box otherBox: entireMap.getBoxes()){
+		for (Box box: map.getBoxes()){
+			if (map.getPlayer().collidesWith(box, left) && d == left) {
+				for (Box otherBox: map.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, left)) {
 							return true;
@@ -184,8 +184,8 @@ public class WarehouseGame {
 				box.move(left);
 				moves++;
 				isFinished();
-			} else if (entireMap.getPlayer().collidesWith(box, right) && d == right) {
-				for (Box otherBox: entireMap.getBoxes()){
+			} else if (map.getPlayer().collidesWith(box, right) && d == right) {
+				for (Box otherBox: map.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, right)) {
 							return true;
@@ -198,8 +198,8 @@ public class WarehouseGame {
 				box.move(right);
 				moves++;
 				isFinished();
-			} else if (entireMap.getPlayer().collidesWith(box, up) && d == up) {
-				for (Box otherBox: entireMap.getBoxes()){
+			} else if (map.getPlayer().collidesWith(box, up) && d == up) {
+				for (Box otherBox: map.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, up)) {
 							return true;
@@ -212,8 +212,8 @@ public class WarehouseGame {
 				box.move(up);
 				moves++;
 				isFinished();
-			} else if (entireMap.getPlayer().collidesWith(box, down) && d == down) {
-				for (Box otherBox: entireMap.getBoxes()){
+			} else if (map.getPlayer().collidesWith(box, down) && d == down) {
+				for (Box otherBox: map.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, down)) {
 							return true;
@@ -253,10 +253,10 @@ public class WarehouseGame {
 	 */
 	public void isFinished() {
 		int goalsReached = 0;
-		int numGoals = entireMap.goalsSize();
+		int numGoals = map.goalsSize();
 		
-		for (Box box: entireMap.getBoxes()){
-			for (Goal goal: entireMap.getGoals()){
+		for (Box box: map.getBoxes()){
+			for (Goal goal: map.getGoals()){
 				if (box.x() == goal.x() && box.y() == goal.y()) {
 					goalsReached++;
 				}
@@ -286,7 +286,7 @@ public class WarehouseGame {
 	 * @return true if it is on a goal, false otherwise.
 	 */
 	public boolean isBoxOnGoal(WarehouseObject obj) {
-		for (Goal goal: entireMap.getGoals()){
+		for (Goal goal: map.getGoals()){
 			if (obj.x() == goal.x() && obj.y() == goal.y()) {
 				return true;
 			}

@@ -8,7 +8,7 @@ public class GameMap {
 	private ArrayList<Box> initialBoxes;
 	private ArrayList<Box> boxes;
 	private ArrayList<Goal> goals;
-	private ArrayList<WarehouseObject> entireMap;
+	private ArrayList<WarehouseObject> map;
 	private ArrayList<WarehouseObject> free;
 	
 	/**
@@ -20,7 +20,7 @@ public class GameMap {
 		boxes = new ArrayList<Box>();
 		initialBoxes = new ArrayList<Box>();
 		goals = new ArrayList<Goal>();
-		entireMap = new ArrayList<WarehouseObject>();
+		map = new ArrayList<WarehouseObject>();
 		free = new ArrayList<WarehouseObject>();		
 	}
 	
@@ -110,49 +110,49 @@ public class GameMap {
 	}
 	
 	/**
-	 * EntireMap functions
+	 * map functions
 	 */
 	public int entireMapSize(){
-		return entireMap.size();
+		return map.size();
 	}
 	
-	public ArrayList<WarehouseObject> getEntireMap(){
-		return entireMap;
+	public ArrayList<WarehouseObject> getMap(){
+		return map;
 	}
 	
 	public void addAllToMap(){
-		entireMap.addAll(walls);
-		entireMap.addAll(goals);
-		entireMap.addAll(boxes);
+		map.addAll(walls);
+		map.addAll(goals);
+		map.addAll(boxes);
 		addPlayerToMap(player);
 	}
 	
 	public void addPlayerToMap(Player p){
-		entireMap.add(p);
+		map.add(p);
 	}
 	
 	public void clearMap(){
-		entireMap.clear();
+		map.clear();
 	}
 	
 	public void restartMap() {
-		entireMap.clear();
+		map.clear();
 		boxes.clear();
 		
 		for (Box b: initialBoxes) {
 			boxes.add(b.clone());		
 		}
 		
-		entireMap.addAll(walls);
-		entireMap.addAll(goals);
-		entireMap.addAll(boxes);
+		map.addAll(walls);
+		map.addAll(goals);
+		map.addAll(boxes);
 		
 		setPlayer(initialPlayer);
-		entireMap.add(player);
+		map.add(player);
 	}
 	
 	public void newMap(){
-		entireMap.clear();
+		map.clear();
 		walls.clear();
 		boxes.clear();
 		free.clear();
