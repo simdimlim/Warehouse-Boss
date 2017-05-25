@@ -35,7 +35,6 @@ public class Player extends WarehouseObject {
 			setY(this.y()-1);
 			break;
 		case DOWN:
-			setImage(image);
 			setY(this.y()+1);
 			break;
 		case LEFT:
