@@ -117,8 +117,8 @@ public class WarehouseView extends JPanel implements ActionListener {
 	 * 
 	 * @param width The board's new width
 	 */
-	public void scale(int width) {
-		size = currSize/width;
+	public void scale() {
+		size = currSize/whg.getWidth();
 	}
 	
 	/**

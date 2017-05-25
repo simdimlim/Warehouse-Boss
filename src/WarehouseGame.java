@@ -100,7 +100,7 @@ public class WarehouseGame {
 	 * @return The board width
 	 */
 	public int getWidth() {
-		return width;
+		return map.getWidth();
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class WarehouseGame {
 	 * @return The board height
 	 */
 	public int getHeight() {
-		return height;
+		return map.getHeight();
 	}
 	
 	/**

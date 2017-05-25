@@ -52,7 +52,7 @@ public class WarehouseGenerator {
 			placePlayer();
 			placeBoxes(4);
 			placeGoals(4);
-			view.scale(width);
+			view.scale();
 		}
 		else if (level >= 10) {
 			initialisePrototype3();
@@ -60,7 +60,7 @@ public class WarehouseGenerator {
 			placePlayer();
 			placeBoxes(5);
 			placeGoals(5);
-			view.scale(width);
+			view.scale();
 		}
 		
 		map.clearMap();
@@ -196,6 +196,8 @@ public class WarehouseGenerator {
 	 * Initialise the game map to store the walls of prototype 1.
 	 */
 	public void initialisePrototype1() {
+		map.clearFree();
+		
 		String prototype =
 		          "########\n"
 				+ "#  ##  #\n"
@@ -240,6 +242,8 @@ public class WarehouseGenerator {
 	 * Initialise the game map to store the walls of prototype 2.
 	 */
 	public void initialisePrototype2() {
+		map.clearFree();
+		
 		String prototype =
 		          "##########\n"
 				+ "#  ##   ##\n"
@@ -285,6 +289,8 @@ public class WarehouseGenerator {
 	 * Initialise the game map to store the walls of prototype 3.
 	 */
 	public void initialisePrototype3() {
+		map.clearFree();
+		
 		String prototype =
 		          "###############\n"
 		  		+ "###############\n"
@@ -512,10 +518,10 @@ public class WarehouseGenerator {
 				}
 				rX++;
 			} else if (element == '#') {
-				map.addToWalls(new Wall(rX, rY));
 				for (Iterator<WarehouseObject> iterator = map.getFree().iterator(); iterator.hasNext();) {
 				    WarehouseObject freeObj = iterator.next();
 				    if (freeObj.x() == rX && freeObj.y() == rY) {
+				    	map.addToWalls(new Wall(rX, rY));
 				    	iterator.remove();
 				    }
 				}
