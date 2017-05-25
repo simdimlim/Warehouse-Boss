@@ -1,9 +1,15 @@
 import java.util.Iterator;
 import java.util.Random;
-
+/**
+ * WarehouseGenerator is responsible for initialising the game map
+ * with the initial positions of the player and boxes, as well as
+ * generating the walls and goal locations for the level.
+ * 
+ * The levels are created by taking a prototype depending on what 
+ * level the player is on and then randomly placing a set of templates
+ * to create interesting levels.
+ */
 public class WarehouseGenerator {
-	private int[] items = new int[]{1,2,3};
-    private Random rand = new Random();
 	private WarehouseGame wg;
 	private WarehouseView sv;
 	private GameMap entireMap;
@@ -15,15 +21,23 @@ public class WarehouseGenerator {
 	private int height;
 	private int width;
     
+	/**
+	 * Constructor to generate warehouse levels.
+	 * 
+	 * @param wg The warehouse game
+	 */
 	public WarehouseGenerator(WarehouseGame wg) {
 		this.wg = wg;
-		sv = wg.getSView();
+		sv = wg.getView();
 		entireMap = wg.getGameMap();
 		generateLevel();
 		wg.setHeight(height);
 		wg.setWidth(width);
 	}
     
+	/**
+	 * Generate a level randomly.
+	 */
 	public void generateLevel() {
 		int level = wg.getLevel();
 		if (level < 5) {
@@ -57,30 +71,40 @@ public class WarehouseGenerator {
 		wg.setSleeping(false);
 	}
 	
+	/**
+	 * Generate a new level.
+	 */
 	public void newLevel() {
 		entireMap.newMap();
 		generateLevel();
 	}
 	
+	/**
+	 * Restart the level.
+	 */
 	public void restartLevel() {
 		entireMap.restartMap();
 		sv.repaint();
 	}
 	
+	/**
+	 * Place templates randomly while generating the level.
+	 * 
+	 * @param prototype The prototype number
+	 */
 	public void placeTemplates(int prototype){
+		Random rng = new Random();
 		for(int i=0;i<3;i++){
-			int x = getRandArrayElement(); 
-			if(x==1) placeTemplate1(prototype);
-			else if(x==2) placeTemplate2(prototype);
-			else if(x==3) placeTemplate3(prototype);
+			int x = rng.nextInt(3);
+			if(x==0) placeTemplate1(prototype);
+			else if(x==1) placeTemplate2(prototype);
+			else if(x==2) placeTemplate3(prototype);
 		}
 	}
-
     
-    public int getRandArrayElement(){
-        return items[rand.nextInt(items.length)];
-    }
-    
+	/**
+	 * Place the player in a randomly selected free space.
+	 */
     public void placePlayer() {
 		WarehouseObject freeSpace = entireMap.getRandomFree();
 		entireMap.removeFree(freeSpace);
@@ -89,6 +113,11 @@ public class WarehouseGenerator {
 		entireMap.setPlayer(p);
 	}
 	
+    /**
+     * Initialise the goal locations at random.
+     * 
+     * @param n The number of goals to place
+     */
 	public void placeGoals(int n) {
 		entireMap.clearGoals();
 		
@@ -98,9 +127,11 @@ public class WarehouseGenerator {
 		while (goalNum < n && i < RNG_BOUND) {
 			WarehouseObject freeSpace = entireMap.getRandomFree();
 			if (wg.hitWall(freeSpace, up) && wg.hitWall(freeSpace, down)) {
-			
+				i++;
+				continue;
 			} else if (wg.hitWall(freeSpace, right) && wg.hitWall(freeSpace, left)) {
-				
+				i++;
+				continue;
 			} else {
 				entireMap.removeFree(freeSpace);
 				Goal g = new Goal(freeSpace.x(), freeSpace.y());
@@ -118,6 +149,11 @@ public class WarehouseGenerator {
 		}
 	}
 	
+	/**
+	 * Initialise the box locations
+	 * 
+	 * @param n The number of boxes to place.
+	 */
 	public void placeBoxes(int n) {
 		int boxNum = 0;
 		int i = 0;
@@ -128,13 +164,17 @@ public class WarehouseGenerator {
 			WarehouseObject freeSpace = entireMap.getRandomFree();
 			
 			if (wg.hitWall(freeSpace, up)) {
-				
+				i++;
+				continue;
 			} else if (wg.hitWall(freeSpace, right)) {
-				
+				i++;
+				continue;
 			} else if (wg.hitWall(freeSpace, down)) {
-				
+				i++;
+				continue;
 			} else if (wg.hitWall(freeSpace, left)) {
-				
+				i++;
+				continue;
 			} else {
 				entireMap.removeFree(freeSpace);
 				Box b = new Box(freeSpace.x(), freeSpace.y());
@@ -148,11 +188,15 @@ public class WarehouseGenerator {
 			i++;
 		}
 		
+		// if the number of boxes place does not equal the number needed, generate a new level
 		if (boxNum < n) {
 			newLevel();
 		}
 	}
 	
+	/**
+	 * Initialise the game map to store the walls of prototype 1.
+	 */
 	public void initialisePrototype1() {
 		String prototype =
 		          "########\n"
@@ -191,6 +235,10 @@ public class WarehouseGenerator {
 		height = y;
 	}
 	
+	
+	/**
+	 * Initialise the game map to store the walls of prototype 2.
+	 */
 	public void initialisePrototype2() {
 		String prototype =
 		          "##########\n"
@@ -231,6 +279,9 @@ public class WarehouseGenerator {
 		height = y;
 	}
 	
+	/**
+	 * Initialise the game map to store the walls of prototype 3.
+	 */
 	public void initialisePrototype3() {
 		String prototype =
 		          "###############\n"
@@ -277,6 +328,11 @@ public class WarehouseGenerator {
 		height = y;
 	}
 	
+	/**
+	 * Place template 1 randomly in the level.
+	 * 
+	 * @param prototype The prototype number
+	 */
 	public void placeTemplate1(int prototype) {
 		String template1 = 
 				  "  \n"
@@ -332,6 +388,11 @@ public class WarehouseGenerator {
 		}
 	}
 	
+	/**
+	 * Place template 2 randomly in the level.
+	 * 
+	 * @param prototype The prototype number
+	 */
 	public void placeTemplate2(int prototype) {
 		String template2 = 
 				  "  \n"
@@ -389,6 +450,11 @@ public class WarehouseGenerator {
 		}
 	}
 	
+	/**
+	 * Place template 3 randomly in the level.
+	 * 
+	 * @param prototype The prototype number
+	 */
 	public void placeTemplate3(int prototype) {
 		String template3 =
 				  "   \n"

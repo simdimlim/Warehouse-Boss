@@ -3,14 +3,19 @@ import java.io.*;
 import sun.audio.*;
 
 /**
- * A key listener that handles the maze key input and frame delay.
- *
+ * A key listener that detects key presses and updates the game accordingly.
  */
 public class WarehouseController implements KeyListener {
      
     private WarehouseGame sb;
     private WarehouseView sv;
     
+    /**
+     * Constructor for WarehouseController.
+     * 
+     * @param sb The warehouse game
+     * @param sv The warehouse view
+     */
     public WarehouseController(WarehouseGame sb, WarehouseView sv) {
         this.sb = sb;
         this.sv = sv;
@@ -118,12 +123,23 @@ public class WarehouseController implements KeyListener {
          
     }
     
+    /**
+     * Plays the collision sound when the player cannot move.
+     * 
+     * @throws Exception
+     */
     public void playCollisionSound() throws Exception{
         String gongFile = "src/sounds/collisionSound.wav";
         InputStream in = new FileInputStream(gongFile);
         AudioStream audioStream = new AudioStream(in);
         AudioPlayer.player.start(audioStream);
     }
+    
+    /**
+     * Plays a sound every time the player moves.
+     * 
+     * @throws Exception
+     */
     public void playMoveSound() throws Exception{
         String gongFile = "src/sounds/tap.wav";
         InputStream in = new FileInputStream(gongFile);

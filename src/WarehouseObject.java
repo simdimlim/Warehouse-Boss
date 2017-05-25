@@ -7,10 +7,9 @@ public class WarehouseObject implements Cloneable {
 	private Image img;
 	
 	/**
-	 * Creates a new Object
-	 * @param g grid
-	 * @param currentLocation 
-	 * @param image
+	 * Constructor for a WarehouseObject.
+	 * @param x The object's x coordinate
+	 * @param y The object's y coordinate
 	 */
 	public WarehouseObject (int x, int y){
 		this.x = x;
@@ -41,6 +40,14 @@ public class WarehouseObject implements Cloneable {
 		this.img = img;
 	}
 	
+	/**
+	 * Returns whether the current object will collide with the object
+	 * taken in as a parameter in the specific direction.
+	 * 
+	 * @param obj The warehouse object to check against
+	 * @param d The direction the current object wishes to move
+	 * @return true if there is a collision, false otherwise.
+	 */
 	public boolean collidesWith(WarehouseObject obj, Direction d) {
 		if (x-1 == obj.x() && y == obj.y() && d == Direction.LEFT) {
 			return true;

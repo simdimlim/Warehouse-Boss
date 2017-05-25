@@ -5,10 +5,11 @@ import java.util.*;
 
 import javax.swing.*;
 
+/**
+ * WarehouseView is responsible for displaying the current state of the game.
+ * It updates the display every time the player moves.
+ */
 public class WarehouseView extends JPanel implements ActionListener {
-	/**
-	 * 
-	 */
 	private int size = 75;
 	private int currSize = 0;
 	private WarehouseGame sg;
@@ -18,6 +19,11 @@ public class WarehouseView extends JPanel implements ActionListener {
 	private JButton restart;
 	private JButton newLevel;
 	
+	/**
+	 * Constructor for WarehouseView.
+	 * 
+	 * @param sg The warehouse game to display
+	 */
 	public WarehouseView(WarehouseGame sg) {
 		this.sg = sg;
 		addKeyListener(new WarehouseController(sg, this));
@@ -28,17 +34,27 @@ public class WarehouseView extends JPanel implements ActionListener {
 		addButtons();
 	}
 	
+	/**
+	 * Updates the board graphics.
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		paintLevel(g);
 	}
 	
+	/**
+	 * Updates the board graphics by going through the objects stored in
+	 * the entire game map and painting the specific object in its current
+	 * position.
+	 * 
+	 * @param g The graphics used to paint
+	 */
 	public void paintLevel(Graphics g) {
 		if (currSize == 0) {
 			currSize = size*sg.getWidth();
 		}
 		
-		ArrayList<WarehouseObject> all = sg.getEntireMap();
+		ArrayList<WarehouseObject> all = sg.getGameMap().getEntireMap();
 		
 		for (int i = 0; i < all.size(); i++) {
 			WarehouseObject obj = all.get(i);
@@ -62,14 +78,16 @@ public class WarehouseView extends JPanel implements ActionListener {
 			}
 		}
 		
+		// paints the move counter
 		g.drawImage(moves, currSize-150, 10, moves.getWidth(null), moves.getHeight(null), this);
 		g.setFont(new Font("Arial", Font.BOLD, 22));
 		g.setColor(Color.WHITE);
 		g.drawString("" + sg.moveNum(), currSize-65, 31);
 		
+		// paints a message if the player completes the game
 		if (sg.isComplete()) {
 			g.drawImage(levelComplete, currSize/5, currSize/3+20, levelComplete.getWidth(null), levelComplete.getHeight(null), this);
-			
+			// if the level is complete, pauses the display for 1.5 seconds before displaying the newly generated level
 			sg.setSleeping(true);
 			Thread newLevelDelay = new Thread(new Runnable() {
 			    public void run() {
@@ -86,18 +104,37 @@ public class WarehouseView extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Returns the current warehouse game.
+	 * 
+	 * @return The warehouse game
+	 */
 	public WarehouseGame getGame() {
 		return sg;
 	}
 	
+	/**
+	 * Changes the size of the board's tile.
+	 * 
+	 * @param width The board's new width
+	 */
 	public void scale(int width) {
 		size = currSize/width;
 	}
 	
+	/**
+	 * Returns the size of the tile.
+	 * 
+	 * @return The tile size
+	 */
 	public int getTileSize() {
 		return size;
 	}
-
+	
+	/**
+	 * If the player presses the "restart level" button or "new level" button,
+	 * the view calls the warehouse game to run the appropriate function.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
@@ -108,6 +145,9 @@ public class WarehouseView extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Adds the buttons to this panel.
+	 */
 	public void addButtons() {
 		restart = new JButton("restart level");		
 		newLevel = new JButton("new level");

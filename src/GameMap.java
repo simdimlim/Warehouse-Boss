@@ -24,7 +24,7 @@ public class GameMap {
 		free = new ArrayList<WarehouseObject>();		
 	}
 	
-	/*
+	/**
 	 * Player functions
 	 */
 	public void setPlayer(Player p){
@@ -39,7 +39,7 @@ public class GameMap {
 		return player;
 	}
 	
-	/*
+	/**
 	 * Wall Functions
 	 */
 	public ArrayList<Wall> getWalls(){
@@ -54,7 +54,7 @@ public class GameMap {
 		walls.add(w);
 	}
 	
-	/*
+	/**
 	 * Box Functions
 	 */
 	
@@ -74,7 +74,7 @@ public class GameMap {
 		boxes.clear();
 	}
 	
-	/*
+	/**
 	 * Initial Boxes functions
 	 */
 	public ArrayList<Box> getInitialBoxes(){
@@ -90,7 +90,7 @@ public class GameMap {
 	}
 
 	
-	/*
+	/**
 	 * Goal Functions
 	 */
 	public int goalsSize(){
@@ -109,7 +109,7 @@ public class GameMap {
 		goals.add(g);
 	}
 	
-	/*
+	/**
 	 * EntireMap functions
 	 */
 	public int entireMapSize(){
@@ -159,7 +159,7 @@ public class GameMap {
 		initialBoxes.clear();
 	}
 	
-	/*
+	/**
 	 * Free Functions
 	 */
 	public int freeSize(){

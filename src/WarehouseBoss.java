@@ -10,7 +10,7 @@ public class WarehouseBoss extends JFrame{
 	public WarehouseBoss() {
 		setLayout(new BorderLayout());
 		WarehouseGame sg = new WarehouseGame();
-		WarehouseView sv = sg.getSView();
+		WarehouseView sv = sg.getView();
 		add(sv, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);

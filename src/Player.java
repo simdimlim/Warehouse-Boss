@@ -4,11 +4,10 @@ import javax.swing.ImageIcon;
 public class Player extends WarehouseObject {
 	
 	private Image image;
-	
 
 	/**
 	 * Constructor for Player object.
-	 * Takes in x and y position and creates a PlayerS in that coordinate.
+	 * Takes in x and y position and creates a Player in that coordinate.
 	 * @param x
 	 * @param y
 	 */
