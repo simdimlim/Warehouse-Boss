@@ -216,6 +216,7 @@ public class WarehouseGenerator {
 				y++;
 				if (width < x) {
 					width = x;
+					map.setWidth(width);
 				}
 				x = 0;
 				continue;
@@ -231,6 +232,7 @@ public class WarehouseGenerator {
 			x++;
 		}
 		height = y;
+		map.setHeight(height);
 	}
 	
 	
@@ -260,6 +262,7 @@ public class WarehouseGenerator {
 				y++;
 				if (width < x) {
 					width = x;
+					map.setWidth(width);
 				}
 				x = 0;
 				continue;
@@ -275,6 +278,7 @@ public class WarehouseGenerator {
 			x++;
 		}
 		height = y;
+		map.setHeight(height);
 	}
 	
 	/**
@@ -308,6 +312,7 @@ public class WarehouseGenerator {
 				y++;
 				if (width < x) {
 					width = x;
+					map.setWidth(width);
 				}
 				x = 0;
 				continue;
@@ -323,6 +328,7 @@ public class WarehouseGenerator {
 			x++;
 		}
 		height = y;
+		map.setHeight(height);
 	}
 	
 	/**

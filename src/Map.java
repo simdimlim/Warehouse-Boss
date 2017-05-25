@@ -9,6 +9,8 @@ public class Map {
 	private ArrayList<Goal> goals;
 	private ArrayList<WarehouseObject> map;
 	private ArrayList<WarehouseObject> free;
+	private int width;
+	private int height;
 	
 	/**
 	 * Constructor for the games map.
@@ -21,6 +23,28 @@ public class Map {
 		goals = new ArrayList<Goal>();
 		map = new ArrayList<WarehouseObject>();
 		free = new ArrayList<WarehouseObject>();		
+	}
+	
+	/**
+	 * Width and height functions
+	 */
+	public int getWidth(){
+		return width;	
+	}
+	
+	public void setWidth(int w){
+		width = w;
+		
+	}
+	
+	public int getHeight(){
+		return height;	
+	}
+	
+	
+	public void setHeight(int h){
+		height = h;
+		
 	}
 	
 	/**
