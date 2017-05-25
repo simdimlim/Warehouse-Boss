@@ -2,7 +2,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-public class Wall extends SokobanObject{
+public class Wall extends WarehouseObject{
 	
 	private Image image;
 	public Wall (int x, int y){

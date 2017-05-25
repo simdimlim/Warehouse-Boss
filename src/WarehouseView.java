@@ -3,20 +3,20 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class SokobanView extends JPanel {
+public class WarehouseView extends JPanel {
 	/**
 	 * 
 	 */
 	private int size = 75;
 	private int currSize = 0;
-	private SokobanGame sg;
+	private WarehouseGame sg;
 	private Image boxOnGoal;
 	private Image levelComplete;
 	private Image moves;
 	
-	public SokobanView(SokobanGame sg) {
+	public WarehouseView(WarehouseGame sg) {
 		this.sg = sg;
-		addKeyListener(new SokobanController(sg, this));
+		addKeyListener(new WarehouseController(sg, this));
 		setFocusable(true);
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
 		levelComplete = new ImageIcon(this.getClass().getResource("/images/level_complete.png")).getImage();
@@ -33,10 +33,10 @@ public class SokobanView extends JPanel {
 			currSize = size*sg.getWidth();
 		}
 		
-		ArrayList<SokobanObject> all = sg.getEntireMap();
+		ArrayList<WarehouseObject> all = sg.getEntireMap();
 		
 		for (int i = 0; i < all.size(); i++) {
-			SokobanObject obj = all.get(i);
+			WarehouseObject obj = all.get(i);
 			if (obj == null) {
 				continue;
 			}
@@ -86,7 +86,7 @@ public class SokobanView extends JPanel {
 		}
 	}
 	
-	public SokobanGame getGame() {
+	public WarehouseGame getGame() {
 		return sg;
 	}
 	

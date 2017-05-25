@@ -1,7 +1,7 @@
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Box extends SokobanObject{
+public class Box extends WarehouseObject{
 	
 	private Image image;
 	public Box (int x, int y){

@@ -8,9 +8,9 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	
 	private JButton restart;
 	private JButton newLevel;
-	private SokobanGame sg;
+	private WarehouseGame sg;
 	
-	public ButtonPanel(SokobanGame sg) {
+	public ButtonPanel(WarehouseGame sg) {
 		this.sg = sg;
 		
 		setLayout(new GridBagLayout());

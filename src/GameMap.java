@@ -8,8 +8,8 @@ public class GameMap {
 	private ArrayList<Box> InitialBoxes;
 	private ArrayList<Box> Boxes;
 	private ArrayList<Goal> Goals;
-	private ArrayList<SokobanObject> EntireMap;
-	private ArrayList<SokobanObject> Free;
+	private ArrayList<WarehouseObject> EntireMap;
+	private ArrayList<WarehouseObject> Free;
 	
 	/**
 	 * Constructor for the games map.
@@ -20,8 +20,8 @@ public class GameMap {
 		Boxes = new ArrayList<Box>();
 		InitialBoxes = new ArrayList<Box>();
 		Goals = new ArrayList<Goal>();
-		EntireMap = new ArrayList<SokobanObject>();
-		Free = new ArrayList<SokobanObject>();		
+		EntireMap = new ArrayList<WarehouseObject>();
+		Free = new ArrayList<WarehouseObject>();		
 	}
 	
 	/*
@@ -112,7 +112,7 @@ public class GameMap {
 		return EntireMap.size();
 	}
 	
-	public ArrayList<SokobanObject> getEntireMap(){
+	public ArrayList<WarehouseObject> getEntireMap(){
 		return EntireMap;
 	}
 	
@@ -162,26 +162,26 @@ public class GameMap {
 		return Free.size();
 	}
 	
-	public ArrayList<SokobanObject> getFree(){
+	public ArrayList<WarehouseObject> getFree(){
 		return Free;
 	}
 	
-	public SokobanObject getRandomFree(){
+	public WarehouseObject getRandomFree(){
 		Random rng = new Random();
-		SokobanObject freeSpace = Free.get(rng.nextInt(Free.size()));
+		WarehouseObject freeSpace = Free.get(rng.nextInt(Free.size()));
 		
 		return freeSpace;	
 	}
 	
-	public void removeFree(SokobanObject toBeRemoved){
+	public void removeFree(WarehouseObject toBeRemoved){
 		Free.remove(toBeRemoved);
 	}
 	
-	public void addToFree(SokobanObject f){
+	public void addToFree(WarehouseObject f){
 		Free.add(f);
 	}
 	
-	public boolean freeContains(SokobanObject f){
+	public boolean freeContains(WarehouseObject f){
 		return Free.contains(f);
 	}
 

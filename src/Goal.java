@@ -1,7 +1,7 @@
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
-public class Goal extends SokobanObject{
+public class Goal extends WarehouseObject{
 
 	private Image image;
 	

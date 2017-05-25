@@ -1,16 +1,16 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class Sokoban extends JFrame{
+public class Warehouse extends JFrame{
 	
 	/**
-	 * Constructor for the Sokoban object
+	 * Constructor for the Warehouse object
 	 * Handles GUI operations.
 	 */
-	public Sokoban() {
+	public Warehouse() {
 		setLayout(new BorderLayout());
-		SokobanGame sg = new SokobanGame();
-		SokobanView sv = sg.getSView();
+		WarehouseGame sg = new WarehouseGame();
+		WarehouseView sv = sg.getSView();
 		add(sv, BorderLayout.CENTER);
 		ButtonPanel bp = new ButtonPanel(sg);
 		add(bp, BorderLayout.EAST);
@@ -28,7 +28,7 @@ public class Sokoban extends JFrame{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        Sokoban sokoban = new Sokoban();
-        sokoban.setVisible(true);
+        Warehouse Warehouse = new Warehouse();
+        Warehouse.setVisible(true);
     }
 }

@@ -6,12 +6,12 @@ import sun.audio.*;
  * A key listener that handles the maze key input and frame delay.
  *
  */
-public class SokobanController implements KeyListener {
+public class WarehouseController implements KeyListener {
      
-    private SokobanGame sb;
-    private SokobanView sv;
+    private WarehouseGame sb;
+    private WarehouseView sv;
     
-    public SokobanController(SokobanGame sb, SokobanView sv) {
+    public WarehouseController(WarehouseGame sb, WarehouseView sv) {
         this.sb = sb;
         this.sv = sv;
     }

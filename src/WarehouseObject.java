@@ -1,6 +1,6 @@
 import java.awt.Image;
 
-public class SokobanObject implements Cloneable {
+public class WarehouseObject implements Cloneable {
 
 	private int x;
 	private int y;
@@ -12,7 +12,7 @@ public class SokobanObject implements Cloneable {
 	 * @param currentLocation 
 	 * @param image
 	 */
-	public SokobanObject (int x, int y){
+	public WarehouseObject (int x, int y){
 		this.x = x;
 		this.y = y;
 	}
@@ -41,7 +41,7 @@ public class SokobanObject implements Cloneable {
 		this.img = img;
 	}
 	
-	public boolean collidesWith(SokobanObject obj, Direction d) {
+	public boolean collidesWith(WarehouseObject obj, Direction d) {
 		if (x-1 == obj.x() && y == obj.y() && d == Direction.LEFT) {
 			return true;
 		} else if (x+1 == obj.x() && obj.y() == y && d == Direction.RIGHT) {
@@ -55,9 +55,9 @@ public class SokobanObject implements Cloneable {
 	}
 	
 	@Override
-	public SokobanObject clone() {
+	public WarehouseObject clone() {
 		try {
-			return (SokobanObject) super.clone();
+			return (WarehouseObject) super.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 			return null;
@@ -66,7 +66,7 @@ public class SokobanObject implements Cloneable {
 	
 	@Override
 	public boolean equals (Object o) {
-		SokobanObject s = (SokobanObject) o;
+		WarehouseObject s = (WarehouseObject) o;
 		return this.x == s.x && this.y == s.y;
 	}
 }
