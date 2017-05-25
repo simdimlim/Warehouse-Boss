@@ -1,10 +1,9 @@
-import java.util.*;
 /**
  * WarehouseGame stores the current state of the game and 
  * performs collision detection every time the player wishes to move.
  */
 public class WarehouseGame {
-	private GameMap map;
+	private Map map;
 	private Direction up = Direction.UP;
 	private Direction down = Direction.DOWN;
 	private Direction left = Direction.LEFT;
@@ -22,7 +21,7 @@ public class WarehouseGame {
 	 * Constructor for WarehouseGame.
 	 */
 	public WarehouseGame() {
-		map = new GameMap();
+		map = new Map();
 		isComplete = false;
 		height = 0;
 		width = 0;
@@ -45,7 +44,7 @@ public class WarehouseGame {
 	 * 
 	 * @return The map
 	 */
-	public GameMap getGameMap() {
+	public Map getGameMap() {
 		return map;
 	}
 	

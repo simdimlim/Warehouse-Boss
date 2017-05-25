@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameMap {
+public class Map {
 	private Player player;
 	private Player initialPlayer;
 	private ArrayList<Wall> walls;
@@ -15,7 +15,7 @@ public class GameMap {
 	 * Constructor for the games map.
 	 * Stores the entire level.
 	 */
-	public GameMap(){
+	public Map(){
 		walls = new ArrayList<Wall>();
 		boxes = new ArrayList<Box>();
 		initialBoxes = new ArrayList<Box>();

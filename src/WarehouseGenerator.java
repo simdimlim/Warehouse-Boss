@@ -12,7 +12,7 @@ import java.util.Random;
 public class WarehouseGenerator {
 	private WarehouseGame g;
 	private WarehouseView view;
-	private GameMap map;
+	private Map map;
 	private int RNG_BOUND = 1000;
 	private Direction up = Direction.UP;
 	private Direction down = Direction.DOWN;
