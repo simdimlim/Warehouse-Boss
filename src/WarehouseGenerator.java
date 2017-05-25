@@ -6,7 +6,6 @@ public class WarehouseGenerator {
     private Random rand = new Random();
 	private WarehouseGame wg;
 	private WarehouseView sv;
-	private int level;
 	private GameMap entireMap;
 	private int RNG_BOUND = 1000;
 	private Direction up = Direction.UP;
@@ -18,7 +17,6 @@ public class WarehouseGenerator {
     
 	public WarehouseGenerator(WarehouseGame wg) {
 		this.wg = wg;
-		level = wg.getLevel();
 		sv = wg.getSView();
 		entireMap = wg.getGameMap();
 		generateLevel();
@@ -27,6 +25,7 @@ public class WarehouseGenerator {
 	}
     
 	public void generateLevel() {
+		int level = wg.getLevel();
 		if (level < 5) {
 			initialisePrototype1();
 			placeTemplates(1);
@@ -40,7 +39,7 @@ public class WarehouseGenerator {
 			placePlayer();
 			placeBoxes(4);
 			placeGoals(4);
-			sv.scale();
+			sv.scale(width);
 		}
 		else if (level >= 10) {
 			initialisePrototype3();
@@ -48,7 +47,7 @@ public class WarehouseGenerator {
 			placePlayer();
 			placeBoxes(5);
 			placeGoals(5);
-			sv.scale();
+			sv.scale(width);
 		}
 		
 		entireMap.clearMap();

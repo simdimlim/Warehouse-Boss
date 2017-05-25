@@ -90,8 +90,8 @@ public class WarehouseView extends JPanel implements ActionListener {
 		return sg;
 	}
 	
-	public void scale() {
-		size = currSize/sg.getWidth();
+	public void scale(int width) {
+		size = currSize/width;
 	}
 	
 	public int getTileSize() {
