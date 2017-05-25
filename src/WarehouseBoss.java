@@ -12,13 +12,11 @@ public class WarehouseBoss extends JFrame{
 		WarehouseGame sg = new WarehouseGame();
 		WarehouseView sv = sg.getSView();
 		add(sv, BorderLayout.CENTER);
-		ButtonPanel bp = new ButtonPanel(sg);
-		add(bp, BorderLayout.EAST);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle("Warehouse Boss");
 		int size = sv.getTileSize();
-		getContentPane().setPreferredSize(new Dimension(sg.getWidth()*size+110, sg.getHeight()*size));
+		getContentPane().setPreferredSize(new Dimension(sg.getWidth()*size, sg.getHeight()*size));
 		pack();
 	}
 	

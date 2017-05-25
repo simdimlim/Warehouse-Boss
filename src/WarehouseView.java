@@ -1,9 +1,11 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 import javax.swing.*;
 
-public class WarehouseView extends JPanel {
+public class WarehouseView extends JPanel implements ActionListener {
 	/**
 	 * 
 	 */
@@ -13,6 +15,8 @@ public class WarehouseView extends JPanel {
 	private Image boxOnGoal;
 	private Image levelComplete;
 	private Image moves;
+	private JButton restart;
+	private JButton newLevel;
 	
 	public WarehouseView(WarehouseGame sg) {
 		this.sg = sg;
@@ -21,10 +25,11 @@ public class WarehouseView extends JPanel {
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
 		levelComplete = new ImageIcon(this.getClass().getResource("/images/level_complete.png")).getImage();
 		moves = new ImageIcon(this.getClass().getResource("/images/moves.png")).getImage();
+		addButtons();
 	}
 	
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		paintLevel(g);
 	}
 	
@@ -91,5 +96,32 @@ public class WarehouseView extends JPanel {
 	
 	public int getTileSize() {
 		return size;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String action = e.getActionCommand();
+		if (action.equals("restart")) {
+			sg.restartLevel();
+		} else if (action.equals("new")) {
+			sg.newLevel();
+		}
+	}
+	
+	public void addButtons() {
+		restart = new JButton("restart level");		
+		newLevel = new JButton("new level");
+		
+		restart.setActionCommand("restart");
+		newLevel.setActionCommand("new");
+		
+		restart.addActionListener(this);
+		newLevel.addActionListener(this);
+		
+		restart.setFocusable(false);
+		newLevel.setFocusable(false);
+				
+		add(restart);
+		add(newLevel);
 	}
 }
