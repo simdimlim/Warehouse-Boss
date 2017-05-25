@@ -1,13 +1,13 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class Warehouse extends JFrame{
+public class WarehouseBoss extends JFrame{
 	
 	/**
 	 * Constructor for the Warehouse object
 	 * Handles GUI operations.
 	 */
-	public Warehouse() {
+	public WarehouseBoss() {
 		setLayout(new BorderLayout());
 		WarehouseGame sg = new WarehouseGame();
 		WarehouseView sv = sg.getSView();
@@ -28,7 +28,7 @@ public class Warehouse extends JFrame{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        Warehouse Warehouse = new Warehouse();
+        WarehouseBoss Warehouse = new WarehouseBoss();
         Warehouse.setVisible(true);
     }
 }
