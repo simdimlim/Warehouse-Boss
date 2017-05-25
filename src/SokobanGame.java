@@ -7,23 +7,15 @@ import sun.audio.AudioStream;
 
 
 public class SokobanGame {
-	
-	private ArrayList<SokobanObject> walls;
-	private ArrayList<SokobanObject> boxes;
-	private ArrayList<SokobanObject> goals;
-	private ArrayList<SokobanObject> all;
-	private ArrayList<SokobanObject> free;
+	private GameMap EntireMap;
 	private Direction up = Direction.UP;
 	private Direction down = Direction.DOWN;
 	private Direction left = Direction.LEFT;
 	private Direction right = Direction.RIGHT;
-	private Player p;
-	private Player initialP;
 	private SokobanView sv;
 	private boolean isComplete;
 	private int height;
 	private int width;
-	private ArrayList<SokobanObject> initialBoxes;
 	private int level = 0;
 	private int moves = 0;
 	private boolean sleep = false;
@@ -31,17 +23,20 @@ public class SokobanGame {
 	
 	
 	public SokobanGame() {
-		walls = new ArrayList<SokobanObject>();
-		boxes = new ArrayList<SokobanObject>();
-		goals = new ArrayList<SokobanObject>();
-		all = new ArrayList<SokobanObject>();
-		free = new ArrayList<SokobanObject>();
-		initialBoxes = new ArrayList<SokobanObject>();
+		EntireMap = new GameMap();
 		isComplete = false;
 		height = 0;
 		width = 0;
 		sv = new SokobanView(this);
 		generateLevel();
+	}
+	
+	public Player getPlayer(){
+		return EntireMap.getPlayer();
+	}
+	
+	public ArrayList<SokobanObject> getEntireMap(){
+		return EntireMap.getEntireMap();
 	}
 	
 	public boolean isSleeping() {
@@ -54,10 +49,6 @@ public class SokobanGame {
 	
 	public void setSleeping(boolean b) {
 		sleep = b;
-	}
-	
-	public Player getPlayer() {
-		return p;
 	}
 	
 	public SokobanView getSView() {
@@ -76,40 +67,33 @@ public class SokobanGame {
 		return height;
 	}
 	
-	public ArrayList<SokobanObject> getAll() {
-		return all;
-	}
-	
 	public boolean hitWall(SokobanObject obj, Direction d) {
-		for (int i = 0; i < walls.size(); i++) {
-			Wall wall = (Wall) walls.get(i);
+		for (Wall w: EntireMap.getWalls()){
 			if (d == Direction.UP) {
-				if (obj.x() == wall.x() && obj.y()-1 == wall.y()) {
+				if (obj.x() == w.x() && obj.y()-1 == w.y()) {
 					return true;
 				}
 			} else if (d == Direction.DOWN) {
-				if (obj.x() == wall.x() && obj.y()+1 == wall.y()) {
+				if (obj.x() == w.x() && obj.y()+1 == w.y()) {
 					return true;
 				}
 			} else if (d == Direction.LEFT) {
-				if (obj.x()-1 == wall.x() && obj.y() == wall.y()) {
+				if (obj.x()-1 == w.x() && obj.y() == w.y()) {
 					return true;
 				}
 			} else if (d == Direction.RIGHT) {
-				if (obj.x()+1 == wall.x() && obj.y() == wall.y()) {
+				if (obj.x()+1 == w.x() && obj.y() == w.y()) {
 					return true;
 				}
-			}
+			}			
 		}
 		return false;
 	}
 	
 	public boolean hitBox(Direction d) {
-		for (int i = 0; i < boxes.size(); i++) {
-			Box box = (Box) boxes.get(i);
-			if (p.collidesWith(box, left) && d == left) {
-				for (int j = 0; j < boxes.size(); j++) {
-					Box otherBox = (Box) boxes.get(j);
+		for (Box box: EntireMap.getBoxes()){
+			if (EntireMap.getPlayer().collidesWith(box, left) && d == left) {
+				for (Box otherBox: EntireMap.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, left)) {
 							return true;
@@ -117,14 +101,13 @@ public class SokobanGame {
 					}
 					if (hitWall(box, left)) {
 						return true;
-					}
+					}					
 				}
 				box.move(left);
 				moves++;
 				isFinished();
-			} else if (p.collidesWith(box, right) && d == right) {
-				for (int j = 0; j < boxes.size(); j++) {
-					Box otherBox = (Box) boxes.get(j);
+			} else if (EntireMap.getPlayer().collidesWith(box, right) && d == right) {
+				for (Box otherBox: EntireMap.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, right)) {
 							return true;
@@ -137,9 +120,8 @@ public class SokobanGame {
 				box.move(right);
 				moves++;
 				isFinished();
-			} else if (p.collidesWith(box, up) && d == up) {
-				for (int j = 0; j < boxes.size(); j++) {
-					Box otherBox = (Box) boxes.get(j);
+			} else if (EntireMap.getPlayer().collidesWith(box, up) && d == up) {
+				for (Box otherBox: EntireMap.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, up)) {
 							return true;
@@ -152,9 +134,8 @@ public class SokobanGame {
 				box.move(up);
 				moves++;
 				isFinished();
-			} else if (p.collidesWith(box, down) && d == down) {
-				for (int j = 0; j < boxes.size(); j++) {
-					Box otherBox = (Box) boxes.get(j);
+			} else if (EntireMap.getPlayer().collidesWith(box, down) && d == down) {
+				for (Box otherBox: EntireMap.getBoxes()){
 					if (!box.equals(otherBox)) {
 						if (box.collidesWith(otherBox, down)) {
 							return true;
@@ -167,7 +148,7 @@ public class SokobanGame {
 				box.move(down);
 				moves++;
 				isFinished();
-			}
+			}			
 		}
 		return false;
 	}
@@ -198,11 +179,8 @@ public class SokobanGame {
 			sv.scale();
 		}
 		
-		all.clear();
-		all.addAll(walls);
-		all.addAll(goals);
-		all.add(p);
-		all.addAll(boxes);
+		EntireMap.clearMap();
+		EntireMap.allAllToMap();
 		
 		sv.repaint();
 		sleep = false;
@@ -215,9 +193,6 @@ public class SokobanGame {
 			else if(x==2) placeTemplate2(prototype);
 			else if(x==3) placeTemplate3(prototype);
 		}
-//		placeTemplate1();
-//		placeTemplate2();
-//		placeTemplate3();
 	}
 
     private int[] items = new int[]{1,2,3};
@@ -227,20 +202,8 @@ public class SokobanGame {
     }
     
 	public void restartLevel() {
-		all.clear();
-		boxes.clear();
-		
-		p = initialP.clone();
-		
-		for (int i = 0; i < initialBoxes.size(); i++) {
-			Box box = (Box) initialBoxes.get(i);
-			boxes.add(box.clone());
-		}
-		
-		all.addAll(walls);
-		all.addAll(goals);
-		all.add(p);
-		all.addAll(boxes);
+		EntireMap.restartMap();
+
 		moves = 0;
 		sv.repaint();
 	}
@@ -251,11 +214,10 @@ public class SokobanGame {
 	
 	public void isFinished() {
 		int goalsReached = 0;
-		int numGoals = goals.size();
-		for (int i = 0; i < boxes.size(); i++) {
-			Box box = (Box) boxes.get(i);
-			for (int j = 0; j < goals.size(); j++) {
-				Goal goal = (Goal) goals.get(j);
+		int numGoals = EntireMap.GoalsSize();
+		
+		for (Box box: EntireMap.getBoxes()){
+			for (Goal goal: EntireMap.getGoals()){
 				if (box.x() == goal.x() && box.y() == goal.y()) {
 					goalsReached++;
 				}
@@ -268,11 +230,8 @@ public class SokobanGame {
 	}
 
 	public void newLevel() {
-		all.clear();
-		walls.clear();
-		boxes.clear();
-		free.clear();
-		initialBoxes.clear();
+		EntireMap.newMap();
+		
 		if (isComplete) {
 			isComplete = false;
 		}
@@ -281,9 +240,8 @@ public class SokobanGame {
 	}
 	
 	public boolean isBoxOnGoal(SokobanObject obj) {
-		for (int i = 0; i < goals.size(); i++) {
-			Goal g = (Goal) goals.get(i);
-			if (obj.x() == g.x() && obj.y() == g.y()) {
+		for (Goal goal: EntireMap.getGoals()){
+			if (obj.x() == goal.x() && obj.y() == goal.y()) {
 				return true;
 			}
 		}
@@ -291,30 +249,29 @@ public class SokobanGame {
 	}
 	
 	public void placePlayer() {
-		Random rng = new Random();
-		SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
-		free.remove(freeSpace);
-		p = new Player(freeSpace.x(), freeSpace.y());
-		initialP = p.clone();
+		SokobanObject freeSpace = EntireMap.getRandomFree();
+		EntireMap.removeFree(freeSpace);
+		Player p = new Player(freeSpace.x(), freeSpace.y());
+		EntireMap.setInitialPlayer(p);
+		EntireMap.setPlayer(p);
 	}
 	
 	public void placeGoals(int n) {
-		goals.clear();
+		EntireMap.clearGoals();
 		
 		int goalNum = 0;
 		int i = 0;
-		Random rng = new Random();
-		
+
 		while (goalNum < n && i < RNG_BOUND) {
-			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
+			SokobanObject freeSpace = EntireMap.getRandomFree();
 			if (hitWall(freeSpace, up) && hitWall(freeSpace, down)) {
 			
 			} else if (hitWall(freeSpace, right) && hitWall(freeSpace, left)) {
 				
 			} else {
-				free.remove(freeSpace);
+				EntireMap.removeFree(freeSpace);
 				Goal g = new Goal(freeSpace.x(), freeSpace.y());
-				goals.add(g);
+				EntireMap.addToGoals(g);
 				goalNum++;
 				if (goalNum == n) {
 					break;
@@ -331,10 +288,9 @@ public class SokobanGame {
 	public void placeBoxes(int n) {
 		int boxNum = 0;
 		int i = 0;
-		Random rng = new Random();
-		
+
 		while (boxNum < n && i < RNG_BOUND) {
-			SokobanObject freeSpace = free.get(rng.nextInt(free.size()));
+			SokobanObject freeSpace = EntireMap.getRandomFree();
 			
 			if (hitWall(freeSpace, up)) {
 				
@@ -345,10 +301,10 @@ public class SokobanGame {
 			} else if (hitWall(freeSpace, left)) {
 				
 			} else {
-				free.remove(freeSpace);
+				EntireMap.removeFree(freeSpace);
 				Box b = new Box(freeSpace.x(), freeSpace.y());
-				boxes.add(b);
-				initialBoxes.add(b.clone());
+				EntireMap.addToBoxes(b);
+				EntireMap.addToInitialBoxes(b.clone());
 				boxNum++;
 				if (boxNum == n) {
 					break;
@@ -388,11 +344,11 @@ public class SokobanGame {
 				continue;
 			} else if (element == '#') {
 				Wall wall = new Wall(x, y);
-				walls.add(wall);
+				EntireMap.addToWalls(wall);
 			} else if (element == ' ') {
 				SokobanObject freeSpace = new SokobanObject(x, y);
-				if (!free.contains(freeSpace)) {
-					free.add(freeSpace);
+				if (!EntireMap.freeContains(freeSpace)) {
+					EntireMap.addToFree(freeSpace);
 				}
 			}
 			x++;
@@ -427,11 +383,11 @@ public class SokobanGame {
 				continue;
 			} else if (element == '#') {
 				Wall wall = new Wall(x, y);
-				walls.add(wall);
+				EntireMap.addToWalls(wall);
 			} else if (element == ' ') {
 				SokobanObject freeSpace = new SokobanObject(x, y);
-				if (!free.contains(freeSpace)) {
-					free.add(freeSpace);
+				if (!EntireMap.freeContains(freeSpace)) {
+					EntireMap.addToFree(freeSpace);
 				}
 			}
 			x++;
@@ -472,11 +428,11 @@ public class SokobanGame {
 				continue;
 			} else if (element == '#') {
 				Wall wall = new Wall(x, y);
-				walls.add(wall);
+				EntireMap.addToWalls(wall);
 			} else if (element == ' ') {
 				SokobanObject freeSpace = new SokobanObject(x, y);
-				if (!free.contains(freeSpace)) {
-					free.add(freeSpace);
+				if (!EntireMap.freeContains(freeSpace)) {
+					EntireMap.addToFree(freeSpace);
 				}
 			}
 			x++;
@@ -525,11 +481,11 @@ public class SokobanGame {
 				rX = initRX;
 				rY++;
 			} else if (element == ' ') {
-				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
+				for (Iterator<Wall> iterator = EntireMap.getWalls().iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	if (!free.contains((SokobanObject) wall)) {
-				    		free.add((SokobanObject) wall);
+				    	if (!EntireMap.freeContains((SokobanObject) wall)) {
+				    		EntireMap.addToFree((SokobanObject) wall);
 						}
 				    	iterator.remove();
 				    }
@@ -582,11 +538,11 @@ public class SokobanGame {
 				rX = initRX;
 				rY++;
 			} else if (element == ' ') {
-				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
+				for (Iterator<Wall> iterator = EntireMap.getWalls().iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	if (!free.contains((SokobanObject) wall)) {
-				    		free.add((SokobanObject) wall);
+				    	if (!EntireMap.freeContains((SokobanObject) wall)) {
+				    		EntireMap.addToFree((SokobanObject) wall);
 						}
 				    	iterator.remove();
 				    }
@@ -639,19 +595,19 @@ public class SokobanGame {
 				rX = initRX;
 				rY++;
 			} else if (element == ' ') {
-				for (Iterator<SokobanObject> iterator = walls.iterator(); iterator.hasNext();) {
+				for (Iterator<Wall> iterator = EntireMap.getWalls().iterator(); iterator.hasNext();) {
 				    Wall wall = (Wall) iterator.next();
 				    if (wall.x() == rX && wall.y() == rY) {
-				    	if (!free.contains((SokobanObject) wall)) {
-				    		free.add((SokobanObject) wall);
+				    	if (!EntireMap.freeContains((SokobanObject) wall)) {
+				    		EntireMap.addToFree((SokobanObject) wall);
 						}
 				    	iterator.remove();
 				    }
 				}
 				rX++;
 			} else if (element == '#') {
-				walls.add(new Wall(rX, rY));
-				for (Iterator<SokobanObject> iterator = free.iterator(); iterator.hasNext();) {
+				EntireMap.addToWalls(new Wall(rX, rY));
+				for (Iterator<SokobanObject> iterator = EntireMap.getFree().iterator(); iterator.hasNext();) {
 				    SokobanObject freeObj = iterator.next();
 				    if (freeObj.x() == rX && freeObj.y() == rY) {
 				    	iterator.remove();

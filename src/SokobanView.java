@@ -33,7 +33,7 @@ public class SokobanView extends JPanel {
 			currSize = size*sg.getWidth();
 		}
 		
-		ArrayList<SokobanObject> all = sg.getAll();
+		ArrayList<SokobanObject> all = sg.getEntireMap();
 		
 		for (int i = 0; i < all.size(); i++) {
 			SokobanObject obj = all.get(i);
