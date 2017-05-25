@@ -1,5 +1,4 @@
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 /**
  * WarehouseGenerator is responsible for initialising the game map
  * with the initial positions of the player and boxes, as well as
@@ -119,7 +118,6 @@ public class WarehouseGenerator {
      */
 	public void placeGoals(int n) {
 		map.clearGoals();
-		
 		int goalNum = 0;
 		int i = 0;
 
@@ -158,6 +156,7 @@ public class WarehouseGenerator {
 		int i = 0;
 		
 		map.clearBoxes();
+		map.clearInitialBoxes();
 		
 		while (boxNum < n && i < RNG_BOUND) {
 			WarehouseObject freeSpace = map.getRandomFree();

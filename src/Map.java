@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class Map {
 	private Player player;
@@ -87,6 +86,10 @@ public class Map {
 	
 	public void addToInitialBoxes(Box b){
 		initialBoxes.add(b);
+	}
+	
+	public void clearInitialBoxes() {
+		initialBoxes.clear();
 	}
 
 	
@@ -177,16 +180,27 @@ public class Map {
 		return freeSpace;	
 	}
 	
-	public void removeFree(WarehouseObject toBeRemoved){
-		free.remove(toBeRemoved);
+	public void removeFree(WarehouseObject toBeRemoved) {
+		for (Iterator<WarehouseObject> iterator = free.iterator(); iterator.hasNext();) {
+		    WarehouseObject obj = iterator.next();
+		    if (obj.x() == toBeRemoved.x() && obj.y() == toBeRemoved.y()) {
+		    	iterator.remove();
+		    }
+		}
 	}
 	
 	public void addToFree(WarehouseObject f){
 		free.add(f);
 	}
 	
-	public boolean freeContains(WarehouseObject f){
-		return free.contains(f);
+	public boolean freeContains(WarehouseObject f) {
+		for (int i = 0; i < free.size(); i++) {
+			WarehouseObject obj = free.get(i);
+			if (obj.x() == f.x() && obj.y() == f.y()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
