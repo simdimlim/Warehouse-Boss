@@ -57,11 +57,6 @@ public class WarehouseView extends JPanel {
 			}
 		}
 		
-//		g.setColor(Color.WHITE);
-//        g.fillRect(sg.getWidth()*size-105, 15, 75, 20);
-//        g.setColor(Color.BLACK);
-//		g.drawString("Moves: " + sg.moveNum(), sg.getWidth()*size-100, 30);
-		
 		g.drawImage(moves, currSize-150, 10, moves.getWidth(null), moves.getHeight(null), this);
 		g.setFont(new Font("Arial", Font.BOLD, 22));
 		g.setColor(Color.WHITE);

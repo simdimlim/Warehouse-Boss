@@ -28,7 +28,7 @@ public class WarehouseBoss extends JFrame{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        WarehouseBoss Warehouse = new WarehouseBoss();
-        Warehouse.setVisible(true);
+        WarehouseBoss warehouse = new WarehouseBoss();
+        warehouse.setVisible(true);
     }
 }
