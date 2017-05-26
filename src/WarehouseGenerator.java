@@ -41,14 +41,14 @@ public class WarehouseGenerator {
 		int level = g.getLevel();
 		if (level <= 5) {
 			initialisePrototype1();
-			placeTemplates(3);
+			placeTemplates(1);
 			placePlayer();
 			placeBoxes(3);
 			placeGoals(3);
 		}
 		else if (level > 5 && level <= 10) {
 			initialisePrototype2();
-			placeTemplates(3);
+			placeTemplates(2);
 			placePlayer();
 			placeBoxes(4);
 			placeGoals(4);
