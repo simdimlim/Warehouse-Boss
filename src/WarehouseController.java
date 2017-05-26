@@ -53,7 +53,7 @@ public class WarehouseController implements KeyListener,ActionListener {
 
     	x += velx;
     	y += vely;
-    	view.repaint();
+//    	view.repaint();
     }
     @Override
     /**
@@ -146,7 +146,7 @@ public class WarehouseController implements KeyListener,ActionListener {
 		} else if (key == KeyEvent.VK_N) {
 			g.newLevel();
 		}
-		//view.repaint();
+		view.repaint();
     }
     
  
