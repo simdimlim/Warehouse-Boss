@@ -93,10 +93,11 @@ public class WarehouseGenerator {
 	public void placeTemplates(int prototype){
 		Random rng = new Random();
 		for(int i=0;i<3;i++){
-			int x = rng.nextInt(3);
+			int x = rng.nextInt(4);
 			if(x==0) placeTemplate1(prototype);
 			else if(x==1) placeTemplate2(prototype);
 			else if(x==2) placeTemplate3(prototype);
+			else if(x==3) placeTemplate4(prototype);
 		}
 	}
     
@@ -204,7 +205,7 @@ public class WarehouseGenerator {
 		        + "#      #\n"
 		        + "#  ##  #\n"
 		        + "#      #\n"
-		        + "########\n"
+		        + "#      #\n"
 		        + "########\n"
 		        + "########\n";
 		
@@ -250,9 +251,9 @@ public class WarehouseGenerator {
 		        + "#        #\n"
 		        + "#  #  ####\n"
 		        + "#        #\n"
-		        + "##########\n"
-		        + "##########\n"
-		        + "##########\n"
+		        + "#        #\n"
+		        + "#        #\n"
+		        + "#        #\n"
 		        + "##########\n"
 		        + "##########\n";
 		
@@ -302,9 +303,9 @@ public class WarehouseGenerator {
 		        + "####   ###    #\n"
 		        + "###    ###### #\n"
 		        + "####          #\n"
-		        + "###############\n"
-		        + "###############\n"
-		        + "###############\n"
+		        + "####          #\n"
+		        + "###           #\n"
+		        + "##            #\n"
 		        + "###############\n"
 		        + "###############\n";
 		
@@ -503,6 +504,77 @@ public class WarehouseGenerator {
 		
 		for (int i = 0; i < template3.length(); i++) {
 			char element = template3.charAt(i);
+			if (element == '\n') {
+				rX = initRX;
+				rY++;
+			} else if (element == ' ') {
+				for (Iterator<Wall> iterator = map.getWalls().iterator(); iterator.hasNext();) {
+				    Wall wall = (Wall) iterator.next();
+				    if (wall.x() == rX && wall.y() == rY) {
+				    	if (!map.freeContains((WarehouseObject) wall)) {
+				    		map.addToFree((WarehouseObject) wall);
+						}
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			} else if (element == '#') {
+				for (Iterator<WarehouseObject> iterator = map.getFree().iterator(); iterator.hasNext();) {
+				    WarehouseObject freeObj = iterator.next();
+				    if (freeObj.x() == rX && freeObj.y() == rY) {
+				    	map.addToWalls(new Wall(rX, rY));
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			}
+		}
+	}
+	
+	/**
+	 * Place template 4 randomly in the level.
+	 * 
+	 * @param prototype The prototype number
+	 */
+	public void placeTemplate4(int prototype) {
+		String template4 =
+				  "   \n"
+				+ "#  \n"
+				+ "#  \n";
+		
+		int t4Width = 3;
+		int t4Height = 3;
+		
+		Random rng = new Random();
+		int rX = 0;
+		int rY = 0;
+		int boundY = 0;
+		
+		while (rX == 0) {
+			rX = rng.nextInt(width-t4Width);
+		}
+		
+		if (rX == 1 || rX == 4) {
+			while (rY < 1 || rY > 4) {
+				rY = rng.nextInt(height-t4Height);
+			}
+		} else if (rX > 1 && rX < 5) {
+			rY = 4;
+		} else {
+			if (prototype == 2) {
+				boundY = 4;
+			} else if (prototype == 3) {
+				boundY = 8;
+			}
+			while (rY < 1 || rY > boundY) {
+				rY = rng.nextInt(height-t4Height);
+			}
+		}
+		
+		int initRX = rX;
+		
+		for (int i = 0; i < template4.length(); i++) {
+			char element = template4.charAt(i);
 			if (element == '\n') {
 				rX = initRX;
 				rY++;
