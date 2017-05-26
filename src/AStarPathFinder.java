@@ -14,8 +14,6 @@ public  class AStarPathFinder implements PathFinder {
 	
 	/** The complete set of nodes across the map */
 	private Node[][] nodes;
-	/** True if we allow diagonal movement */
-	private boolean allowDiagMovement;
 	/** The heuristic we're applying to determine which nodes to search first */
 	private AStarHeuristic heuristic;
 	
@@ -26,8 +24,8 @@ public  class AStarPathFinder implements PathFinder {
 	 * @param maxSearchDistance The maximum depth we'll search before giving up
 	 * @param allowDiagMovement True if the search should try diagonal movement
 	 */
-	public AStarPathFinder(Map map, int maxSearchDistance, boolean allowDiagMovement) {
-		this(map, maxSearchDistance, allowDiagMovement, new AStarHeuristic());
+	public AStarPathFinder(Map map, int maxSearchDistance) {
+		this(map, maxSearchDistance, new AStarHeuristic());
 	}
 
 	/**
@@ -38,12 +36,10 @@ public  class AStarPathFinder implements PathFinder {
 	 * @param maxSearchDistance The maximum depth we'll search before giving up
 	 * @param allowDiagMovement True if the search should try diagonal movement
 	 */
-	public AStarPathFinder(Map map, int maxSearchDistance, 
-						   boolean allowDiagMovement, AStarHeuristic heuristic) {
+	public AStarPathFinder(Map map, int maxSearchDistance, AStarHeuristic heuristic) {
 		this.heuristic = heuristic;
 		this.map = map;
 		this.maxSearchDistance = maxSearchDistance;
-		this.allowDiagMovement = false;
 		
 
 		nodes = new Node[map.getWidth()][map.getHeight()];
@@ -57,15 +53,22 @@ public  class AStarPathFinder implements PathFinder {
 			nodes[wo.x()][wo.y()] = new Node(wo.x(), wo.y(), map.getType(wo));
 			//System.out.print(wo.x() + " " + wo.y() + " " + map.getType(wo) +" \n" );
 		}
-//		for (int x=0;x<map.getWidth();x++) {
-//			for (int y=0;y<map.getHeight();y++) {
-//				System.out.print(nodes[x][y].x + " ");
-//				System.out.print(nodes[x][y].y + " ");
-//				System.out.println(nodes[x][y].type);
+		for (int x=0;x<map.getWidth();x++) {
+			for (int y=0;y<map.getHeight();y++) {
+				//System.out.print(nodes[x][y].x + " ");
+				//System.out.print(nodes[x][y].y + " ");
+				System.out.print(nodes[x][y].type + " ");
+			}System.out.println();
+		}
+		map.cornerListCreator(map.getFree(), map.getWalls());
+//		for (Wall corner : map.getCorners()){
+//			if (corner.x() == x && corner.y() == y){
+//				return false;
 //			}
+//			System.out.println(corner.x()+"--"+corner.y());
 //		}
 	}
-	
+
 	/**
 	 * @see PathFinder#findPath(Mover, int, int, int, int)
 	 */
@@ -90,6 +93,9 @@ public  class AStarPathFinder implements PathFinder {
 			// be the most likely to be the next step based on our heuristic
 
 			Node current = getFirstInOpen();
+//			if ((current == nodes[tx][ty]) || (!canPush(current))) {
+//				break;
+//			}
 			if (current == nodes[tx][ty]) {
 				break;
 			}
@@ -110,11 +116,10 @@ public  class AStarPathFinder implements PathFinder {
 					// if we're not allowing diagonal movement then only 
 					// one of x or y can be set
 
-					if (!allowDiagMovement) {
-						if ((x != 0) && (y != 0)) {
-							continue;
-						}
+					if ((x != 0) && (y != 0)) {
+						continue;
 					}
+					
 					
 					// determine the location of the neighbor and evaluate it
 
@@ -146,9 +151,7 @@ public  class AStarPathFinder implements PathFinder {
 						}
 						
 						// if the node hasn't already been processed and discarded then
-
 						// reset it's cost to our current cost and add it as a next possible
-
 						// step (i.e. to the open list)
 
 						if (!inOpenList(neighbour) && !(inClosedList(neighbour))) {
@@ -265,15 +268,37 @@ public  class AStarPathFinder implements PathFinder {
 	 * @return True if the location is valid for the given mover
 	 */
 	protected boolean isValidLocation(WarehouseObject box, int sx, int sy, int x, int y) {
-		boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidth()) || (y >= map.getHeight());
+		if((x < 0) || (y < 0) || (x >= map.getWidth()) || (y >= map.getHeight())){
+			return false;
+		}
+		
 		
 		//check if box is put into corner
-		//if()
-//		if ((!invalid) && ((sx != x) || (sy != y))) {
-//			invalid = map.blocked(box, x, y);
-//		}
+		for (Wall corner : map.getCorners()){
+			for (WarehouseObject g : map.getGoals()){
+				if ((corner.x() == x && corner.y() == y) && (x != g.x() && y!= g.y()) ){
+					return false;
+				}
+			}
+		}
 		
-		return !invalid;
+		return true;
+	}
+	protected boolean canPush(Node current){
+		for (Wall w : map.getWalls()){
+			if (current.parentDirection == 'X'){
+				return true;
+			} else if(current.parentDirection == 'R'){
+				if ( (w.x() == (current.parent.x-1)) && (w.y() == (current.parent.y))) return false; 
+			} else if(current.parentDirection == 'L'){
+				if (( w.x() == (current.parent.x+1))&& (w.y() == (current.parent.y))) return false;
+			} else if(current.parentDirection == 'U'){
+				if (( w.y() == (current.parent.y-1)) && (w.x() == (current.parent.x))) return false;	
+			} else if(current.parentDirection == 'D'){
+				if ((w.y() == (current.parent.y+1)) && (w.x() == (current.parent.x))) return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -385,6 +410,7 @@ public  class AStarPathFinder implements PathFinder {
 		private int depth;
 		
 		private char type;
+		private char parentDirection;
 		
 		/**
 		 * Create a new node
@@ -407,8 +433,25 @@ public  class AStarPathFinder implements PathFinder {
 		public int setParent(Node parent) {
 			depth = parent.depth + 1;
 			this.parent = parent;
-			
+			this.setParentDirection(this);
 			return depth;
+		}
+		
+		public char setParentDirection(Node n){
+			int px =  n.parent.x - n.x;
+			int py =  n.parent.y - n.y;
+			
+			if (px > 0 ){
+				return 'L';
+			} else if (px < 0 ){
+				return 'R';
+			} else if (py > 0 ){
+				return 'U';
+			} else if (py < 0 ){
+				return 'D';
+			}
+			
+			return 'X';
 		}
 		
 		/**

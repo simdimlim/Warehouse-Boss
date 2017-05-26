@@ -146,11 +146,19 @@ public class WarehouseController implements KeyListener,ActionListener {
 		} else if (key == KeyEvent.VK_N) {
 			g.newLevel();
 		}
+		if(g.boxCornered()){
+			try {
+				playCorneredSound();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		view.repaint();
     }
     
- 
-    @Override
+
+	@Override
     /**
      * Handle any key let up.
      */
@@ -187,6 +195,17 @@ public class WarehouseController implements KeyListener,ActionListener {
      */
     public void playMoveSound() throws Exception{
         String gongFile = "src/sounds/tap.wav";
+        InputStream in = new FileInputStream(gongFile);
+        AudioStream audioStream = new AudioStream(in);
+        AudioPlayer.player.start(audioStream);
+    }
+    /**
+     * Plays a sound when the box is in a corner and not on goal
+     * 
+     * @throws Exception
+     */
+    public void playCorneredSound() throws Exception{
+        String gongFile = "src/sounds/aww.wav";
         InputStream in = new FileInputStream(gongFile);
         AudioStream audioStream = new AudioStream(in);
         AudioPlayer.player.start(audioStream);

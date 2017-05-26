@@ -70,8 +70,7 @@ public class WarehouseGenerator {
 		
 		view.repaint();
 		
-		AStarPathFinder astar = new AStarPathFinder(g.getGameMap(), 10, false);
-		//System.out.println("!!!"+g.getGameMap().getGoals().size()+" "+g.getGameMap().getBoxes().size());
+		AStarPathFinder astar = new AStarPathFinder(g.getGameMap(),15);
 		int flag =0;
 		for (int j=0;j<g.getGameMap().getGoals().size();j++){
 			for (int i=0;i<g.getGameMap().getBoxes().size();i++){
@@ -79,7 +78,6 @@ public class WarehouseGenerator {
 				Path p = astar.findPath(b, b.x(), b.y(), g.getGameMap().getGoals().get(j).x(), g.getGameMap().getGoals().get(j).y());
 				if(p != null) {
 					flag++;
-					//System.out.println(p.getLength()+"--");
 					break;
 				}
 				
@@ -550,6 +548,5 @@ public class WarehouseGenerator {
 				rX++;
 			}
 		}
-	}
-    
+	}    
 }
