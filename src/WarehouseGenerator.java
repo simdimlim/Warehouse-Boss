@@ -70,22 +70,28 @@ public class WarehouseGenerator {
 		}
 		
 		map.addAllToMap();
-		AStarPathFinder astar = new AStarPathFinder(g.getGameMap(),15);
-		int flag =0;
-		for (int j=0;j<g.getGameMap().getGoals().size();j++){
-			for (int i=0;i<g.getGameMap().getBoxes().size();i++){
-				Box b = g.getGameMap().getBoxes().get(i);
-				Path p = astar.findPath(b, b.x(), b.y(), g.getGameMap().getGoals().get(j).x(), g.getGameMap().getGoals().get(j).y());
-				if(p != null) {
-					flag++;
-					break;
+		/*
+		 * Only check up to level 10 as after level 10, levels are huge and runtime is massive.
+		 */
+		if (level < 10 ) {
+			AStarPathFinder astar = new AStarPathFinder(g.getGameMap(),15);
+			int flag =0;
+			for (int j=0;j<g.getGameMap().getGoals().size();j++){
+				for (int i=0;i<g.getGameMap().getBoxes().size();i++){
+					Box b = g.getGameMap().getBoxes().get(i);
+					Path p = astar.findPath(b, b.x(), b.y(), g.getGameMap().getGoals().get(j).x(), g.getGameMap().getGoals().get(j).y());
+					if(p != null) {
+						flag++;
+						break;
+					}
+					
 				}
-				
+			}
+			if(flag != g.getGameMap().getGoals().size()){
+				newLevel();
 			}
 		}
-		if(flag != g.getGameMap().getGoals().size()){
-			newLevel();
-		}
+
 		view.repaint();
 
 		g.setSleeping(false);
