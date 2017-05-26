@@ -94,7 +94,7 @@ public class WarehouseGenerator {
 	 */
 	public void generateTutorial() {
 		map.clearMap();
-		initialisePrototype1();
+		initialiseTutorialPrototype();
 		Player p = new Player(2, 4);
 		map.setInitialPlayer(p);
 		map.setPlayer(p);
@@ -244,6 +244,51 @@ public class WarehouseGenerator {
 		if (boxNum < n) {
 			newLevel();
 		}
+	}
+	
+	/**
+	 * Initialise the game map to store the walls of tutorial prototype.
+	 */
+	public void initialiseTutorialPrototype() {
+		map.clearFree();
+		
+		String prototype =
+		          "########\n"
+				+ "#      #\n"
+		        + "#      #\n"
+		        + "#      #\n"
+		        + "#      #\n"
+		        + "#      #\n"
+		        + "#      #\n"
+		        + "########\n";
+		
+		int x = 0;
+		int y = 0;
+		
+		for (int i = 0; i < prototype.length(); i++) {
+			char element = prototype.charAt(i);
+			
+			if (element == '\n') {
+				y++;
+				if (width < x) {
+					width = x;
+					map.setWidth(width);
+				}
+				x = 0;
+				continue;
+			} else if (element == '#') {
+				Wall wall = new Wall(x, y);
+				map.addToWalls(wall);
+			} else if (element == ' ') {
+				WarehouseObject freeSpace = new WarehouseObject(x, y);
+				if (!map.freeContains(freeSpace)) {
+					map.addToFree(freeSpace);
+				}
+			}
+			x++;
+		}
+		height = y;
+		map.setHeight(height);
 	}
 	
 	/**
