@@ -45,19 +45,12 @@ public class WarehouseGenerator {
 		map.clearMap();
 		if (g.isTutorial()) {
 			generateTutorial();
-		} else if (level <= 3) {
+		} else if (level <= 6) {
 			initialisePrototype1();
 			placeTemplates(1);
 			placePlayer();
 			placeBoxes(3);
 			placeGoals(3);
-		}
-		else if (level > 3 && level <= 6) {
-			initialisePrototype1();
-			placeTemplates(1);
-			placePlayer();
-			placeBoxes(4);
-			placeGoals(4);
 		}
 		else if (level > 6 && level <= 9) {
 			initialisePrototype2();
