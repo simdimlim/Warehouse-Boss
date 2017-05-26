@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>200</x>
+      <y>288</y>
+      <w>312</w>
+      <h>696</h>
+    </coordinates>
+    <panel_attributes>::Map
+--
+-player: Player
+-initialPlayer: Player
+-walls: ArrayList&lt;Wall&gt;
+-initialBoxes: ArrayList&lt;Box&gt;
+-boxes: ArrayList&lt;Box&gt;
+-goals: ArrayList&lt;Goal&gt;
+-map: ArrayList&lt;WarehouseObject&gt;
+-free: ArrayList&lt;WarehouseObject&gt;
+-width: int
+-height: int
+-visited: boolean[][]
+--
++&lt;&lt;constructor&gt;&gt; Map()
++getWidth(): int
++setWidth(int w): void
++getHeight(): int
++setHeight(int h): void
++setPlayer(Player p): void
++setInitialPlayer(Player p): void
++getPlayer(): Player
++getWalls(): ArrayList&lt;Wall&gt;
++wallSize(): int
++addToWalls(Wall w): void
++boxesSize(): int
++getBoxes(): ArrayList&lt;Box&gt;
++addToBoxes(Box b): void
++clearBoxes(): void
++getInitialBoxes(): ArrayList&lt;Box&gt;
++initialBoxesSize(): int
++addToInitialBoxes(Box b): void
++clearInitialBoxes(): void
++goalsSize(): int
++getGoals(): ArrayList&lt;Goal&gt;
++clearGoals(): void
++addToGoals(Goal g): void
++entireMapSize(): int
++getMap(): ArrayList&lt;WarehouseObject&gt;
++addAllToMap(): void
++addPlayerToMap(Player p): void
++clearMap(): void
++restartMap(): void
++newMap(): void
++freeSize(): int
++getFree(): ArrayList&lt;WarehouseObject&gt;
++getRandomFree(): WarehouseObject
++removeFree(WarehouseObject toBeRemoved): void
++addToFree(WarehouseObject f): void
++freeContains(WarehouseObject f): boolean
++clearFree(): void
++pathFinderVisited(int x, int y): void
++clearVisited(): void
++getCost(WarehouseObject f, int sx, int sy, int tx, int ty): float
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>256</x>
+      <y>1200</y>
+      <w>272</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>::WarehouseGame
+--
+-map: Map
+-up: Direction
+-down: Direction
+-left: Direction
+-right: Direction
+-view: WarehouseView
+-isComplete: boolean
+-height: int
+-width: int
+-level: int
+-moves: int
+-sleep: boolean
+-gen: WarehouseGenerator
+--
++&lt;&lt;constructor&gt;&gt;WarehouseGame()
++getPlayer(): Player
++getGameMap(): Map
++isSleeping(): boolean
++getLevel(): int
++setSleeping(boolean b): void
++getView(): WarehouseView
++isComplete(): boolean
++getWidth(): int
++getHeight(): int
++setWidth(int width): void
++setHeight(int height): void
++hitWall(WarehouseObject obj, Direction d): boolean
++hitBox(Direction d): boolean
++restartLevel(): void
++moveNum(): int
++isFinished(): void
++newLevel(): void
++isBoxOnGoal(WarehouseObject obj): boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1008</x>
+      <y>672</y>
+      <w>304</w>
+      <h>368</h>
+    </coordinates>
+    <panel_attributes>::WarehouseGenerator
+--
+-g: WarehouseGame
+-view: WarehouseView
+-map: Map
+-RNG_BOUND = 1000: int
+-up = Direction.UP: Direction
+-down = Direction.DOWN: Direction
+-left = Direction.LEFT: Direction
+-right = Direction.RIGHT: Direction
+-height: int
+-width: int
+--
++&lt;&lt;constructor&gt;&gt;WarehouseGenerator(WarehouseGame g)
++generateLevel(): void
++newLevel(): void
++restartLevel(): void
++placeTemplates(int prototype): void
++placePlayer(): void
++placeGoals(int n): void
++placeBoxes(int n): void
++initialisePrototype1(): void
++initialisePrototype2(): void
++initialisePrototype3(): void
++placeTemplate1(int prototype): void
++placeTemplate2(int prototype): void
++placeTemplate3(int prototype): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1384</x>
+      <y>1176</y>
+      <w>368</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>::WarehouseController
+--
+-g: WarehouseGame
+-view: WarehouseView
+~t: Timer
+~x,y,velx,vely: int
+--
++&lt;&lt;constructor&gt;&gt;WarehouseController(WarehouseGame g, WarehouseView view)
++actionPerformed(ActionEvent e): void
++keyPressed(KeyEvent e): void
++keyReleased(KeyEvent e): void
++keyTyped(KeyEvent e): void
++playCollisionSound(): void
++playMoveSound(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>984</x>
+      <y>160</y>
+      <w>320</w>
+      <h>304</h>
+    </coordinates>
+    <panel_attributes>::WarehouseView
+--
+-size: int
+-currSize: int
+-whg: WarehouseGame
+-boxOnGoal: Image
+-levelComplete: Image
+-moves: Image
+-level: Image
+-restartImg: Icon
+-newLevelImg: Icon
+-restart: JButton
+-newLevel: JButton
+--
++&lt;&lt;constructor&gt;&gt;WarehouseView(WarehouseGame whg)
++paintComponent(Graphics g): void
++paintLevel(Graphics g): void
++getGame(): WarehouseGame
++scale(): void
++getTileSize(): int
++actionPerformed(ActionEvent e): void
++addButtons(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>1112</y>
+      <w>304</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>::WarehouseObject
+--
+-x: int
+-y: int
+-img: Image
+--
++&lt;&lt;constructor&gt;&gt;WarehouseObject(int x, int y)
++x(): int
++y(): int
++setX(int x): void
++setY(int y): void
++getImage(): Image
++setImage(Image img): void
++collidesWith(WarehouseObject obj, Direction d): boolean
++clone(): WarehouseObject
++equals(Object o): boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>880</x>
+      <y>1552</y>
+      <w>136</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>::Player
+--
+-image: Image
+-imageR: Image
+-imageU: Image
+--
++&lt;&lt;constructor&gt;&gt;Player(int x, int y)
++move(Direction dir): void
++clone(): Player
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1048</x>
+      <y>1568</y>
+      <w>144</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>::Box
+--
+-image: Image
+--
++&lt;&lt;constructor&gt;&gt;Box(int x, int y)
++move(Direction dir): void
++clone(): Box
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1184</x>
+      <y>1440</y>
+      <w>184</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>::Goal
+--
+-image: Image
+--
++&lt;&lt;constructor&gt;&gt;Goal(int x, int y)
++clone(): Goal</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>1576</y>
+      <w>120</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>::Wall
+--
+-image: Image
+--
++&lt;&lt;constructor&gt;&gt;Wall(int x, int y)
++clone(): Wall</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>704</x>
+      <y>648</y>
+      <w>136</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>::WarehouseBoss
+--
++&lt;&lt;constructor&gt;&gt;WarehouseBoss()
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>736</x>
+      <y>1328</y>
+      <w>176</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>200.0;10.0;10.0;310.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>912</x>
+      <y>1328</y>
+      <w>80</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;280.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>992</x>
+      <y>1328</y>
+      <w>152</w>
+      <h>256</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;300.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>1328</y>
+      <w>184</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>512</x>
+      <y>712</y>
+      <w>248</w>
+      <h>504</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>290.0;10.0;10.0;610.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>832</x>
+      <y>296</y>
+      <w>168</w>
+      <h>392</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;470.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>976</y>
+      <w>32</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>20.0;280.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>872</y>
+      <w>504</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;530.0;610.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>976</x>
+      <y>1032</y>
+      <w>80</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1576</x>
+      <y>776</y>
+      <w>240</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ActionListener
+--
+--
++actionPerformed(ActionEvent e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1352</x>
+      <y>792</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+KeyListener
+--
+--
++keyPressed(KeyEvent e): void
++keyReleased(KeyEvent e): void
++keyTyped(KeyEvent e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1408</x>
+      <y>880</y>
+      <w>152</w>
+      <h>312</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;370.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1568</x>
+      <y>864</y>
+      <w>120</w>
+      <h>328</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;390.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>896</y>
+      <w>448</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;540.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>1336</y>
+      <w>880</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;170.0;1080.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1328</x>
+      <y>24</y>
+      <w>432</w>
+      <h>304</h>
+    </coordinates>
+    <panel_attributes>::AStarPathFinder
+--
+-closed: ArrayList
+-open: SortedList
+-map: Map
+-maxSearchDistance: int
+-nodes: Node[][]
+-heuristic: AStarHeuristic
+--
++AStarPathFinder(Map map, int maxSearchDistance): ctor
++AStarPathFinder(Map map, int maxSearchDistance, AStarHeuristic heuristic): ctor
++findPath(WarehouseObject box, int sx, int sy, int tx, int ty): Path
+#getFirstInOpen(): Node
+#addToOpen(Node node): void
+#inOpenList(Node node): boolean
+#removeFromOpen(Node node): void
+#addToClosed(Node node): void
+#inClosedList(Node node): boolean
+#removeFromClosed(Node node): void
+#isValidLocation(WarehouseObject box, int sx, int sy, int x, int y): boolean
+#canPush(Node current): boolean
++getMovementCost(WarehouseObject box, int sx, int sy, int tx, int ty): float
++getHeuristicCost(WarehouseObject box, int x, int y, int tx, int ty): float</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>408</x>
+      <y>104</y>
+      <w>184</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>::Path
+--
+-steps = new ArrayList(): ArrayList
+--
++Path(): ctor
++getLength(): int
++getStep(int index): Step
++getX(int index): int
++getY(int index): int
++appendStep(int x, int y): void
++prependStep(int x, int y): void
++contains(int x, int y): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>624</x>
+      <y>112</y>
+      <w>344</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+::PathFinder
+--
++findPath(WarehouseObject player, int sx, int sy, int tx, int ty): Path
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1344</x>
+      <y>464</y>
+      <w>384</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>::AStarHeuristic
+--
++getCost(Map map, WarehouseObject player, int x, int y, int tx, int ty): float
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>960</x>
+      <y>88</y>
+      <w>384</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;40.0;460.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>512</x>
+      <y>256</y>
+      <w>512</w>
+      <h>536</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>620.0;650.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>176</y>
+      <w>424</w>
+      <h>512</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>510.0;620.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1464</x>
+      <y>320</y>
+      <w>24</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+</diagram>
