@@ -286,6 +286,30 @@ public class WarehouseGame {
 		}
 	}
 	
+	public boolean boxCornered() {
+		
+		for (Box box: map.getBoxes()){
+			for (Goal goal : map.getGoals()){	
+				for (Wall corner: map.getCorners()){
+
+					if((corner.x() != goal.x()) && (corner.y() != goal.y()) ){
+						if (box.x() == corner.x() && box.y() == corner.y()) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Advances the current level.
+	 */
+	public void advanceLevel() {
+		level++;
+	}
+	
 	/**
 	 * Advances the current level.
 	 */

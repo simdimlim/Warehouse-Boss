@@ -45,7 +45,11 @@ public class WarehouseGenerator {
 		map.clearMap();
 		if (g.isTutorial()) {
 			generateTutorial();
+<<<<<<< HEAD
 		} else if (level <= 6) {
+=======
+		} else if (level <= 5) {
+>>>>>>> refs/remotes/origin/LevelCheckFinalBranch
 			initialisePrototype1();
 			placeTemplates(1);
 			placePlayer();
@@ -85,8 +89,24 @@ public class WarehouseGenerator {
 		}
 		
 		map.addAllToMap();
-
+		AStarPathFinder astar = new AStarPathFinder(g.getGameMap(),15);
+		int flag =0;
+		for (int j=0;j<g.getGameMap().getGoals().size();j++){
+			for (int i=0;i<g.getGameMap().getBoxes().size();i++){
+				Box b = g.getGameMap().getBoxes().get(i);
+				Path p = astar.findPath(b, b.x(), b.y(), g.getGameMap().getGoals().get(j).x(), g.getGameMap().getGoals().get(j).y());
+				if(p != null) {
+					flag++;
+					break;
+				}
+				
+			}
+		}
+		if(flag != g.getGameMap().getGoals().size()){
+			newLevel();
+		}
 		view.repaint();
+
 		g.setSleeping(false);
 	}
 	
@@ -95,7 +115,11 @@ public class WarehouseGenerator {
 	 */
 	public void generateTutorial() {
 		map.clearMap();
+<<<<<<< HEAD
 		initialiseTutorialPrototype();
+=======
+		initialisePrototype1();
+>>>>>>> refs/remotes/origin/LevelCheckFinalBranch
 		Player p = new Player(2, 4);
 		map.setInitialPlayer(p);
 		map.setPlayer(p);
@@ -127,12 +151,21 @@ public class WarehouseGenerator {
 	 */
 	public void restartLevel() {
 		if (g.isTutorial()) {
+<<<<<<< HEAD
 				generateTutorial();
 	 			map.addAllToMap();
 	 			g.setSleeping(false);
 	 	} else {
 	 			map.restartMap();
 	 	}
+=======
+			generateTutorial();
+			map.addAllToMap();
+			g.setSleeping(false);
+		} else {
+			map.restartMap();
+		}
+>>>>>>> refs/remotes/origin/LevelCheckFinalBranch
 		view.repaint();
 	}
 	
@@ -144,13 +177,20 @@ public class WarehouseGenerator {
 	public void placeTemplates(int prototype){
 		Random rng = new Random();
 		for(int i=0;i<3;i++){
+<<<<<<< HEAD
 			int x = rng.nextInt(6);
+=======
+			int x = rng.nextInt(4);
+>>>>>>> refs/remotes/origin/LevelCheckFinalBranch
 			if(x==0) placeTemplate1(prototype);
 			else if(x==1) placeTemplate2(prototype);
 			else if(x==2) placeTemplate3(prototype);
 			else if(x==3) placeTemplate4(prototype);
+<<<<<<< HEAD
 			else if(x==4) placeTemplate5(prototype);
 			else if(x==5) placeTemplate5(prototype);
+=======
+>>>>>>> refs/remotes/origin/LevelCheckFinalBranch
 		}
 	}
     
@@ -700,6 +740,7 @@ public class WarehouseGenerator {
 			}
 		}
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * Place template 5 randomly in the level.
@@ -841,5 +882,7 @@ public class WarehouseGenerator {
 			}
 		}
 	}
+=======
+>>>>>>> refs/remotes/origin/LevelCheckFinalBranch
     
 }

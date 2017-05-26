@@ -13,18 +13,20 @@ public class Map {
 	private int width;
 	private int height;
 	/** Indicator if a given tile has been visited during the search */
-	private boolean[][] visited = new boolean[width][height];
+	private boolean[][] visited = new boolean[15][15];
+
 	/**
 	 * Constructor for the games map.
 	 * Stores the entire level.
 	 */
 	public Map(){
 		walls = new ArrayList<Wall>();
+		corners = new ArrayList<Wall>();
 		boxes = new ArrayList<Box>();
 		initialBoxes = new ArrayList<Box>();
 		goals = new ArrayList<Goal>();
 		map = new ArrayList<WarehouseObject>();
-		free = new ArrayList<WarehouseObject>();		
+		free = new ArrayList<WarehouseObject>();	
 	}
 	
 	/**
@@ -77,6 +79,11 @@ public class Map {
 
 	public void addToWalls(Wall w){
 		walls.add(w);
+	}
+	
+	public void addToCorners(int x, int y){
+		Wall corner = new Wall(x, y);
+		corners.add(corner);
 	}
 	
 	/**
@@ -225,6 +232,7 @@ public class Map {
 	public void clearFree() {
 		free.clear();
 	}
+
 	
 	public void pathFinderVisited(int x, int y) {
 		visited[x][y] = true;
@@ -260,5 +268,34 @@ public class Map {
 		}
 		
 		return 'F';
+	}
+
+	public ArrayList<Wall> getCorners() {
+		return corners;
+	}
+	
+	public void cornerListCreator(ArrayList<WarehouseObject> free, ArrayList<Wall> walls){
+		for(WarehouseObject cor : free){
+			int cFlag =0;
+			for (int x=-1;x<2;x++) {
+				for (int y=-1;y<2;y++) {
+					int xw = x + cor.x();
+					int yw = y + cor.y();
+					for (Wall w : walls){
+						if(w.x() == xw && w.y() == yw){
+							cFlag++;
+						}
+					}
+					if(cFlag == 3){
+						addToCorners(cor.x(), cor.y());
+						break;
+					}
+				}
+				if(cFlag == 3){
+					//addToCorners(cor.x(), cor.y());
+					break;
+				}
+			}
+		}
 	}
 }
