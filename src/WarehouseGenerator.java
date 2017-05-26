@@ -73,7 +73,7 @@ public class WarehouseGenerator {
 		/*
 		 * Only check up to level 10 as after level 10, levels are huge and runtime is massive.
 		 */
-		if (level < 10 ) {
+		if (level <= 10 ) {
 			AStarPathFinder astar = new AStarPathFinder(g.getGameMap(),15);
 			int flag =0;
 			for (int j=0;j<g.getGameMap().getGoals().size();j++){
