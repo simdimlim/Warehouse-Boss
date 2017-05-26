@@ -16,6 +16,7 @@ public class WarehouseView extends JPanel implements ActionListener {
 	private Image boxOnGoal;
 	private Image levelComplete;
 	private Image moves;
+	private Image level;
 	private Icon restartImg;
 	private Icon newLevelImg;
 	private JButton restart;
@@ -33,6 +34,7 @@ public class WarehouseView extends JPanel implements ActionListener {
 		boxOnGoal = new ImageIcon(this.getClass().getResource("/images/box_on_goal.jpg")).getImage();
 		levelComplete = new ImageIcon(this.getClass().getResource("/images/level_complete.png")).getImage();
 		moves = new ImageIcon(this.getClass().getResource("/images/moves.png")).getImage();
+		level = new ImageIcon(this.getClass().getResource("/images/level.png")).getImage();
 		addButtons();
 	}
 	
@@ -85,6 +87,12 @@ public class WarehouseView extends JPanel implements ActionListener {
 		g.setFont(new Font("Arial", Font.BOLD, 22));
 		g.setColor(Color.WHITE);
 		g.drawString("" + whg.moveNum(), currSize-65, 31);
+		
+		// paints the level counter
+		g.drawImage(level, 20, 10, level.getWidth(null), level.getHeight(null), this);
+		g.setFont(new Font("Arial", Font.BOLD, 22));
+		g.setColor(Color.WHITE);
+		g.drawString("" + whg.getLevel(), 85, 31);
 		
 		// paints a message if the player completes the game
 		if (whg.isComplete()) {

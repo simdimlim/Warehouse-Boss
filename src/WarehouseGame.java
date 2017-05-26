@@ -13,7 +13,7 @@ public class WarehouseGame {
 	private boolean isComplete;
 	private int height;
 	private int width;
-	private int level = 0;
+	private int level = 1;
 	private int moves = 0;
 	private boolean sleep = false;
 	private WarehouseGenerator gen;
