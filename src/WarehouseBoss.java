@@ -23,7 +23,7 @@ public class WarehouseBoss extends JFrame{
 	/**
 	 * Main function for WarehouseBoss sets off rest of the program.
 	 * 
-	 * @param args
+	 * @param args arguments
 	 */
 	public static void main(String[] args) {
         WarehouseBoss warehouse = new WarehouseBoss();
