@@ -264,8 +264,11 @@ public class WarehouseGame {
 		}
 		if (goalsReached == numGoals) {
 			isComplete = true;
-			level++;
 		}
+	}
+	
+	public void advanceLevel() {
+		level++;
 	}
 	
 	/**

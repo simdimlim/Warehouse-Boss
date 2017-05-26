@@ -109,8 +109,8 @@ public class WarehouseView extends JPanel implements ActionListener {
 		            }
 			    }
 			});
-			
 			newLevelDelay.start();
+			whg.advanceLevel();
 		}
 	}
 	
