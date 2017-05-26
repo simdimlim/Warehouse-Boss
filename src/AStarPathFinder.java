@@ -43,12 +43,25 @@ public  class AStarPathFinder implements PathFinder {
 		this.heuristic = heuristic;
 		this.map = map;
 		this.maxSearchDistance = maxSearchDistance;
-		this.allowDiagMovement = allowDiagMovement;
+		this.allowDiagMovement = false;
 		
 		nodes = new Node[map.getWidth()][map.getHeight()];
+		
+		for (WarehouseObject wo: map.getMap()){
+			nodes[wo.x()][wo.y()] = new Node(wo.x(), wo.y(), map.getType(wo));
+			//System.out.print(wo.x() + " " + wo.y() + " " + map.getType(wo) +" \n" );
+		}
+		
+		for (WarehouseObject wo: map.getFree()){
+			nodes[wo.x()][wo.y()] = new Node(wo.x(), wo.y(), map.getType(wo));
+			//System.out.print(wo.x() + " " + wo.y() + " " + map.getType(wo) +" \n" );
+		}
+		
 		for (int x=0;x<map.getWidth();x++) {
 			for (int y=0;y<map.getHeight();y++) {
-				nodes[x][y] = new Node(x,y);
+				System.out.print(nodes[x][y].x + " ");
+				System.out.print(nodes[x][y].y + " ");
+				System.out.println(nodes[x][y].type);
 			}
 		}
 	}
@@ -256,6 +269,8 @@ public  class AStarPathFinder implements PathFinder {
 	protected boolean isValidLocation(WarehouseObject player, int sx, int sy, int x, int y) {
 		boolean invalid = (x < 0) || (y < 0) || (x >= map.getWidth()) || (y >= map.getHeight());
 		
+		//check if box is put into corner
+		
 //		if ((!invalid) && ((sx != x) || (sy != y))) {
 //			invalid = map.blocked(player, x, y);
 //		}
@@ -371,15 +386,18 @@ public  class AStarPathFinder implements PathFinder {
 		/** The search depth of this node */
 		private int depth;
 		
+		private char type;
+		
 		/**
 		 * Create a new node
 		 * 
 		 * @param x The x coordinate of the node
 		 * @param y The y coordinate of the node
 		 */
-		public Node(int x, int y) {
+		public Node(int x, int y, char type) {
 			this.x = x;
 			this.y = y;
+			this.type = type;
 		}
 		
 		/**

@@ -65,6 +65,7 @@ public class WarehouseGenerator {
 		
 		map.clearMap();
 		map.addAllToMap();
+
 		view.repaint();
 		g.setSleeping(false);
 	}
