@@ -78,6 +78,7 @@ public class WarehouseGenerator {
 	 * Generates a tutorial level.
 	 */
 	public void generateTutorial() {
+		map.clearMap();
 		initialisePrototype1();
 		Player p = new Player(2, 4);
 		map.setInitialPlayer(p);
@@ -109,7 +110,13 @@ public class WarehouseGenerator {
 	 * Restart the level.
 	 */
 	public void restartLevel() {
-		map.restartMap();
+		if (g.isTutorial()) {
+			generateTutorial();
+			map.addAllToMap();
+			g.setSleeping(false);
+		} else {
+			map.restartMap();
+		}
 		view.repaint();
 	}
 	
