@@ -1,4 +1,7 @@
+import java.awt.Image;
 import java.util.*;
+
+import javax.swing.ImageIcon;
 /**
  * WarehouseGenerator is responsible for initialising the game map
  * with the initial positions of the player and boxes, as well as
@@ -39,7 +42,10 @@ public class WarehouseGenerator {
 	 */
 	public void generateLevel() {
 		int level = g.getLevel();
-		if (level <= 5) {
+		map.clearMap();
+		if (g.isTutorial()) {
+			generateTutorial();
+		} else if (level <= 5) {
 			initialisePrototype1();
 			placeTemplates(1);
 			placePlayer();
@@ -63,10 +69,32 @@ public class WarehouseGenerator {
 			view.scale();
 		}
 		
-		map.clearMap();
 		map.addAllToMap();
 		view.repaint();
 		g.setSleeping(false);
+	}
+	
+	/**
+	 * Generates a tutorial level.
+	 */
+	public void generateTutorial() {
+		initialisePrototype1();
+		Player p = new Player(2, 4);
+		map.setInitialPlayer(p);
+		map.setPlayer(p);
+		Goal g = new Goal(6, 4);
+		map.addToGoals(g);
+		map.clearBoxes();
+		Box b = new Box(3, 4);
+		WarehouseObject arrow = new WarehouseObject(4,4);
+		WarehouseObject arrow2 = new WarehouseObject(5,4);
+		Image arrowImg = new ImageIcon(this.getClass().getResource("/images/tutorial_arrow.png")).getImage();
+		arrow.setImage(arrowImg);
+		arrow2.setImage(arrowImg);
+		map.addToMap(arrow);
+		map.addToMap(arrow2);
+		map.addToBoxes(b);
+		map.addToInitialBoxes(b.clone());
 	}
 	
 	/**
@@ -110,6 +138,7 @@ public class WarehouseGenerator {
 		Player p = new Player(freeSpace.x(), freeSpace.y());
 		map.setInitialPlayer(p);
 		map.setPlayer(p);
+		
 	}
 	
     /**

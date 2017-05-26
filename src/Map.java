@@ -187,6 +187,10 @@ public class Map {
 		initialBoxes.clear();
 	}
 	
+	public void addToMap(WarehouseObject obj) {
+		map.add(obj);
+	}
+	
 	/**
 	 * Free Functions
 	 */
