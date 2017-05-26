@@ -4,6 +4,7 @@ public class Map {
 	private Player player;
 	private Player initialPlayer;
 	private ArrayList<Wall> walls;
+	private ArrayList<Wall> corners;
 	private ArrayList<Box> initialBoxes;
 	private ArrayList<Box> boxes;
 	private ArrayList<Goal> goals;
@@ -235,5 +236,25 @@ public class Map {
 	
 	public float getCost(WarehouseObject f, int sx, int sy, int tx, int ty) {
 		return 1;
+	}
+	
+	/**
+	 * Find the type of object at the given coordinates
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public char getType(WarehouseObject so){
+		if (so instanceof Wall){
+			return 'W';
+		} else if (so instanceof Box){
+			return 'B';
+		} else if (so instanceof Player){
+			return 'P';
+		} else if (so instanceof Goal){
+			return 'G';
+		}
+		
+		return 'F';
 	}
 }
