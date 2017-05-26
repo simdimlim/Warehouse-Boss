@@ -58,13 +58,7 @@ public class WarehouseView extends JPanel implements ActionListener {
 			currSize = size*whg.getWidth();
 		}
 		
-
-		
 		ArrayList<WarehouseObject> all = whg.getGameMap().getMap();
-		
-		AStarPathFinder astar = new AStarPathFinder(whg.getGameMap(), 6, false);
-
-		//Path p = astar.findPath(whg.getGameMap().getPlayer(), 4, 0, 0, 0);
 		
 		for (int i = 0; i < all.size(); i++) {
 			WarehouseObject obj = all.get(i);
@@ -85,6 +79,8 @@ public class WarehouseView extends JPanel implements ActionListener {
 				g.drawImage(obj.getImage(), x, y, size, size, this);
 			} else if (obj instanceof Wall) {
 				g.drawImage(obj.getImage(), x, y, size, size, this);
+			} else if (obj instanceof WarehouseObject) {
+				g.drawImage(obj.getImage(), x, y, size, size, this);
 			}
 		}
 		
@@ -96,9 +92,14 @@ public class WarehouseView extends JPanel implements ActionListener {
 		
 		// paints the level counter
 		g.drawImage(level, 20, 10, level.getWidth(null), level.getHeight(null), this);
-		g.setFont(new Font("Arial", Font.BOLD, 22));
 		g.setColor(Color.WHITE);
-		g.drawString("" + whg.getLevel(), 85, 31);
+		if (whg.isTutorial()) {
+			g.setFont(new Font("Arial", Font.BOLD, 11));
+			g.drawString("TUTORIAL", 80, 27);
+		} else {
+			g.setFont(new Font("Arial", Font.BOLD, 22));
+			g.drawString("" + whg.getLevel(), 85, 31);
+		}
 		
 		// paints a message if the player completes the game
 		if (whg.isComplete()) {
@@ -115,8 +116,12 @@ public class WarehouseView extends JPanel implements ActionListener {
 		            }
 			    }
 			});
-			
 			newLevelDelay.start();
+			if (whg.isTutorial()) {
+				whg.setIsTutorial(false);
+			} else {
+				whg.advanceLevel();
+			}
 		}
 	}
 	

@@ -1,4 +1,7 @@
+import java.awt.Image;
 import java.util.*;
+
+import javax.swing.ImageIcon;
 /**
  * WarehouseGenerator is responsible for initialising the game map
  * with the initial positions of the player and boxes, as well as
@@ -39,7 +42,10 @@ public class WarehouseGenerator {
 	 */
 	public void generateLevel() {
 		int level = g.getLevel();
-		if (level <= 5) {
+		map.clearMap();
+		if (g.isTutorial()) {
+			generateTutorial();
+		} else if (level <= 5) {
 			initialisePrototype1();
 			placeTemplates(1);
 			placePlayer();
@@ -63,11 +69,50 @@ public class WarehouseGenerator {
 			view.scale();
 		}
 		
-		map.clearMap();
 		map.addAllToMap();
-
+		AStarPathFinder astar = new AStarPathFinder(g.getGameMap(),15);
+		int flag =0;
+		for (int j=0;j<g.getGameMap().getGoals().size();j++){
+			for (int i=0;i<g.getGameMap().getBoxes().size();i++){
+				Box b = g.getGameMap().getBoxes().get(i);
+				Path p = astar.findPath(b, b.x(), b.y(), g.getGameMap().getGoals().get(j).x(), g.getGameMap().getGoals().get(j).y());
+				if(p != null) {
+					flag++;
+					break;
+				}
+				
+			}
+		}
+		if(flag != g.getGameMap().getGoals().size()){
+			newLevel();
+		}
 		view.repaint();
+
 		g.setSleeping(false);
+	}
+	
+	/**
+	 * Generates a tutorial level.
+	 */
+	public void generateTutorial() {
+		map.clearMap();
+		initialisePrototype1();
+		Player p = new Player(2, 4);
+		map.setInitialPlayer(p);
+		map.setPlayer(p);
+		Goal g = new Goal(6, 4);
+		map.addToGoals(g);
+		map.clearBoxes();
+		Box b = new Box(3, 4);
+		WarehouseObject arrow = new WarehouseObject(4,4);
+		WarehouseObject arrow2 = new WarehouseObject(5,4);
+		Image arrowImg = new ImageIcon(this.getClass().getResource("/images/tutorial_arrow.png")).getImage();
+		arrow.setImage(arrowImg);
+		arrow2.setImage(arrowImg);
+		map.addToMap(arrow);
+		map.addToMap(arrow2);
+		map.addToBoxes(b);
+		map.addToInitialBoxes(b.clone());
 	}
 	
 	/**
@@ -82,7 +127,13 @@ public class WarehouseGenerator {
 	 * Restart the level.
 	 */
 	public void restartLevel() {
-		map.restartMap();
+		if (g.isTutorial()) {
+			generateTutorial();
+			map.addAllToMap();
+			g.setSleeping(false);
+		} else {
+			map.restartMap();
+		}
 		view.repaint();
 	}
 	
@@ -94,10 +145,11 @@ public class WarehouseGenerator {
 	public void placeTemplates(int prototype){
 		Random rng = new Random();
 		for(int i=0;i<3;i++){
-			int x = rng.nextInt(3);
+			int x = rng.nextInt(4);
 			if(x==0) placeTemplate1(prototype);
 			else if(x==1) placeTemplate2(prototype);
 			else if(x==2) placeTemplate3(prototype);
+			else if(x==3) placeTemplate4(prototype);
 		}
 	}
     
@@ -110,6 +162,7 @@ public class WarehouseGenerator {
 		Player p = new Player(freeSpace.x(), freeSpace.y());
 		map.setInitialPlayer(p);
 		map.setPlayer(p);
+		
 	}
 	
     /**
@@ -205,7 +258,7 @@ public class WarehouseGenerator {
 		        + "#      #\n"
 		        + "#  ##  #\n"
 		        + "#      #\n"
-		        + "########\n"
+		        + "#      #\n"
 		        + "########\n"
 		        + "########\n";
 		
@@ -251,9 +304,9 @@ public class WarehouseGenerator {
 		        + "#        #\n"
 		        + "#  #  ####\n"
 		        + "#        #\n"
-		        + "##########\n"
-		        + "##########\n"
-		        + "##########\n"
+		        + "#        #\n"
+		        + "#        #\n"
+		        + "#        #\n"
 		        + "##########\n"
 		        + "##########\n";
 		
@@ -303,9 +356,9 @@ public class WarehouseGenerator {
 		        + "####   ###    #\n"
 		        + "###    ###### #\n"
 		        + "####          #\n"
-		        + "###############\n"
-		        + "###############\n"
-		        + "###############\n"
+		        + "####          #\n"
+		        + "###           #\n"
+		        + "##            #\n"
 		        + "###############\n"
 		        + "###############\n";
 		
@@ -504,6 +557,77 @@ public class WarehouseGenerator {
 		
 		for (int i = 0; i < template3.length(); i++) {
 			char element = template3.charAt(i);
+			if (element == '\n') {
+				rX = initRX;
+				rY++;
+			} else if (element == ' ') {
+				for (Iterator<Wall> iterator = map.getWalls().iterator(); iterator.hasNext();) {
+				    Wall wall = (Wall) iterator.next();
+				    if (wall.x() == rX && wall.y() == rY) {
+				    	if (!map.freeContains((WarehouseObject) wall)) {
+				    		map.addToFree((WarehouseObject) wall);
+						}
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			} else if (element == '#') {
+				for (Iterator<WarehouseObject> iterator = map.getFree().iterator(); iterator.hasNext();) {
+				    WarehouseObject freeObj = iterator.next();
+				    if (freeObj.x() == rX && freeObj.y() == rY) {
+				    	map.addToWalls(new Wall(rX, rY));
+				    	iterator.remove();
+				    }
+				}
+				rX++;
+			}
+		}
+	}
+	
+	/**
+	 * Place template 4 randomly in the level.
+	 * 
+	 * @param prototype The prototype number
+	 */
+	public void placeTemplate4(int prototype) {
+		String template4 =
+				  "   \n"
+				+ "#  \n"
+				+ "#  \n";
+		
+		int t4Width = 3;
+		int t4Height = 3;
+		
+		Random rng = new Random();
+		int rX = 0;
+		int rY = 0;
+		int boundY = 0;
+		
+		while (rX == 0) {
+			rX = rng.nextInt(width-t4Width);
+		}
+		
+		if (rX == 1 || rX == 4) {
+			while (rY < 1 || rY > 4) {
+				rY = rng.nextInt(height-t4Height);
+			}
+		} else if (rX > 1 && rX < 5) {
+			rY = 4;
+		} else {
+			if (prototype == 2) {
+				boundY = 4;
+			} else if (prototype == 3) {
+				boundY = 8;
+			}
+			while (rY < 1 || rY > boundY) {
+				rY = rng.nextInt(height-t4Height);
+			}
+		}
+		
+		int initRX = rX;
+		
+		for (int i = 0; i < template4.length(); i++) {
+			char element = template4.charAt(i);
 			if (element == '\n') {
 				rX = initRX;
 				rY++;
