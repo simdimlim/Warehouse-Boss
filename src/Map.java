@@ -13,7 +13,8 @@ public class Map {
 	private int width;
 	private int height;
 	/** Indicator if a given tile has been visited during the search */
-	private boolean[][] visited = new boolean[width][height];
+	private boolean[][] visited = new boolean[10][10];
+
 	/**
 	 * Constructor for the games map.
 	 * Stores the entire level.
@@ -24,7 +25,7 @@ public class Map {
 		initialBoxes = new ArrayList<Box>();
 		goals = new ArrayList<Goal>();
 		map = new ArrayList<WarehouseObject>();
-		free = new ArrayList<WarehouseObject>();		
+		free = new ArrayList<WarehouseObject>();	
 	}
 	
 	/**
@@ -221,6 +222,7 @@ public class Map {
 	public void clearFree() {
 		free.clear();
 	}
+
 	
 	public void pathFinderVisited(int x, int y) {
 		visited[x][y] = true;

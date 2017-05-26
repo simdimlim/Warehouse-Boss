@@ -62,10 +62,6 @@ public class WarehouseView extends JPanel implements ActionListener {
 		
 		ArrayList<WarehouseObject> all = whg.getGameMap().getMap();
 		
-		AStarPathFinder astar = new AStarPathFinder(whg.getGameMap(), 6, false);
-
-		//Path p = astar.findPath(whg.getGameMap().getPlayer(), 4, 0, 0, 0);
-		
 		for (int i = 0; i < all.size(); i++) {
 			WarehouseObject obj = all.get(i);
 			if (obj == null) {

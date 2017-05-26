@@ -19,7 +19,9 @@ public class WarehouseGenerator {
 	private Direction right = Direction.RIGHT;
 	private int height;
 	private int width;
-    
+
+
+	
 	/**
 	 * Constructor to generate warehouse levels.
 	 * 
@@ -65,8 +67,27 @@ public class WarehouseGenerator {
 		
 		map.clearMap();
 		map.addAllToMap();
-
+		
 		view.repaint();
+		
+		AStarPathFinder astar = new AStarPathFinder(g.getGameMap(), 10, false);
+		//System.out.println("!!!"+g.getGameMap().getGoals().size()+" "+g.getGameMap().getBoxes().size());
+		int flag =0;
+		for (int j=0;j<g.getGameMap().getGoals().size();j++){
+			for (int i=0;i<g.getGameMap().getBoxes().size();i++){
+				Box b = g.getGameMap().getBoxes().get(i);
+				Path p = astar.findPath(b, b.x(), b.y(), g.getGameMap().getGoals().get(j).x(), g.getGameMap().getGoals().get(j).y());
+				if(p != null) {
+					flag++;
+					//System.out.println(p.getLength()+"--");
+					break;
+				}
+				
+			}
+		}
+		if(flag != g.getGameMap().getGoals().size()){
+			newLevel();
+		}
 		g.setSleeping(false);
 	}
 	
