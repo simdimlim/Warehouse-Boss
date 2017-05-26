@@ -17,6 +17,7 @@ public class WarehouseGame {
 	private int moves = 0;
 	private boolean sleep = false;
 	private WarehouseGenerator gen;
+	private boolean tutorial = true;
 	
 	/**
 	 * Constructor for WarehouseGame.
@@ -92,6 +93,24 @@ public class WarehouseGame {
 	 */
 	public boolean isComplete() {
 		return isComplete;
+	}
+	
+	/**
+	 * Returns whether the level is a tutorial level.
+	 * 
+	 * @return If level is a tutorial
+	 */
+	public boolean isTutorial() {
+		return tutorial;
+	}
+	
+	/**
+	 * Sets whether it is a tutorial level.
+	 * 
+	 * @param b The new isTutorial boolean
+	 */
+	public void setIsTutorial(boolean b) {
+		tutorial = b;
 	}
 	
 	/**
@@ -264,8 +283,14 @@ public class WarehouseGame {
 		}
 		if (goalsReached == numGoals) {
 			isComplete = true;
-			level++;
 		}
+	}
+	
+	/**
+	 * Advances the current level.
+	 */
+	public void advanceLevel() {
+		level++;
 	}
 	
 	/**
