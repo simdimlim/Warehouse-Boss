@@ -60,7 +60,15 @@ public class WarehouseGenerator {
 			placeGoals(4);
 			view.scale();
 		}
-		else if (level > 10) {
+		else if (level > 10 && level <= 15) {
+			initialisePrototype2();
+			placeTemplates(2);
+			placePlayer();
+			placeBoxes(5);
+			placeGoals(5);
+			view.scale();
+		}
+		else if (level > 15) {
 			initialisePrototype3();
 			placeTemplates(3);
 			placePlayer();
@@ -73,7 +81,7 @@ public class WarehouseGenerator {
 		/*
 		 * Only check up to level 10 as after level 10, levels are huge and runtime is massive.
 		 */
-		if (level < 10 ) {
+		if (level < 15 ) {
 			AStarPathFinder astar = new AStarPathFinder(g.getGameMap(),15);
 			int flag =0;
 			for (int j=0;j<g.getGameMap().getGoals().size();j++){
