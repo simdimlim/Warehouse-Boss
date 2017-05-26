@@ -138,7 +138,7 @@ public class WarehouseGenerator {
 	 			g.setSleeping(false);
 	 	} else {
 	 			map.restartMap();
-		}
+	 	}
 		view.repaint();
 	}
 	
