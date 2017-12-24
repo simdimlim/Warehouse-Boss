@@ -1,2 +1,2 @@
 # WarehouseBoss
-Warehouse Boss – A Interactive Puzzle Game
+An interactive puzzle game.
